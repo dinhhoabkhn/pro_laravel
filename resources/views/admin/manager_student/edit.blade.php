@@ -22,11 +22,15 @@
         </div>
         <div class="form-group">
             <laber>Birthday</laber>
-            <input type="date" value="{{$student->phone}}" class="form-control" name="brithday">
+            <input type="date" value="{{$student->birthday}}" class="form-control" name="birthday">
         </div>
         <div class="form-group">
             <laber>Class</laber>
             <input type="text" value="{{$student->class}}" class="form-control" name="class">
+        </div>
+        <div class="form-group">
+            <laber>Address</laber>
+            <input type="text" value="{{$student->address}}" class="form-control" name="address">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>

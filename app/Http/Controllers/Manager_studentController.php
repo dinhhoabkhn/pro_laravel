@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Student;
-class AdminController extends Controller
+class Manager_studentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class AdminController extends Controller
     public function index()
     {
         $students = Student::all();
-        return view('student.manager',['student'=>$students]);
+        return view('admin.manager_student.manager',['student'=>$students]);
     }
 
     /**
@@ -24,7 +24,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('student.add');
+        return view('admin.manager_student.add');
     }
 
     /**
@@ -38,11 +38,11 @@ class AdminController extends Controller
         $student = new Student();
         $student->name = $request->name;
         $student->student_code = $request->student_code;
-        $student->email = $request->email;
         $student->phone = $request->phone;
         $student->birthday = $request->birthday;
         $student->class = $request->class;  
-        $student->name = $request->name;
+        $student->address = $request->address;
+        $student->email = $request->email;
         $student->password = "$request->student_code.mssv";
         $student->save();
         return redirect('admin');
@@ -68,7 +68,7 @@ class AdminController extends Controller
     public function edit($id)
     {
         $student = Student::find($id);
-        return view('student.edit',['student'=>$student]);
+        return view('admin.manager_student.edit',['student'=>$student]);
     }
 
     /**
@@ -80,16 +80,16 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $student = Student::find($id);
         $student->name = $request->name;
-        $student->mssv = $request->mssv;
+        $student->student_code = $request->student_code;
         $student->email = $request->email;
         $student->phone = $request->phone;
         $student->birthday = $request->birthday;
         $student->class = $request->class;  
-        $student->name = $request->name;
-        $student->update();
+        $student->address = $request->address;
+        $student->save();
+        dd(1);
         return redirect('admin');
     }
 
@@ -101,7 +101,7 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        Student::where('id',$id)->delete();
+        Student::destroy($id);
         return back();
         
     }

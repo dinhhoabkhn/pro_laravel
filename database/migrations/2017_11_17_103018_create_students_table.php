@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateStudentsTable extends Migration
 {
+    
     /**
      * Run the migrations.
      *
@@ -16,9 +17,9 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',255);
-            $table->integer('student_code');
-            $table->string('password');
             $table->string('email',100)->unique();
+            $table->string('password');
+            $table->integer('student_code');
             $table->integer('phone');
             $table->string('class');
             $table->string('address');

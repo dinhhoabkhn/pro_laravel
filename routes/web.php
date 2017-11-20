@@ -14,7 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('admin','AdminController@index');
+Route::get('admin','Manager_studentController@index');
 // Route::get('addstudent','AdminController@create');
 // Route::post('addstudent','AdminController@store');
-Route::resource('manager_student','AdminController');
+Route::resources([
+	'manager_student'=>'Manager_studentController',
+	'manager_teacher'=>'Manager_teacherController'
+]);
