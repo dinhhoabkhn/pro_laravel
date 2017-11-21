@@ -13,10 +13,7 @@ class Student extends Model
         'password', 'remember_token',
     ];
     public $timestamps = false;
-    public function user(){
-    	return $this->belongsTo('App\User');
-    }
-    public function student_course(){
-    	return $this->belongsTo('Student_course');
+    public function course(){
+    	return $this->belongsToMany('App\Course')->withPivot('point')->withTimestamps();
     }
 }

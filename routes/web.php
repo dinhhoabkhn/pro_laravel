@@ -19,5 +19,7 @@ Route::get('admin','Manager_studentController@index');
 // Route::post('addstudent','AdminController@store');
 Route::resources([
 	'manager_student'=>'Manager_studentController',
-	'manager_teacher'=>'Manager_teacherController'
+	'manager_teacher'=>'Manager_teacherController',
+	'manager_course'=>'Manager_courseController'
 ]);
+Route::group()

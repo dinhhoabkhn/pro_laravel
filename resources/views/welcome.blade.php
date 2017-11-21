@@ -23,7 +23,7 @@
         <ul class="nav navbar-nav navbar-left">
           <li><a href="/admin">Student</a></li>
           <li><a href="{{route('manager_teacher.index')}}">Teacher</a></li>
-          <li><a href="">Course</a></li>
+          <li><a href="{{route('manager_course.index')}}">Course</a></li>
         </ul>
         <ul class="nav navbar-right">
             <li><a href="logout">Log out</a></li>

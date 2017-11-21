@@ -1,8 +1,9 @@
 @extends('welcome')
 @section('header')
 <div class="container">
-    <form action="{{route('manager_teacher.store')}}" method="post" role="form">
-     {{ csrf_field() }}
+    <form action="{{route('manager_teacher.update',$teacher->id)}}" method="post">
+    {{ method_field('PUT') }}
+        {{ csrf_field() }}
      <div class="form-group">
         <laber>Name</laber>
         <input type="text" value="{{$teacher->name}}" class="form-control" name="name">

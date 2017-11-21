@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Student;
-class Manager_studentController extends Controller
+use App\Course;
+
+class Manager_courseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,9 +14,9 @@ class Manager_studentController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
-        return view('admin.manager_student.manager',['student'=>$students]);
-    }
+        $course = Course::all();
+        return view('admin.manager_course.manager',['course' =>$course]);
+    }   
 
     /**
      * Show the form for creating a new resource.
@@ -24,7 +25,7 @@ class Manager_studentController extends Controller
      */
     public function create()
     {
-        return view('admin.manager_student.add');
+        return view('admin.manager_course.add');
     }
 
     /**
@@ -35,17 +36,14 @@ class Manager_studentController extends Controller
      */
     public function store(Request $request)
     {
-        $student = new Student();
-        $student->name = $request->name;
-        $student->student_code = $request->student_code;
-        $student->phone = $request->phone;
-        $student->birthday = $request->birthday;
-        $student->class = $request->class;  
-        $student->address = $request->address;
-        $student->email = $request->email;
-        $student->password = "$request->student_code.mssv";
-        $student->save();
-        return redirect('admin');
+        $course = new Course;
+        $course->course_code = $request->course_code;
+        $course->class = $request->class;
+        $course->semester = $request->semester;
+        $course->timeStart = $request->timestart;
+        $course->timeFinish = $request->timefinish;
+        $course->save();
+        return redirect('manager_course');
     }
 
     /**
@@ -56,7 +54,7 @@ class Manager_studentController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
@@ -67,8 +65,7 @@ class Manager_studentController extends Controller
      */
     public function edit($id)
     {
-        $student = Student::find($id);
-        return view('admin.manager_student.edit',['student'=>$student]);
+        return view('admin.manager_course.edit',['course'=> $course = Course::findOrfail($id)]);
     }
 
     /**
@@ -80,17 +77,14 @@ class Manager_studentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $student = Student::find($id);
-        $student->name = $request->name;
-        $student->student_code = $request->student_code;
-        $student->email = $request->email;
-        $student->email = $request->email;
-        $student->phone = $request->phone;
-        $student->birthday = $request->birthday;
-        $student->class = $request->class;  
-        $student->address = $request->address;
-        $student->save();
-        return redirect('admin');
+        $course = Course::findOrfail($id);
+        $course->course_code = $request->course_code;
+        $course->class = $request->class;
+        $course->semester = $request->semester;
+        $course->timeStart = $request->timestart;
+        $course->timeFinish = $request->timefinish;
+        $course->save();
+        return redirect('manager_course');
     }
 
     /**
@@ -101,8 +95,7 @@ class Manager_studentController extends Controller
      */
     public function destroy($id)
     {
-        Student::destroy($id);
+        Course::destroy($id);
         return back();
-        
     }
 }

@@ -79,6 +79,9 @@ class Manager_teacherController extends Controller
      */
     public function update(Request $request, $id)
     {
+        /**
+         * undocumented constant
+         **/
         $teacher = Teacher::find($id);
         $teacher->name = $request->name;
         $teacher->email = $request->email;
