@@ -3,12 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-class Teacher extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class Teacher extends Authenticatable
 {
-    protected $table = 'teachers';
-    protected $fillable= ['name','brithday','address','email','address'];
+    protected $fillable= ['name','brithday','address','email','address','password'];
     public $timestamps = false;
-    public function course(){
-    	return $this->hasMany('App\Course');
+    public function courses(){
+    	return $this->hasMany(Course::class);
     }
 }

@@ -13,14 +13,16 @@
     <div class="container">
         <div class="login">
             <form action="" method="post">
+                {{ csrf_field() }}
                 <div class="form-group">
-                    <label for="">Name/email</label>
-                    <input type="text" name="email" placeholder="name/email">
+                    <label for="">Email</label>
+                    <input type="text" name="email" class="form-control" placeholder="email">
                 </div>
                 <div class="form-group">
                     <label for="">Password</label>
-                    <input type="text" name="password" placeholder="password">
+                    <input type="password" name="password" class="form-control" placeholder="password">
                 </div>
+                <input type="submit" name="">
             </form>
         </div>
     </div>

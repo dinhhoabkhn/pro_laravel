@@ -45,6 +45,14 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+        'admin'=>[
+            'driver' =>'session',
+            'provider' => 'admin',
+        ],
+        'teacher'=>[
+            'driver' =>'session',
+            'provider'=>'teacher',
+        ]
     ],
 
     /*
@@ -65,15 +73,19 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'admin' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Admin::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'student' => [
+            'driver' => 'eloquent',
+            'model' => App\Student::class,
+        ],
+        'teacher' => [
+            'driver' => 'eloquent',
+            'model' => App\Teacher::class,
+        ],
     ],
 
     /*

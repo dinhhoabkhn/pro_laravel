@@ -43,7 +43,7 @@ class Manager_studentController extends Controller
         $student->class = $request->class;  
         $student->address = $request->address;
         $student->email = $request->email;
-        $student->password = "$request->student_code.mssv";
+        $student->password = bcrypt('123456');
         $student->save();
         return redirect('admin');
     }

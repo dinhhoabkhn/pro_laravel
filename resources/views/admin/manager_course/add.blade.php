@@ -8,8 +8,33 @@
             <input type="number" placeholder="Course code" class="form-control" name="course_code">
         </div>
         <div class="form-group">
+            <label>Subject</label>
+            <select class="form-control" name="subject_id" >
+                @foreach($subjects as $sub)
+                <option value="{{ $sub->id }}">{{$sub->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
             <laber>Class</laber>
-            <input type="text" placeholder="Class" class="form-control" name="class">
+            <select class="form-control" name="class">
+                <option>101</option>
+                <option>102</option>
+                <option>103</option>
+                <option>104</option>
+                <option>105</option>
+                <option>106</option>
+                <option>107</option>
+                <option>108</option>
+                <option>201</option>
+                <option>202</option>
+                <option>203</option>
+                <option>204</option>
+                <option>205</option>
+                <option>206</option>
+                <option>207</option>
+                <option>208</option>
+            </select>
         </div>
         <div class="form-group">
             <laber>Semester</laber>
@@ -22,6 +47,18 @@
         <div class="form-group">
             <laber>Time finish</laber>
             <input type="time" placeholder="Time finish" class="form-control" name="timefinish">
+        </div>
+        <div class="form-group">
+            <laber>Day of Week</laber>
+            <select class="form-control" name="weekday">
+                <option>Monday</option>
+                <option>Tuesday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+                <option>Sunday</option>
+            </select>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>

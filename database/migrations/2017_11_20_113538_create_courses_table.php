@@ -15,11 +15,14 @@ class CreateCoursesTable extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('course_code');
+            $table->integer('teacher_id')->unsigned()->nullable();
+            $table->integer('subject_id')->unsigned();
             $table->string('class');
+            $table->integer('course_code');
             $table->integer('semester');
-            $table->time('timeStart');
-            $table->time('timeFinish');
+            $table->time('timefinish');
+            $table->time('timestart');
+            $table->string('weekdays');
             $table->timestamps();
         });
     }

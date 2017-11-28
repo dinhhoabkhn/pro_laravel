@@ -6,14 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    protected $table = 'courses';
     protected $fillable = [''];
     public $timestamps = false;
-    public function student(){
+    public function students()
+    {
 
-    	return $this->belongsToMany('App\Student');
+    	return $this->belongsToMany(Student::class);
     }
     public function subject(){
-    	return $this->belongsTo('App\Subject','course_student','student_id','course_id');
+    	return $this->belongsTo(Subject::class);
+    }
+    public function teacher(){
+    	return $this->belongsTo(Teacher::class);
     }
 }

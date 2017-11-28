@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use App\Course;
+use App\Subject;
 
 class Manager_courseController extends Controller
 {
@@ -14,8 +16,8 @@ class Manager_courseController extends Controller
      */
     public function index()
     {
-        $course = Course::all();
-        return view('admin.manager_course.manager',['course' =>$course]);
+        $courses = Course::with(['teacher','subject'])->get();
+        return view('admin.manager_course.manager',['courses' =>$courses]);
     }   
 
     /**
@@ -25,7 +27,9 @@ class Manager_courseController extends Controller
      */
     public function create()
     {
-        return view('admin.manager_course.add');
+        $subject = Subject::all();
+
+        return view('admin.manager_course.add',['subjects'=>$subject]);
     }
 
     /**
@@ -36,12 +40,14 @@ class Manager_courseController extends Controller
      */
     public function store(Request $request)
     {
-        $course = new Course;
-        $course->course_code = $request->course_code;
+        $course = new Course();
+        $course->course_code = $request->course_code; 
         $course->class = $request->class;
+        $course->subject_id = $request->subject_id;
         $course->semester = $request->semester;
         $course->timeStart = $request->timestart;
         $course->timeFinish = $request->timefinish;
+        $course->weekdays = $request->weekday;
         $course->save();
         return redirect('manager_course');
     }
@@ -65,7 +71,9 @@ class Manager_courseController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.manager_course.edit',['course'=> $course = Course::findOrfail($id)]);
+        $course = Course::findOrfail($id);
+        $subjects = Subject::all();
+        return view('admin.manager_course.edit',['course'=> $course,'subjects'=>$subjects]);
     }
 
     /**
@@ -78,11 +86,13 @@ class Manager_courseController extends Controller
     public function update(Request $request, $id)
     {
         $course = Course::findOrfail($id);
-        $course->course_code = $request->course_code;
+        $course->course_code = $request->course_code; 
         $course->class = $request->class;
+        $course->subject_id = $request->subject_id;
         $course->semester = $request->semester;
         $course->timeStart = $request->timestart;
         $course->timeFinish = $request->timefinish;
+        $course->weekdays = $request->weekday;
         $course->save();
         return redirect('manager_course');
     }

@@ -38,7 +38,7 @@ class Manager_teacherController extends Controller
         $teacher = new Teacher;
         $teacher->name = $request->name;
         $teacher->email = $request->email;
-        $teacher->password = '123456';
+        $teacher->password = bcrypt('123456');
         $teacher->level = $request->level;
         $teacher->address = $request->address;
         $teacher->birthday = $request->birthday;
