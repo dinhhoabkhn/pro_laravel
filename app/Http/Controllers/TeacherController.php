@@ -10,10 +10,6 @@ use App\Subject;
 
 class TeacherController extends Controller
 {
-	public function __construct()
-	{
-		$this->middleware('check_teacher')->except(['getLoginTeacher','postLoginTeacher']);
-	}
 	public function getLoginTeacher(){
 		return view('auth.loginteacher');
 	}
@@ -27,20 +23,31 @@ class TeacherController extends Controller
 			return redirect('teacher/login');
 		}
 	}
-	public function logout_teacher(){
+	public function logoutTeacher(){
 		Auth::guard('teacher')->logout();
 		return redirect('teacher/login');
 	}
 	public function showCourse(){
 		$teacher = Auth::guard('teacher')->user();
-		$courses = Course::where('teacher_id',$teacher->id)->where('semester','20172')->get();
-		return view('system.teacher.home',['courses',$courses]);
+		$courses = Course::where('teacher_id',$teacher->id)->where('semester','20172')->with('subject')->get();
+		return view('system.teacher.home',['courses'=>$courses]);
+	}
+	public function deleteRegisterCourse($id){
+		$course = Course::findOrFail($id);
+		$course->teacher_id = Null;
+		$course->save();
+		return back();
 	}
 	public function listCourse(){
 		$teacher = Auth::guard('teacher')->user();
-		$courses = Course::where('semester','20172')->where('teacher_id','<>',$teacher->id)->get();
-		dd($courses);
-
-		return view('system.teacher.listcourse',['courses',$courses]);
+		$courses = Course::doesntHave('teacher')->where('semester','20172')->with('subject')->get();
+		return view('system.teacher.listcourse',['courses'=>$courses]);
+	}
+	public function registerCourse(Request $request,$id){
+		$teacher = Auth::guard('teacher')->user();
+		$course = Course::findOrFail($id);
+		$course->teacher_id = $teacher->id;
+		$course->save();
+		return redirect('/teacher');
 	}
 }

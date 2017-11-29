@@ -10,8 +10,6 @@
     <link rel="stylesheet" type="text/css" href="{{url('css/main.css')}}">
 </head>
 <body>
-    <div class="container-fluid">
-        @yeild('layout')
-    </div>
+        @yield('teacher')
 </body>
 </html>

@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
-	public function __construct()
-    {
-        $this->middleware('check')->except(['getLoginAdmin','postLoginAdmin']);
-    }
+	// public function __construct()
+ //    {
+ //        $this->middleware('check')->except(['getLoginAdmin','postLoginAdmin']);
+ //    }
 	public function getLoginAdmin(){
 		return view('auth.loginadmin');
 	}

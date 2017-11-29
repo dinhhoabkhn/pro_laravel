@@ -18,7 +18,7 @@ class CreateCoursesTable extends Migration
             $table->integer('teacher_id')->unsigned()->nullable();
             $table->integer('subject_id')->unsigned();
             $table->string('class');
-            $table->integer('course_code');
+            $table->integer('course_code')->unique();
             $table->integer('semester');
             $table->time('timefinish');
             $table->time('timestart');
