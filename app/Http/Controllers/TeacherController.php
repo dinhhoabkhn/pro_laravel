@@ -32,6 +32,7 @@ class TeacherController extends Controller
 		$courses = Course::where('teacher_id',$teacher->id)->where('semester','20172')->with('subject')->get();
 		return view('system.teacher.home',['courses'=>$courses]);
 	}
+	
 	public function deleteRegisterCourse($id){
 		$course = Course::findOrFail($id);
 		$course->teacher_id = Null;
