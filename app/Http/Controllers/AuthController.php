@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
@@ -13,7 +14,7 @@ class AuthController extends Controller
 	public function getLoginAdmin(){
 		return view('auth.loginadmin');
 	}
-	public function postLoginAdmin(Request $request){
+	public function postLoginAdmin(LoginRequest $request){
 		$name = $request->name;
 		$password = $request->password;
 		if (Auth::guard('admin')->attempt(['name'=>$name, 'password'=>$password])) {

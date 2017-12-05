@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateStudent;
 use App\Student;
 class Manager_studentController extends Controller
 {
@@ -33,7 +34,7 @@ class Manager_studentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateStudent $request)
     {
         $student = new Student();
         $student->name = $request->name;
@@ -78,7 +79,7 @@ class Manager_studentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateStudent $request, $id)
     {
         $student = Student::find($id);
         $student->name = $request->name;

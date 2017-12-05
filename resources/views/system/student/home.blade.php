@@ -1,5 +1,5 @@
-@extends('layouts.layout')
-@section('teacher')
+@extends('layouts.layout_student')
+@section('student')
 <div class="container" style="margin-top: 50px;">
     <div class="row">
         <p>Đăng ký môn học mới</p>

@@ -3,6 +3,13 @@
 <div class="container">
     <form action="{{route('manager_teacher.store')}}" method="post" role="form">
      {{ csrf_field() }}
+     @if($errors->any())
+       <ul>
+       @foreach ($errors->all() as $error)
+       <li>{{ $error }}</li>
+       @endforeach
+   </ul>
+       @endif
      <div class="form-group">
         <laber>Name</laber>
         <input type="text" placeholder="Ho ten" class="form-control" name="name">

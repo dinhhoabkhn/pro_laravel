@@ -11,16 +11,18 @@ class HomeController extends Controller
 {
     public function listStudentCourse($id){
     	$course = Course::findOrFail($id);
-    	$students = Student::whereHas('courses',function($query) use ($course){
-    		$query->where('courses.id',$course->id);
-    	})->get();
-    	// dd($students);
-    	return view('system.liststudentcourse',['students'=>$students]);
+        $students = $course->students;
+    	return view('system.liststudentcourse',['students'=>$students,'course'=>$course]);
+
     }
-    public function pointStudent(Request $request){
-    	// $course = Course::findOrFail($studentId);
-    	dd($request->all());
-    	$course ->students()->updateExistingPivot('point',10);
-    	dd('5');
+    public function pointStudent(Request $request,$courseId){
+    	$course = Course::findOrFail($courseId);
+    	$point = $request->point;
+    	// dd($point);
+    	foreach ( $point as $student => $point) {
+    		$course->students()->updateExistingPivot($student,['point'=>$point]);
+    	}
+    	
+    	return back();
     }
 }

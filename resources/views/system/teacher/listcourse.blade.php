@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.layout_teacher')
 @section('teacher')
 <div class="container" style="margin-top: 50px;">
     <div class="row">

@@ -17,10 +17,20 @@
                 <div class="form-group">
                     <label for="">Name</label>
                     <input type="text" name="name" class="form-control" placeholder="name/email">
+                    @if($errors->has('name'))
+                        <div class="alert alert-danger">
+                            <strong> {{ $errors->first('name') }}</strong>
+                        </div>
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="">Password</label>
                     <input type="password" name="password" class="form-control" placeholder="password">
+                    @if($errors->has('password'))
+                        <div class="alert alert-danger">
+                            <strong> {{ $errors->first('password') }}</strong>
+                        </div>
+                    @endif
                 </div>
                 <input type="submit" name="">
             </form>

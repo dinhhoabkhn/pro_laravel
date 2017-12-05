@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateTeacher;
 use App\Teacher;
 class Manager_teacherController extends Controller
 {
@@ -33,12 +34,12 @@ class Manager_teacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTeacher $request)
     {
         $teacher = new Teacher;
         $teacher->name = $request->name;
         $teacher->email = $request->email;
-        $teacher->password = bcrypt('123456');
+        $teacher->password = bcrypt('1');
         $teacher->level = $request->level;
         $teacher->address = $request->address;
         $teacher->birthday = $request->birthday;
@@ -77,7 +78,7 @@ class Manager_teacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateTeacher $request, $id)
     {
         /**
          * undocumented constant

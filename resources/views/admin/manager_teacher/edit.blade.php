@@ -4,6 +4,13 @@
     <form action="{{route('manager_teacher.update',$teacher->id)}}" method="post">
     {{ method_field('PUT') }}
         {{ csrf_field() }}
+        @if($errors->any())
+       <ul>
+       @foreach ($errors->all() as $error)
+       <li>{{ $error }}</li>
+       @endforeach
+   </ul>
+       @endif
      <div class="form-group">
         <laber>Name</laber>
         <input type="text" value="{{$teacher->name}}" class="form-control" name="name">

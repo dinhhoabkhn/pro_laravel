@@ -21,7 +21,9 @@ Route::middleware('check')->group(function (){
 		'manager_teacher'=>'Manager_teacherController',
 		'manager_course'=>'Manager_courseController'
 	]);
+	Route::get('liststudent','StatisticController@listStudent')->name('liststudent');
 	Route::get('logout','AuthController@logout_admin');
+	Route::get('statisticpoint/{id}','StatisticController@pointStudent')->name('statisticpoint');
 });
 
 // Route::group()
@@ -43,7 +45,6 @@ Route::middleware('check_teacher')->group(function (){
 	});
 });
 // Route::group(['middleware'=>'check_teacher','prefix'=>'teacher'], function({
-
 // }))
 Route::prefix('student')->group(function(){
 	Route::middleware('check_student')->group(function(){
@@ -55,4 +56,4 @@ Route::prefix('student')->group(function(){
 	});
 });
 Route::get('liststudent/{id}','HomeController@listStudentCourse');
-Route::get('pointstudent','HomeController@pointStudent');
+Route::post('pointstudent/{courseId}','HomeController@pointStudent')->name('pointstudent');
