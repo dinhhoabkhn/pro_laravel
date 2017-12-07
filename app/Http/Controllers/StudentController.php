@@ -17,8 +17,8 @@ class StudentController extends Controller
 	}
 	public function postLoginStudent(LoginUser $request){
 		$email = $request->email;
-		$password = $request->password;
-		if(Auth::guard('student')->attempt(['email'=>$email, 'password'=>$password])){
+		$password = $request->passwosrd;
+		if(Auth::guard('student')->where('active',1)->attempt(['email'=>$email, 'password'=>$password])){
 			return redirect('student');
 
 		}
@@ -53,5 +53,13 @@ class StudentController extends Controller
     	$student = Auth::guard('student')->user();
     	$student ->courses() ->attach($id);
         return redirect('student');
+    }
+    public function verify($token){
+
+        $student= Student::where('email_token',$token)->firstOrFail();
+        $student ->active = 1;
+        $student->email_token = null;
+        $student->save();
+        return redirect('student/login');
     }
 }

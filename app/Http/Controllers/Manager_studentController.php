@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateStudent;
 use App\Student;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AuthenticateLogin;
+
 class Manager_studentController extends Controller
 {
     /**
@@ -44,8 +47,11 @@ class Manager_studentController extends Controller
         $student->class = $request->class;  
         $student->address = $request->address;
         $student->email = $request->email;
+        $student->email_token = str_random('15');
         $student->password = bcrypt('1');
         $student->save();
+        $email = new AuthenticateLogin($student);
+        Mail::to($student)->send($email);
         return redirect('admin');
     }
 

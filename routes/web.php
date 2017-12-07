@@ -31,7 +31,7 @@ Route::get('login','AuthController@getLoginAdmin');
 Route::post('login','AuthController@postLoginAdmin');
 Route::get('teacher/login','TeacherController@getLoginTeacher');
 Route::post('teacher/login','TeacherController@postLoginTeacher');
-Route::get('student/login','StudentController@getLoginStudent');
+Route::get('student/login','StudentController@getLoginStudent')->name('student.login');
 Route::post('student/login','StudentController@postLoginStudent');
 
 
@@ -54,6 +54,7 @@ Route::prefix('student')->group(function(){
 		Route::post('register/{id}','StudentController@registerCourseStudent')->name('student.register');
 		Route::post('delete/{id}','StudentController@deleteCourse')->name('student.delete');
 	});
+	Route::post('verify/{token}','StudentController@verify')->name('student.verify');
 });
 Route::get('liststudent/{id}','HomeController@listStudentCourse');
 Route::post('pointstudent/{courseId}','HomeController@pointStudent')->name('pointstudent');

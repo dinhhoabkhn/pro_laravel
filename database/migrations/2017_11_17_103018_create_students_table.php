@@ -18,6 +18,7 @@ class CreateStudentsTable extends Migration
             $table->increments('id');
             $table->string('name',255);
             $table->string('email',100)->unique();
+            $table->string('email_token')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->integer('student_code');
@@ -25,9 +26,11 @@ class CreateStudentsTable extends Migration
             $table->string('class');
             $table->string('address');
             $table->date('birthday');
-            });
+            $table->string('academy')->nullable();
+            $table->boolean('active')->default(false);
+            $table->timestamps();
+        });
     }
-
     /**
      * Reverse the migrations.
      *
