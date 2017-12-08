@@ -2,8 +2,7 @@
 @section('student')
 <div class="container" style="margin-top: 50px;">
     <div class="row">
-        <p>Đăng ký môn học mới</p>
-        <a href="{{route('student.listcourse')}}" class="btn btn-primary btn-lg active btn-add"><h3>Tại đây</h3></a>
+        <h4>Đăng ký môn học mới<a href="{{route('student.listcourse')}}" class="btn btn-primary  active ">Tại đây</a></h4>
     </div>
     <table class="table-bordered table">
         <tr>

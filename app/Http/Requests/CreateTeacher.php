@@ -25,7 +25,7 @@ class CreateTeacher extends FormRequest
     {
         return [
             'name'=>'required',
-            'email'=>'required|email',
+            'email'=>'required|unique:teachers,email',
             'level'=>'required',
             'address'=>'required',
             'birthday'=>'required',

@@ -9,6 +9,7 @@
 	margin-top: 20px;
 	column-span: 10px;
 	text-align: center;
+	border: solid 2px aliceblue;
 }
 .table th{
 	font-size: 16px;

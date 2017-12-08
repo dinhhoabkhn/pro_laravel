@@ -14,10 +14,20 @@
         <div class="login">
             <form action="" method="post">
                 {{ csrf_field() }}
+                @if($errors->has('email'))
+                        <div class="alert alert-danger">
+                            <strong> {{ $errors->first('email') }}</strong>
+                        </div>
+                    @endif
                 <div class="form-group">
                     <label for="">Email</label>
                     <input type="text" name="email" class="form-control" placeholder="email">
                 </div>
+                @if($errors->has('password'))
+                        <div class="alert alert-danger">
+                            <strong> {{ $errors->first('password') }}</strong>
+                        </div>
+                    @endif
                 <div class="form-group">
                     <label for="">Password</label>
                     <input type="password" name="password" class="form-control" placeholder="password">

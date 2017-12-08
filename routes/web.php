@@ -22,39 +22,42 @@ Route::middleware('check')->group(function (){
 		'manager_course'=>'Manager_courseController'
 	]);
 	Route::get('liststudent','StatisticController@listStudent')->name('liststudent');
-	Route::get('logout','AuthController@logout_admin');
+	Route::get('logout','AuthController@logoutAdmin')->name('admin.logout');
 	Route::get('statisticpoint/{id}','StatisticController@pointStudent')->name('statisticpoint');
+	Route::get('liststudent/{id}','HomeController@listStudentCourse')->name('liststudent.course');
+	Route::post('pointstudent/{courseId}','HomeController@pointStudent')->name('pointstudent');
 });
 
 // Route::group()
-Route::get('login','AuthController@getLoginAdmin');
-Route::post('login','AuthController@postLoginAdmin');
-Route::get('teacher/login','TeacherController@getLoginTeacher');
-Route::post('teacher/login','TeacherController@postLoginTeacher');
-Route::get('student/login','StudentController@getLoginStudent')->name('student.login');
-Route::post('student/login','StudentController@postLoginStudent');
+Route::get('login','AuthController@getLoginAdmin')->name('getlogin');
+Route::post('login','AuthController@postLoginAdmin')->name('postlogin');
+Route::get('teacher/login','TeacherController@getLoginTeacher')->name('teacher.getlogin');
+Route::post('teacher/login','TeacherController@postLoginTeacher')->name('teacher.postlogin');
+Route::get('student/login','StudentController@getLoginStudent')->name('student.getlogin');
+Route::post('student/login','StudentController@postLoginStudent')->name('student.postlogin');
 
 
 Route::middleware('check_teacher')->group(function (){
 	Route::prefix('teacher')->group(function (){
-		Route::get('logout','TeacherController@logoutTeacher');
-		Route::get('/','TeacherController@showCourse');
+		Route::get('logout','TeacherController@logoutTeacher')->name('teacher.logout');
+		Route::get('/','TeacherController@showCourse')->name('teacher');
 		Route::post('/deleteregister/{id}','TeacherController@deleteRegisterCourse')->name('teacher.deleteregister');
 		Route::get('listcourse','TeacherController@listCourse')->name('teacher.course');
 		Route::post('registercourse/{id}','TeacherController@registerCourse')->name('teacher.registercourse');
 	});
+	Route::post('verify/{token}','TeacherController@verifyTeacher')->name('teacher.verify');
 });
 // Route::group(['middleware'=>'check_teacher','prefix'=>'teacher'], function({
 // }))
 Route::prefix('student')->group(function(){
 	Route::middleware('check_student')->group(function(){
-		Route::get('logout','StudentController@logoutStudent');
-		Route::get('/','StudentController@listMyCourse')->name('homestudent');
+		Route::get('logout','StudentController@logoutStudent')->name('student.logout');
+		Route::get('/','StudentController@listMyCourse')->name('student');
 		Route::get('listcourse','StudentController@listCourse')->name('student.listcourse');
 		Route::post('register/{id}','StudentController@registerCourseStudent')->name('student.register');
 		Route::post('delete/{id}','StudentController@deleteCourse')->name('student.delete');
+		Route::get('myinformation','StudentController@studentInformation')->name('student.information');
+		Route::get('rspassword','StudentController@getResetPassword')->name('student.rspassword');
 	});
 	Route::post('verify/{token}','StudentController@verify')->name('student.verify');
 });
-Route::get('liststudent/{id}','HomeController@listStudentCourse');
-Route::post('pointstudent/{courseId}','HomeController@pointStudent')->name('pointstudent');

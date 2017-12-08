@@ -27,7 +27,7 @@
           <li><a href="{{route('liststudent')}}">List Student</a></li>
         </ul>
         <ul class="nav navbar-right">
-            <li><a href="logout">Log out</a></li>
+            <li><a href="{{route('admin.logout')}}">Log out</a></li>
         </ul>
     </div>
 </nav>

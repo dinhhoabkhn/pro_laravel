@@ -23,10 +23,10 @@
         <ul class="nav navbar-nav navbar-left">
           <li><a href="/student">My course</a></li>
           <li><a href="{{route('student.listcourse')}}">Register Course</a></li>
-          <li><a href="">My Information</a></li>
+          <li><a href="{{route('student.information')}}">My Information</a></li>
         </ul>
         <ul class="nav navbar-right">
-            <li><a href="student/logout">Log out</a></li>
+            <li><a href="{{route('student.logout')}}">Log out</a></li>
         </ul>
     </div>
 </nav>

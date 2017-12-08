@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateTeacher;
+use App\Http\Requests\UpdateTeacher;
 use App\Teacher;
+use App\Mail\AuthenticateLoginTeacher;
+use Illuminate\Support\Facades\Mail;
 class Manager_teacherController extends Controller
 {
     /**
@@ -39,13 +42,16 @@ class Manager_teacherController extends Controller
         $teacher = new Teacher;
         $teacher->name = $request->name;
         $teacher->email = $request->email;
+        $teacher->email_token = str_random('10');
         $teacher->password = bcrypt('1');
         $teacher->level = $request->level;
         $teacher->address = $request->address;
         $teacher->birthday = $request->birthday;
         $teacher->academy = $request->academy;
         $teacher->save();
-        return redirect('manager_teacher');
+        $email = new AuthenticateLoginTeacher($teacher);
+        Mail::to($teacher)->send($email);
+        return redirect()->route('manager_teacher.index');
     }
 
     /**
@@ -78,7 +84,7 @@ class Manager_teacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateTeacher $request, $id)
+    public function update(UpdateTeacher $request, $id)
     {
         /**
          * undocumented constant
@@ -91,7 +97,7 @@ class Manager_teacherController extends Controller
         $teacher->birthday = $request->birthday;
         $teacher->academy = $request->academy;
         $teacher->save();
-        return redirect('manager_teacher');
+        return redirect()->route('manager_teacher.index');
     }
 
     /**

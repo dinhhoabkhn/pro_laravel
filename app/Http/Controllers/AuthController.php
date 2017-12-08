@@ -12,20 +12,20 @@ class AuthController extends Controller
  //        $this->middleware('check')->except(['getLoginAdmin','postLoginAdmin']);
  //    }
 	public function getLoginAdmin(){
-		return view('auth.loginadmin');
+		return view('auth.login_admin');
 	}
 	public function postLoginAdmin(LoginRequest $request){
 		$name = $request->name;
 		$password = $request->password;
 		if (Auth::guard('admin')->attempt(['name'=>$name, 'password'=>$password])) {
-			return redirect('admin');
+			return redirect()->route('manager_student.index');
 		}
 		else {
 			return back()->with('section',"nhập lại thông tin");
 		}
 	}
-	public function logout_admin(){
+	public function logoutAdmin(){
 		Auth::guard('admin')->logout();
-		return redirect('login');
+		return redirect()->route('getlogin');
 	}
 }

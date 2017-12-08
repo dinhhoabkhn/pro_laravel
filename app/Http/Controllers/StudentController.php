@@ -13,13 +13,13 @@ use App\Subject;
 class StudentController extends Controller
 {
 	public function getLoginStudent(){
-		return view('auth.loginstudent');
+		return view('auth.login_student');
 	}
 	public function postLoginStudent(LoginUser $request){
 		$email = $request->email;
-		$password = $request->passwosrd;
-		if(Auth::guard('student')->where('active',1)->attempt(['email'=>$email, 'password'=>$password])){
-			return redirect('student');
+		$password = $request->password;
+		if(Auth::guard('student')->attempt(['email'=>$email, 'password'=>$password,'active'=>1])){
+			return redirect()->route('student');
 
 		}
 		else{
@@ -28,7 +28,7 @@ class StudentController extends Controller
 	}
 	public function logoutStudent(){
 		Auth::guard('student')->logout();
-		return redirect('student/login');
+		return redirect()->route('student.login');
 	}
     public function listMyCourse(){
     	$student = Auth::guard('student')->user();
@@ -47,12 +47,20 @@ class StudentController extends Controller
     	$courses = Course::whereDoesntHave('students',function($query) use ($student){
     		$query->where('students.id',$student->id);
     	})->with('subject')->get();
-    	return view('system.student.listcourse',['courses'=>$courses]);
+    	return view('system.student.list_course',['courses'=>$courses]);
     }
     public function registerCourseStudent($id){
     	$student = Auth::guard('student')->user();
     	$student ->courses() ->attach($id);
-        return redirect('student');
+        return redirect()->route('student');
+    }
+    public function studentInformation(){
+        $student = Auth::guard('student')->user();
+        return view('system.student.information',['student'=>$student]);
+    }
+    public function getResetPassword($id){
+        $student = Auth::guard('student')->user();
+        return view('system.student.reset_password');
     }
     public function verify($token){
 
@@ -60,6 +68,6 @@ class StudentController extends Controller
         $student ->active = 1;
         $student->email_token = null;
         $student->save();
-        return redirect('student/login');
+        return redirect()->route('student.login');
     }
 }

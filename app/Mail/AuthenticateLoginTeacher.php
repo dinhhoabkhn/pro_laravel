@@ -6,9 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Student;
+use App\Teacher;
 
-class AuthenticateLogin extends Mailable
+class AuthenticateLoginTeacher extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -17,10 +17,10 @@ class AuthenticateLogin extends Mailable
      *
      * @return void
      */
-    public $student;
-    public function __construct(Student $student)
+    public $teacher;
+    public function __construct(Teacher $teacher)
     {
-        $this->student = $student;
+        $this->teacher = $teacher;
     }
 
     /**
@@ -30,6 +30,6 @@ class AuthenticateLogin extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.auth_login_student');
+        return $this->view('emails.auth_login_teacher');
     }
 }

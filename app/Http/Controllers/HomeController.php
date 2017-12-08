@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function listStudentCourse($id){
     	$course = Course::findOrFail($id);
         $students = $course->students;
-    	return view('system.liststudentcourse',['students'=>$students,'course'=>$course]);
+    	return view('system.list_student_course',['students'=>$students,'course'=>$course]);
 
     }
     public function pointStudent(Request $request,$courseId){

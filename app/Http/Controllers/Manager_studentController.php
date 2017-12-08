@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateStudent;
+use App\Http\Requests\UpdateStudent;
 use App\Student;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AuthenticateLogin;
@@ -52,7 +53,7 @@ class Manager_studentController extends Controller
         $student->save();
         $email = new AuthenticateLogin($student);
         Mail::to($student)->send($email);
-        return redirect('admin');
+        return redirect()->route('manager_student.index');
     }
 
     /**
@@ -85,19 +86,18 @@ class Manager_studentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateStudent $request, $id)
+    public function update(UpdateStudent $request, $id)
     {
         $student = Student::find($id);
         $student->name = $request->name;
         $student->student_code = $request->student_code;
         $student->email = $request->email;
-        $student->email = $request->email;
         $student->phone = $request->phone;
         $student->birthday = $request->birthday;
         $student->class = $request->class;  
         $student->address = $request->address;
-        $student->save();
-        return redirect('admin');
+        $student->update();
+        return redirect()->route('manager_student.index');
     }
 
     /**

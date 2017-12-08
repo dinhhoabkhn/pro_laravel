@@ -12,12 +12,12 @@ use App\Subject;
 class TeacherController extends Controller
 {
 	public function getLoginTeacher(){
-		return view('auth.loginteacher');
+		return view('auth.login_teacher');
 	}
 	public function postLoginTeacher(LoginUser $request){
 		$email =$request->email;
 		$password = $request->password;
-		if (Auth::guard('teacher')->attempt(['email'=>$email,'password'=>$password])) {
+		if (Auth::guard('teacher')->attempt(['email'=>$email,'password'=>$password, 'active'=>1])) {
 			return redirect('teacher');
 		}
 		else{
@@ -51,5 +51,12 @@ class TeacherController extends Controller
 		$course->teacher_id = $teacher->id;
 		$course->save();
 		return redirect('/teacher');
+	}
+	public function verifyTeacher($token){
+		$teacher = Teacher::where('email_token',$token)->first();
+		$teacher->active = 1;
+		$teacher->email_token = null;
+		$teacher ->save();
+		return redirect('teacher/login');
 	}
 }

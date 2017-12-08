@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateStudent extends FormRequest
+class UpdateTeacher extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,13 @@ class CreateStudent extends FormRequest
      */
     public function rules()
     {
-        // $this->request->method = 
         return [
             'name'=>'required',
-            'email'=>'required|unique:students,email',
-            'student_code'=>'required|digits:8|',
-            'phone'=>'required|max:11',
-            'class'=>'required',
-            'birthday'=>'required',
+            'email'=>'required|unique:teachers,email,'. $this->route('manager_teacher'),
+            'level'=>'required',
             'address'=>'required',
+            'birthday'=>'required',
+            'academy'=>'required',
         ];
     }
 }

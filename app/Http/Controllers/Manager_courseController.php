@@ -50,7 +50,7 @@ class Manager_courseController extends Controller
         $course->timeFinish = $request->timefinish;
         $course->weekdays = $request->weekday;
         $course->save();
-        return redirect('manager_course');
+        return redirect()->route('manager_course.index');
     }
 
     /**
@@ -86,6 +86,7 @@ class Manager_courseController extends Controller
      */
     public function update(CreateCourse $request, $id)
     {
+        dd($request->all());
         $course = Course::findOrfail($id);
         $course->course_code = $request->course_code; 
         $course->class = $request->class;
@@ -95,7 +96,7 @@ class Manager_courseController extends Controller
         $course->timeFinish = $request->timefinish;
         $course->weekdays = $request->weekday;
         $course->save();
-        return redirect('manager_course');
+        return redirect()->route('manager_course.index');
     }
 
     /**
