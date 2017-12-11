@@ -33,12 +33,17 @@ class StudentController extends Controller
     }
     public function postForgotPasswordStudent(Request $request){
         $email = $request->email;
-        $student = Student::where('email',$email)->first();
-        $student->email_token = str_random(15);
-        $student->save();
-        $sendemail = new ForgotPasswordStudent($student);
-        Mail::to($student)->send($sendemail);
-        return redirect()->route('student.getlogin');
+        if(!empty(Student::where('email',$email)->first())){
+            $student = Student::where('email',$email)->first();
+            $student->email_token = str_random(15);
+            $student->save();
+            $sendEmail = new ForgotPasswordStudent($student);
+            Mail::to($student)->send($sendEmail);
+            return redirect()->route('student.getlogin');
+        }
+        else {
+            return back();
+        }
     }
     public function check($token){
         $student = Student::where('email_token',$token)->first();
@@ -94,13 +99,13 @@ class StudentController extends Controller
     public function postResetPassword(Request $request){
         $student = Auth::guard('student')->user();
         $password = $student->password;
-        $oldpassword = $request->oldpassword;
-        $newpassword = $request->newpassword;
-        $renewpassword = $request->renewpassword;
-        if (Hash::check($oldpassword,$password)==false) {
+        $oldPassword = $request->oldpassword;
+        $newPassword = $request->newpassword;
+        $retypeNewPassword = $request->renewpassword;
+        if (Hash::check($oldPassword,$password)==false) {
             return back()->withErrors('');
         }
-        elseif ($newpassword != $renewpassword) {
+        elseif ($newPassword != $retypeNewPassword) {
             return back()->withErrors('');
         }
         else{

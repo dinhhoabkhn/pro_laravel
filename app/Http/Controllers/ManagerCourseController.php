@@ -111,7 +111,7 @@ class Manager_courseController extends Controller
         return redirect()->route('manager_course.index');
     }
     public function searchCourse(Request $request){
-        $search = $request->search_course;
+        $search = $request->course_code;
         $courses = Course::where('course_code',$search)->get();
         return view('admin.manager_course.manager',['courses'=>$courses]);
     }

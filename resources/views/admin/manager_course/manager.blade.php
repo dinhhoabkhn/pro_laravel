@@ -9,9 +9,9 @@
             {{ csrf_field() }}
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-4">
-                <input type="text" name="search_course" class="form-control">
+                <input type="text" name="course_code" class="form-control" placeholder="type Course code">
             </div>
-                <input type="submit" name="">
+                <input type="submit" name="" value="search" class="btn btn-small btn-primary">
             </div>
             
         </form>

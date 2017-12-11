@@ -15,18 +15,18 @@ Route::get('/', function () {
 	return view('welcome');
 });
 Route::middleware('check')->group(function (){
-	Route::get('admin','Manager_studentController@index');
+	Route::get('admin','ManagerStudentController@index');
 	Route::resources([
-		'manager_student'=>'Manager_studentController',
-		'manager_teacher'=>'Manager_teacherController',
-		'manager_course'=>'Manager_courseController'
+		'manager_student'=>'ManagerStudentController',
+		'manager_teacher'=>'ManagerTeacherController',
+		'manager_course'=>'ManagerCourseController'
 	]);
 	Route::get('liststudent','StatisticController@listStudent')->name('liststudent');
 	Route::get('logout','AuthController@logoutAdmin')->name('admin.logout');
 	Route::get('statisticpoint/{id}','StatisticController@pointStudent')->name('statisticpoint');
-	Route::post('searchstudent','Manager_studentController@searchStudent')->name('manager_student.search');
-	Route::post('searchteacher','Manager_teacherController@searchTeacher')->name('manager_teacher.search');
-	Route::post('searchcourse','Manager_courseController@searchCourse')->name('manager_course.search');
+	Route::post('searchstudent','ManagerStudentController@searchStudent')->name('manager_student.search');
+	Route::post('searchteacher','ManagerTeacherController@searchTeacher')->name('manager_teacher.search');
+	Route::post('searchcourse','ManagerCourseController@searchCourse')->name('manager_course.search');
 });
 
 // Route::group()
@@ -40,10 +40,10 @@ Route::post('student/login','StudentController@postLoginStudent')->name('student
 
 Route::middleware('check_teacher')->group(function (){
 	Route::prefix('teacher')->group(function (){
-		Route::get('logout','TeacherController@logoutTeacher')->name('teacher.logout');
 		Route::get('/','TeacherController@showCourse')->name('teacher');
 		Route::post('/deleteregister/{id}','TeacherController@deleteRegisterCourse')->name('teacher.deleteregister');
 		Route::get('listcourse','TeacherController@listCourse')->name('teacher.course');
+		Route::get('logout','TeacherController@logoutTeacher')->name('teacher.logout');
 		Route::post('registercourse/{id}','TeacherController@registerCourse')->name('teacher.registercourse');
 		Route::get('liststudent/{id}','TeacherController@listStudentCourse')->name('teacher.liststudent.course');
 		Route::post('pointstudent/{courseId}','TeacherController@pointStudent')->name('teacher.pointstudent');

@@ -113,7 +113,7 @@ class Manager_teacherController extends Controller
         return redirect()->route('manager_teacher.index');
     }
     public function searchTeacher(Request $request){
-        $search = $request->search_teacher;
+        $search = $request->name;
         $teacher = Teacher::where('name',$search)->get();
         return view('admin.manager_teacher.manager',['teacher'=>$teacher]);
     }

@@ -113,7 +113,7 @@ class Manager_studentController extends Controller
         
     }
     public function searchStudent(Request $request){
-        $search = $request->search_student;
+        $search = $request->student_code;
         $students = Student::where('student_code',$search)->get();
         return view('admin.manager_student.manager',['students'=>$students]);
     }
