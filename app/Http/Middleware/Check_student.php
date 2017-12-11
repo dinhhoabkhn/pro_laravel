@@ -20,7 +20,7 @@ class Check_student
             return $next($request);
         }
         else{
-            return redirect()->intended('dashboard');
+            return redirect('student/login');
         }
         
     }

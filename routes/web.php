@@ -29,6 +29,8 @@ Route::get('login','AuthController@getLoginAdmin');
 Route::post('login','AuthController@postLoginAdmin');
 Route::get('teacher/login','TeacherController@getLoginTeacher');
 Route::post('teacher/login','TeacherController@postLoginTeacher');
+Route::get('student/login','StudentController@getLoginStudent');
+Route::post('student/login','StudentController@postLoginStudent');
 
 
 Route::middleware('check_teacher')->group(function (){
@@ -43,3 +45,14 @@ Route::middleware('check_teacher')->group(function (){
 // Route::group(['middleware'=>'check_teacher','prefix'=>'teacher'], function({
 
 // }))
+Route::prefix('student')->group(function(){
+	Route::middleware('check_student')->group(function(){
+		Route::get('logout','StudentController@logoutStudent');
+		Route::get('/','StudentController@listMyCourse')->name('homestudent');
+		Route::get('listcourse','StudentController@listCourse')->name('student.listcourse');
+		Route::post('register/{id}','StudentController@registerCourseStudent')->name('student.register');
+		Route::post('delete/{id}','StudentController@deleteCourse')->name('student.delete');
+	});
+});
+Route::get('liststudent/{id}','HomeController@listStudentCourse');
+Route::get('pointstudent','HomeController@pointStudent');

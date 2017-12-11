@@ -2,8 +2,7 @@
 @section('teacher')
 <div class="container" style="margin-top: 50px;">
     <div class="row">
-        <p>Đăng ký môn học mới</p>
-        <a href="{{route('teacher.course')}}" class="btn btn-primary btn-lg active btn-add"><h3>Tại đây</h3></a>
+        <h2>List the Courses in this semester:</h2>
     </div>
     <table class="table-bordered table">
         <tr>
@@ -12,6 +11,7 @@
             <th style="width: 14%">Class</th>
             <th style="width: 14%">Time</th>
             <th style="width: 15%"> Weekday</th>
+            <th style="width: 10%"></th>
         </tr>
         @foreach($courses as $cou)
         <tr>
@@ -23,9 +23,9 @@
             <td>{{$cou->timestart}}->{{$cou->timefinish}} </td>
             <td>{{$cou->weekdays}}</td>
             <td>
-                <form action="{{route('teacher.deleteregister',$cou->id)}}" method="post">
+                <form action="{{route('student.register',$cou->id)}}" method="post">
                     {{ csrf_field() }}
-                    <button type="submit" title="DELETE" ><span class="glyphicon glyphicon-remove"></span></button>
+                    <button type="submit" title="Register" >Register</span></button>
                 </form>
             </td>
         </tr>

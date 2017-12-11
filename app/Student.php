@@ -3,12 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
-class Student extends Model
+class Student extends Authenticatable
 {
-	protected $guard = "student";
 	protected $table ='students';
     protected $fillable =['name','class','phone','email','student_code','birthday'];
     protected $hidden = [
