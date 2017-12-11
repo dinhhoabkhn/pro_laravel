@@ -4,8 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-
-class Check_student
+class CheckTeacher
 {
     /**
      * Handle an incoming request.
@@ -16,12 +15,11 @@ class Check_student
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('student')->check()) {
+        if (Auth::guard('teacher')->check()) {
             return $next($request);
         }
         else{
-            return redirect('student/login');
+            return redirect('teacher/login');
         }
-        
     }
 }

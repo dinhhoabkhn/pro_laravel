@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateTeacher;
-use App\Http\Requests\UpdateTeacher;
+use App\Http\Requests\CreateTeacherRequest;
+use App\Http\Requests\UpdateTeacherRequest;
 use App\Teacher;
 use App\Student;
 use App\Mail\AuthenticateLoginTeacher;
 use Illuminate\Support\Facades\Mail;
-class Manager_teacherController extends Controller
+class ManagerTeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,7 +38,7 @@ class Manager_teacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateTeacher $request)
+    public function store(CreateTeacherRequest $request)
     {
         $teacher = new Teacher;
         $teacher->name = $request->name;
@@ -85,7 +85,7 @@ class Manager_teacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTeacher $request, $id)
+    public function update(UpdateTeacherRequest $request, $id)
     {
         /**
          * undocumented constant

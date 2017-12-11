@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\LoginUser;
+use App\Http\Requests\LoginUserRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Teacher;
 use App\Course;
@@ -14,7 +14,7 @@ class TeacherController extends Controller
 	public function getLoginTeacher(){
 		return view('auth.login_teacher');
 	}
-	public function postLoginTeacher(LoginUser $request){
+	public function postLoginTeacher(LoginUserRequest $request){
 		$email =$request->email;
 		$password = $request->password;
 		if (Auth::guard('teacher')->attempt(['email'=>$email,'password'=>$password, 'active'=>1])) {

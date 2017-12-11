@@ -3,6 +3,11 @@
 <div class="container_fluid col-md-4 col-md-offset-4">
 	<form action="{{route('student.postrspassword')}}" method="post">
 		{{ csrf_field() }}
+		@if($errors->any())
+		<div class="alert alert-danger">
+                {{$errors->first()}}
+            </div>
+        @endif
 		<div class="form-group">
 			<div class="row">
 				<label for="">Old Password</label>

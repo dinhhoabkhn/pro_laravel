@@ -1,6 +1,11 @@
 @extends('layouts.layout_student')
 @section('student')
 <div class="container_fluid">
+	@if(session()->has('success'))
+	<div class="alert alert-success">
+                {{session()->get('success')}}
+            </div>
+        @endif
 	<div class="row">
 		<div class="col-md-2 col-md-offset-1 field_information">
 			<h4><strong> Name: </strong></h4>

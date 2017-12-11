@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\LoginUser;
+use App\Http\Requests\LoginUserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\ForgotPasswordStudent;
@@ -18,7 +18,7 @@ class StudentController extends Controller
 	public function getLoginStudent(){
 		return view('auth.login_student');
 	}
-	public function postLoginStudent(LoginUser $request){
+	public function postLoginStudent(LoginUserRequest $request){
 		$email = $request->email;
 		$password = $request->password;
 		if(Auth::guard('student')->attempt(['email'=>$email, 'password'=>$password,'active'=>1])){
@@ -103,15 +103,15 @@ class StudentController extends Controller
         $newPassword = $request->newpassword;
         $retypeNewPassword = $request->renewpassword;
         if (Hash::check($oldPassword,$password)==false) {
-            return back()->withErrors('');
+            return back()->withErrors(['error'=>'the password you type not true']);
         }
         elseif ($newPassword != $retypeNewPassword) {
-            return back()->withErrors('');
+            return back()->withErrors(['error'=>'2 password not same']);
         }
         else{
-            $student ->password = bcrypt($newpassword);
+            $student ->password = bcrypt($newPassword);
             $student->save();
-            return redirect()->route('student.information');
+            return redirect()->route('student.information')->with('success','you reseted password success');
         }
     }
     public function verify($token){

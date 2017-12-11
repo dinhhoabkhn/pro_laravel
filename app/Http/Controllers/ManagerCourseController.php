@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Requests\CreateCourse;
+use App\Http\Requests\CreateCourseRequest;
 use App\Course;
 use App\Subject;
 
-class Manager_courseController extends Controller
+class ManagerCourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -39,7 +39,7 @@ class Manager_courseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateCourse $request)
+    public function store(CreateCourseRequest $request)
     {
         $course = new Course();
         $course->course_code = $request->course_code; 
@@ -84,7 +84,7 @@ class Manager_courseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateCourse $request, $id)
+    public function update(CreateCourseRequest $request, $id)
     {
         dd($request->all());
         $course = Course::findOrfail($id);

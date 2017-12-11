@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateStudent;
-use App\Http\Requests\UpdateStudent;
+use App\Http\Requests\CreateStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Student;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AuthenticateLogin;
 
-class Manager_studentController extends Controller
+class ManagerStudentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,7 +38,7 @@ class Manager_studentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateStudent $request)
+    public function store(CreateStudentRequest $request)
     {
         $student = new Student();
         $student->name = $request->name;
@@ -86,7 +86,7 @@ class Manager_studentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateStudent $request, $id)
+    public function update(UpdateStudentRequest $request, $id)
     {
         $student = Student::find($id);
         $student->name = $request->name;
