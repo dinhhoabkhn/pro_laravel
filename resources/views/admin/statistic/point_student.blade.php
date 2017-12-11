@@ -3,7 +3,7 @@
 
 <div class="container" style="margin-top: 50px;">
     <div class="row">
-        <h2>List the Student</h2>
+        <h2>List the Course of {{$student->name}}</h2>
     </div>
     <table class="table-bordered table">
         <tr>

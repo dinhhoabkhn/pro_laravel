@@ -4,6 +4,18 @@
     <div class="row">
         <a href="{{route('manager_teacher.create')}}" class="btn btn-primary btn-lg active btn-add">New Teacher</a>
     </div>
+    <div class="row">
+        <form action="{{route('manager_teacher.search')}}" method="post">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <div class="col-md-3 col-md-offset-4">
+                <input type="text" name="search_teacher" class="form-control">
+            </div>
+                <input type="submit" name="">
+            </div>
+            
+        </form>
+    </div>
     <table class="table-bordered table">
         <tr>
             <th style="width: 18%">Name </th>

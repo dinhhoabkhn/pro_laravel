@@ -108,6 +108,11 @@ class Manager_courseController extends Controller
     public function destroy($id)
     {
         Course::destroy($id);
-        return back();
+        return redirect()->route('manager_course.index');
+    }
+    public function searchCourse(Request $request){
+        $search = $request->search_course;
+        $courses = Course::where('course_code',$search)->get();
+        return view('admin.manager_course.manager',['courses'=>$courses]);
     }
 }

@@ -7,11 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Teacher</title>
     <link rel="stylesheet" href="{{url('/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url('/css/main.css')}}">
 </head>
 
 <body>
     <div class="container">
-        <div class="login">
+        <div class="login col-md-4 col-md-offset-4">
             <form action="" method="post">
                 {{ csrf_field() }}
                 <div class="form-group">
@@ -32,7 +33,8 @@
                     <label for="">Password</label>
                     <input type="password" name="password" class="form-control" placeholder="password">
                 </div>
-                <input type="submit" name="">
+                <a href="{{route('student.forgotpasswordstudent')}}">Forgot password ?</a><br>
+                <input type="submit" value="Login" class="btn btn-primary">
             </form>
         </div>
     </div>

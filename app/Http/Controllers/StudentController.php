@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginUser;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Mail\ForgotPasswordStudent;
+use Illuminate\Support\Facades\Mail;
 use App\Student;
 use App\Course;
 use App\Teacher;
@@ -20,15 +23,41 @@ class StudentController extends Controller
 		$password = $request->password;
 		if(Auth::guard('student')->attempt(['email'=>$email, 'password'=>$password,'active'=>1])){
 			return redirect()->route('student');
-
 		}
 		else{
 			return back();
 		}
 	}
+    public function getForgotPasswordStudent(){
+        return view('system.student.forgot_password');
+    }
+    public function postForgotPasswordStudent(Request $request){
+        $email = $request->email;
+        $student = Student::where('email',$email)->first();
+        $student->email_token = str_random(15);
+        $student->save();
+        $sendemail = new ForgotPasswordStudent($student);
+        Mail::to($student)->send($sendemail);
+        return redirect()->route('student.getlogin');
+    }
+    public function check($token){
+        $student = Student::where('email_token',$token)->first();
+        return view('system.student.new_password',['student'=>$student]);
+    }
+    public function changePassword(Request $request,$id){
+        $student = Student::findOrFail($id);
+        if($request->password == $request->repassword){
+            $student->password = bcrypt($request->password);
+            $student->save();
+            return redirect()->route('student.getlogin');
+        }
+        else{
+            return back();
+        }
+    }
 	public function logoutStudent(){
 		Auth::guard('student')->logout();
-		return redirect()->route('student.login');
+		return redirect()->route('student.getlogin');
 	}
     public function listMyCourse(){
     	$student = Auth::guard('student')->user();
@@ -58,9 +87,27 @@ class StudentController extends Controller
         $student = Auth::guard('student')->user();
         return view('system.student.information',['student'=>$student]);
     }
-    public function getResetPassword($id){
+    public function getResetPassword(){
         $student = Auth::guard('student')->user();
-        return view('system.student.reset_password');
+        return view('system.student.reset_password',['student'=>$student]);
+    }
+    public function postResetPassword(Request $request){
+        $student = Auth::guard('student')->user();
+        $password = $student->password;
+        $oldpassword = $request->oldpassword;
+        $newpassword = $request->newpassword;
+        $renewpassword = $request->renewpassword;
+        if (Hash::check($oldpassword,$password)==false) {
+            return back()->withErrors('');
+        }
+        elseif ($newpassword != $renewpassword) {
+            return back()->withErrors('');
+        }
+        else{
+            $student ->password = bcrypt($newpassword);
+            $student->save();
+            return redirect()->route('student.information');
+        }
     }
     public function verify($token){
 

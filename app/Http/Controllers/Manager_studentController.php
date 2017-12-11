@@ -19,7 +19,7 @@ class Manager_studentController extends Controller
     public function index()
     {
         $students = Student::all();
-        return view('admin.manager_student.manager',['student'=>$students]);
+        return view('admin.manager_student.manager',['students'=>$students]);
     }
 
     /**
@@ -109,7 +109,12 @@ class Manager_studentController extends Controller
     public function destroy($id)
     {
         Student::destroy($id);
-        return back();
+        return redirect()->route('manager_student.index');
         
+    }
+    public function searchStudent(Request $request){
+        $search = $request->search_student;
+        $students = Student::where('student_code',$search)->get();
+        return view('admin.manager_student.manager',['students'=>$students]);
     }
 }

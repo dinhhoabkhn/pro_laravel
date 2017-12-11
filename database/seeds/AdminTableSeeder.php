@@ -12,12 +12,26 @@ class AdminTableSeeder extends Seeder
     public function run()
     {
         DB::table('admins')->insert([
-        	'name'=>'test',
-        	'password'=> bcrypt('1234'),
+        	'name'=>'admin',
+        	'password'=> bcrypt('admin'),
         ]);
         DB::table('subjects')->insert([
+        [
             'name' =>'giai tich',
             'academy'=>'toan-tin',
-        ]);
+        ],
+        [
+            'name'=>'Đại số',
+            'academy'=>'toan-tin',
+        ],
+        [
+            'name'=>'Triết 1',
+            'academy'=>'Triết',
+        ],
+        [
+            'name'=>'Thể dục',
+            'academy'=>'Giáo dục thể chất',
+        ]
+    ]);
     }
 }

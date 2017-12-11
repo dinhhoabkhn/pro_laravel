@@ -27,5 +27,7 @@
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="DB_DATABASE" value="manager_student_test"/>
+        <env name="DB_USERNAME" value="root"/>
     </php>
 </phpunit>

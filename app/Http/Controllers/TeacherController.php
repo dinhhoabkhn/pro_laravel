@@ -43,7 +43,7 @@ class TeacherController extends Controller
 	public function listCourse(){
 		$teacher = Auth::guard('teacher')->user();
 		$courses = Course::doesntHave('teacher')->where('semester','20172')->with('subject')->get();
-		return view('system.teacher.listcourse',['courses'=>$courses]);
+		return view('system.teacher.list_course',['courses'=>$courses]);
 	}
 	public function registerCourse(Request $request,$id){
 		$teacher = Auth::guard('teacher')->user();
@@ -59,4 +59,22 @@ class TeacherController extends Controller
 		$teacher ->save();
 		return redirect('teacher/login');
 	}
+	public function listStudentCourse($id){
+		$teacher = Auth::guard('teacher')->user();
+    	$course = Course::findOrFail($id);
+        $students = $course->students;
+    	return view('system.list_student_course',['students'=>$students,'course'=>$course,'teacher'=>$teacher]);
+
+    }
+    public function pointStudent(Request $request,$courseId){
+    	$teacher = Auth::guard('teacher')->user();
+    	$course = Course::findOrFail($courseId);
+    	$point = $request->point;
+    	// dd($point);
+    	foreach ( $point as $student => $point) {
+    		$course->students()->updateExistingPivot($student,['point'=>$point]);
+    	}
+    	
+    	return back();
+    }
 }

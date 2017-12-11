@@ -7,11 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
     <link rel="stylesheet" href="{{url('/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url('/css/main.css')}}">
 </head>
 
 <body>
     <div class="container">
-        <div class="login">
+        <div class=" col-md-4 col-md-offset-4 login">
             <form action="" method="post">
                 {{ csrf_field() }}
                 <div class="form-group">
@@ -32,7 +33,7 @@
                         </div>
                     @endif
                 </div>
-                <input type="submit" name="">
+                <input type="submit" value="Login" class="btn btn-primary">
             </form>
         </div>
     </div>

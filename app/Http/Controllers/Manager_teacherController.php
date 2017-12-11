@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateTeacher;
 use App\Http\Requests\UpdateTeacher;
 use App\Teacher;
+use App\Student;
 use App\Mail\AuthenticateLoginTeacher;
 use Illuminate\Support\Facades\Mail;
 class Manager_teacherController extends Controller
@@ -109,6 +110,11 @@ class Manager_teacherController extends Controller
     public function destroy($id)
     {
         Teacher::destroy($id);
-        return back();
+        return redirect()->route('manager_teacher.index');
+    }
+    public function searchTeacher(Request $request){
+        $search = $request->search_teacher;
+        $teacher = Teacher::where('name',$search)->get();
+        return view('admin.manager_teacher.manager',['teacher'=>$teacher]);
     }
 }

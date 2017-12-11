@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<a href="{{route('')}}" class="btn-primary">Reset Pasword</button></a> 
+		<a href="{{route('student.getrspassword')}}" class="resetpassword">Reset Pasword</button></a> 
 	</div>
 </div>
 @endsection

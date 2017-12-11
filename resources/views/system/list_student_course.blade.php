@@ -4,7 +4,7 @@
     <div class="row">
         <h2>List the Courses in this semester:</h2>
     </div>
-    <form action="{{route('pointstudent',$course->id)}}" method="post">
+    <form action="{{route('teacher.pointstudent',$course->id)}}" method="post">
         {{ csrf_field() }}
     <table class="table-bordered table">
         <tr>
@@ -30,7 +30,7 @@
             <td>{{$stu->birthday}}</td>
             <td>{{$stu->pivot->point}}</td>
             <td>
-                <input type="number" name="point[{{$stu->id}}]" >
+                <input type="number" max="10" min="0" name="point[{{$stu->id}}]" >
             </td>
         </tr>
         @endforeach

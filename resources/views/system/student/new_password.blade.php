@@ -18,19 +18,28 @@
     <nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{route('teacher')}}">Manager School</a>
+            <a class="navbar-brand" href="student">Manager School</a>
         </div>
-        <ul class="nav navbar-nav navbar-left">
-          <li><a href="{{route('teacher')}}">MY Course</a></li>
-          <li><a href="{{route('teacher.course')}}">Register Course</a></li>
-          <li><a href="">My information</a></li>
-        </ul>
-        <ul class="nav navbar-right">
-            <li><a href="{{route('teacher.logout')}}">Log out</a></li>
-        </ul>
     </div>
 </nav>
-@yield('teacher')
+<div class="row">
+    <div class="col-md-4 col-md-offset-4" style="border: solid 1px black">
+        <form action="{{route('student.changepassword',$student->id)}}" method="post">
+            {{ csrf_field() }}
+            <h4> Hello {{$student->name}}</h4>
+            <p>Now, type your new Password</p>
+            <div class="form-group">
+                <label>Type new password</label>
+                <input type="password" name="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Retype password</label>
+                <input type="password" name="repassword" class="form-control">
+            </div>
+            <input type="submit" name="">
+        </form>
+    </div>
+</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

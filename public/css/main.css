@@ -19,3 +19,20 @@
 .table td a{
 	margin: 0 50px;
 }
+.login{
+	margin-top: 70px;
+    padding: 40px;
+    background-color: aliceblue;
+    border: solid 1px;
+}
+.value_information{
+
+}
+.resetpassword{
+	padding: 10px;
+	border-radius: 20px;
+	background-color: blue;
+	color: white;
+	text-align: center;
+	margin-left: 130px;
+}

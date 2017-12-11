@@ -24,8 +24,9 @@ Route::middleware('check')->group(function (){
 	Route::get('liststudent','StatisticController@listStudent')->name('liststudent');
 	Route::get('logout','AuthController@logoutAdmin')->name('admin.logout');
 	Route::get('statisticpoint/{id}','StatisticController@pointStudent')->name('statisticpoint');
-	Route::get('liststudent/{id}','HomeController@listStudentCourse')->name('liststudent.course');
-	Route::post('pointstudent/{courseId}','HomeController@pointStudent')->name('pointstudent');
+	Route::post('searchstudent','Manager_studentController@searchStudent')->name('manager_student.search');
+	Route::post('searchteacher','Manager_teacherController@searchTeacher')->name('manager_teacher.search');
+	Route::post('searchcourse','Manager_courseController@searchCourse')->name('manager_course.search');
 });
 
 // Route::group()
@@ -44,6 +45,8 @@ Route::middleware('check_teacher')->group(function (){
 		Route::post('/deleteregister/{id}','TeacherController@deleteRegisterCourse')->name('teacher.deleteregister');
 		Route::get('listcourse','TeacherController@listCourse')->name('teacher.course');
 		Route::post('registercourse/{id}','TeacherController@registerCourse')->name('teacher.registercourse');
+		Route::get('liststudent/{id}','TeacherController@listStudentCourse')->name('teacher.liststudent.course');
+		Route::post('pointstudent/{courseId}','TeacherController@pointStudent')->name('teacher.pointstudent');
 	});
 	Route::post('verify/{token}','TeacherController@verifyTeacher')->name('teacher.verify');
 });
@@ -57,7 +60,12 @@ Route::prefix('student')->group(function(){
 		Route::post('register/{id}','StudentController@registerCourseStudent')->name('student.register');
 		Route::post('delete/{id}','StudentController@deleteCourse')->name('student.delete');
 		Route::get('myinformation','StudentController@studentInformation')->name('student.information');
-		Route::get('rspassword','StudentController@getResetPassword')->name('student.rspassword');
+		Route::get('rspassword','StudentController@getResetPassword')->name('student.getrspassword');
+		Route::post('rspassword','StudentController@postResetPassword')->name('student.postrspassword');
 	});
 	Route::post('verify/{token}','StudentController@verify')->name('student.verify');
+	Route::get('forgotpasswordstudent','StudentController@getForgotPasswordStudent')->name('student.forgotpasswordstudent');
+	Route::post('sendforgotpasswordstudent','StudentController@postForgotpasswordStudent')->name('student.sendforgotpasswordstudent');
+	Route::post('newpassword/{token}','StudentController@check')->name('student.newpassword');
+	Route::post('changepassword/{id}','StudentController@changePassword')->name('student.changepassword');
 });

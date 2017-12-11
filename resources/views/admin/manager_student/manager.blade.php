@@ -4,6 +4,18 @@
     <div class="row">
         <a href="{{route('manager_student.create')}}" class="btn btn-primary btn-lg active btn-add">New Student</a>
     </div>
+    <div class="row">
+        <form action="{{route('manager_student.search')}}" method="post">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <div class="col-md-3 col-md-offset-4">
+                <input type="text" name="search_student" class="form-control">
+            </div>
+                <input type="submit" name="">
+            </div>
+            
+        </form>
+    </div>
     <table class="table-bordered table">
         <tr>
             <th style="width: 18%">Name </th>
@@ -13,7 +25,7 @@
             <th style="width: 14%">Birthday</th>
             <th style="width: 15%">Class</th>
         </tr>
-        @foreach($student as $stu)
+        @foreach($students as $stu)
         <tr>
             <td>{{$stu->name}} </td>
             <td>{{$stu->student_code}} </td>
