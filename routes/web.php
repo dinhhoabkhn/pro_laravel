@@ -23,30 +23,27 @@ Route::middleware('check')->group(function (){
 	]);
 	Route::get('liststudent','StatisticController@listStudent')->name('liststudent');
 	Route::get('logout','AuthController@logoutAdmin')->name('admin.logout');
-	Route::get('statisticpoint/{id}','StatisticController@pointStudent')->name('statisticpoint');
-	Route::post('searchstudent','ManagerStudentController@searchStudent')->name('manager_student.search');
-	Route::post('searchteacher','ManagerTeacherController@searchTeacher')->name('manager_teacher.search');
-	Route::post('searchcourse','ManagerCourseController@searchCourse')->name('manager_course.search');
+	Route::get('statisticpoint/{id}','StatisticController@pointStudent')->name('statistic_point');
 });
 
 // Route::group()
 Route::get('login','AuthController@getLoginAdmin')->name('getlogin');
 Route::post('login','AuthController@postLoginAdmin')->name('postlogin');
-Route::get('teacher/login','TeacherController@getLoginTeacher')->name('teacher.getlogin');
-Route::post('teacher/login','TeacherController@postLoginTeacher')->name('teacher.postlogin');
-Route::get('student/login','StudentController@getLoginStudent')->name('student.getlogin');
-Route::post('student/login','StudentController@postLoginStudent')->name('student.postlogin');
+Route::get('teacher/login','TeacherController@getLoginTeacher')->name('teacher.get_login');
+Route::post('teacher/login','TeacherController@postLoginTeacher')->name('teacher.post_login');
+Route::get('student/login','StudentController@getLoginStudent')->name('student.get_login');
+Route::post('student/login','StudentController@postLoginStudent')->name('student.post_login');
 
 
 Route::middleware('check_teacher')->group(function (){
 	Route::prefix('teacher')->group(function (){
 		Route::get('/','TeacherController@showCourse')->name('teacher');
-		Route::post('/deleteregister/{id}','TeacherController@deleteRegisterCourse')->name('teacher.deleteregister');
-		Route::get('listcourse','TeacherController@listCourse')->name('teacher.course');
+		Route::post('/deleteregister/{id}','TeacherController@deleteRegisterCourse')->name('teacher.delete_register');
+		Route::get('list-course','TeacherController@listCourse')->name('teacher.course');
 		Route::get('logout','TeacherController@logoutTeacher')->name('teacher.logout');
-		Route::post('registercourse/{id}','TeacherController@registerCourse')->name('teacher.registercourse');
-		Route::get('liststudent/{id}','TeacherController@listStudentCourse')->name('teacher.liststudent.course');
-		Route::post('pointstudent/{courseId}','TeacherController@pointStudent')->name('teacher.pointstudent');
+		Route::post('register-course/{id}','TeacherController@registerCourse')->name('teacher.register_course');
+		Route::get('list-student/{id}','TeacherController@listStudentCourse')->name('teacher.list_student_course');
+		Route::post('point-student/{courseId}','TeacherController@pointStudent')->name('teacher.point_student');
 	});
 	Route::post('verify/{token}','TeacherController@verifyTeacher')->name('teacher.verify');
 });
@@ -56,16 +53,16 @@ Route::prefix('student')->group(function(){
 	Route::middleware('check_student')->group(function(){
 		Route::get('logout','StudentController@logoutStudent')->name('student.logout');
 		Route::get('/','StudentController@listMyCourse')->name('student');
-		Route::get('listcourse','StudentController@listCourse')->name('student.listcourse');
+		Route::get('list-course','StudentController@listCourse')->name('student.list_course');
 		Route::post('register/{id}','StudentController@registerCourseStudent')->name('student.register');
 		Route::post('delete/{id}','StudentController@deleteCourse')->name('student.delete');
-		Route::get('myinformation','StudentController@studentInformation')->name('student.information');
-		Route::get('rspassword','StudentController@getResetPassword')->name('student.getrspassword');
-		Route::post('rspassword','StudentController@postResetPassword')->name('student.postrspassword');
+		Route::get('my-information','StudentController@studentInformation')->name('student.information');
+		Route::get('rs-password','StudentController@getResetPassword')->name('student.get_rs_password');
+		Route::post('rs-password','StudentController@postResetPassword')->name('student.post_rs_password');
 	});
 	Route::post('verify/{token}','StudentController@verify')->name('student.verify');
-	Route::get('forgotpasswordstudent','StudentController@getForgotPasswordStudent')->name('student.forgotpasswordstudent');
-	Route::post('sendforgotpasswordstudent','StudentController@postForgotpasswordStudent')->name('student.sendforgotpasswordstudent');
-	Route::post('newpassword/{token}','StudentController@check')->name('student.newpassword');
-	Route::post('changepassword/{id}','StudentController@changePassword')->name('student.changepassword');
+	Route::get('forgot-password-student','StudentController@getForgotPasswordStudent')->name('student.forgot_password_student');
+	Route::post('send-forgot-password-student','StudentController@postForgotpasswordStudent')->name('student.send_forgot_password_student');
+	Route::post('new-password/{token}','StudentController@check')->name('student.new_password');
+	Route::post('change-password/{id}','StudentController@changePassword')->name('student.change_password');
 });

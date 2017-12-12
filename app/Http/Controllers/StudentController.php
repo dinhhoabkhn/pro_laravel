@@ -39,7 +39,7 @@ class StudentController extends Controller
             $student->save();
             $sendEmail = new ForgotPasswordStudent($student);
             Mail::to($student)->send($sendEmail);
-            return redirect()->route('student.getlogin');
+            return redirect()->route('student.get_login');
         }
         else {
             return back();
@@ -54,7 +54,7 @@ class StudentController extends Controller
         if($request->password == $request->repassword){
             $student->password = bcrypt($request->password);
             $student->save();
-            return redirect()->route('student.getlogin');
+            return redirect()->route('student.get_login');
         }
         else{
             return back();
@@ -62,7 +62,7 @@ class StudentController extends Controller
     }
 	public function logoutStudent(){
 		Auth::guard('student')->logout();
-		return redirect()->route('student.getlogin');
+		return redirect()->route('student.get_login');
 	}
     public function listMyCourse(){
     	$student = Auth::guard('student')->user();

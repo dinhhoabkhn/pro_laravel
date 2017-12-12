@@ -26,7 +26,7 @@ class TeacherController extends Controller
 	}
 	public function logoutTeacher(){
 		Auth::guard('teacher')->logout();
-		return redirect('teacher/login');
+		return redirect()->route('teacher.get_login');
 	}
 	public function showCourse(){
 		$teacher = Auth::guard('teacher')->user();
@@ -50,14 +50,14 @@ class TeacherController extends Controller
 		$course = Course::findOrFail($id);
 		$course->teacher_id = $teacher->id;
 		$course->save();
-		return redirect('/teacher');
+		return redirect()->route('teacher');
 	}
 	public function verifyTeacher($token){
 		$teacher = Teacher::where('email_token',$token)->first();
 		$teacher->active = 1;
 		$teacher->email_token = null;
 		$teacher ->save();
-		return redirect('teacher/login');
+		return redirect()->route('teacher.get_login');
 	}
 	public function listStudentCourse($id){
 		$teacher = Auth::guard('teacher')->user();

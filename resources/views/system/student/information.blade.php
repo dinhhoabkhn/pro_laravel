@@ -7,7 +7,7 @@
             </div>
         @endif
 	<div class="row">
-		<div class="col-md-2 col-md-offset-1 field_information">
+		<div class="col-md-2 col-md-offset-1 field-information">
 			<h4><strong> Name: </strong></h4>
 		</div>
 		<div class="col-md-9 value_information">
@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-2 col-md-offset-1 field_information">
+		<div class="col-md-2 col-md-offset-1 field-information">
 			<h4><strong> Email: </strong></h4>
 		</div>
 		<div class="col-md-9 value_information">
@@ -23,7 +23,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-2 col-md-offset-1 field_information">
+		<div class="col-md-2 col-md-offset-1 field-information">
 			<h4><strong> Student Code: </strong></h4>
 		</div>
 		<div class="col-md-9 value_information">
@@ -31,7 +31,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-2 col-md-offset-1 field_information">
+		<div class="col-md-2 col-md-offset-1 field-information">
 			<h4><strong> Class: </strong></h4>
 		</div>
 		<div class="col-md-9 value_information">
@@ -39,7 +39,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-2 col-md-offset-1 field_information">
+		<div class="col-md-2 col-md-offset-1 field-information">
 			<h4><strong> Address: </strong></h4>
 		</div>
 		<div class="col-md-9 value_information">
@@ -47,7 +47,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-2 col-md-offset-1 field_information">
+		<div class="col-md-2 col-md-offset-1 field-information">
 			<h4><strong> Birthday: </strong></h4>
 		</div>
 		<div class="col-md-9 value_information">
@@ -55,7 +55,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-2 col-md-offset-1 field_information">
+		<div class="col-md-2 col-md-offset-1 field-information">
 			<h4><strong> Academy: </strong></h4>
 		</div>
 		<div class="col-md-9 value_information">
@@ -63,7 +63,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<a href="{{route('student.getrspassword')}}" class="resetpassword">Reset Pasword</button></a> 
+		<a href="{{route('student.get_rs_password')}}" class="reset-password">Reset Pasword</button></a> 
 	</div>
 </div>
 @endsection

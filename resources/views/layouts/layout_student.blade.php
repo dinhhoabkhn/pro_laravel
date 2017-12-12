@@ -21,8 +21,8 @@
             <a class="navbar-brand" href="student">Manager School</a>
         </div>
         <ul class="nav navbar-nav navbar-left">
-          <li><a href="/student">My course</a></li>
-          <li><a href="{{route('student.listcourse')}}">Register Course</a></li>
+          <li><a href="{{route('student')}}">My course</a></li>
+          <li><a href="{{route('student.list_course')}}">Register Course</a></li>
           <li><a href="{{route('student.information')}}">My Information</a></li>
         </ul>
         <ul class="nav navbar-right">

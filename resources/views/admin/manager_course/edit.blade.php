@@ -54,11 +54,11 @@
         </div>
         <div class="form-group">
             <laber>Time start</laber>
-            <input type="time" class="form-control" name="timestart" value="{{$course->timestart}}">
+            <input type="time" class="form-control" name="timestart" value="{{$course->time_start}}">
         </div>
         <div class="form-group">
             <laber>Time finish</laber>
-            <input type="time" class="form-control" name="timefinish" value="{{$course->timefinish}}">
+            <input type="time" class="form-control" name="timefinish" value="{{$course->time_finish}}">
         </div>
         <div class="form-group">
             <laber>Day of Week</laber>

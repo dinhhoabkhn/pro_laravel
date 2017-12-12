@@ -5,8 +5,9 @@
         <a href="{{route('manager_course.create')}}" class="btn btn-primary btn-lg active btn-add">New course</a>
     </div>
     <div class="row">
-        <form action="{{route('manager_course.search')}}" method="post">
-            {{ csrf_field() }}
+        <form action="" method="get">
+            
+            
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-4">
                 <input type="text" name="course_code" class="form-control" placeholder="type Course code">
@@ -32,7 +33,7 @@
             <td>{{$cou->class}} </td>
             <td>{{$cou->semester}} </td>
             <td>{{$cou->teacher['name']}}</td>
-            <td>{{$cou->timestart}}->{{$cou->timefinish}} </td>
+            <td>{{$cou->time_start}}->{{$cou->time_finish}} </td>
             <td> <a class="glyphicon glyphicon-edit" title="edit" href="{{route('manager_course.edit',$cou->id)}}"></a></td>
             <td>
                 <form action="{{route('manager_course.destroy',$cou->id)}}" method="post">
@@ -44,5 +45,7 @@
         </tr>
         @endforeach
     </table>
+    {{$courses->links()}}
 </div>
+
 @endsection

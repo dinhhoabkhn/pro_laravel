@@ -2,7 +2,7 @@
 @section('student')
 <div class="container" style="margin-top: 50px;">
     <div class="row">
-        <h4>Đăng ký môn học mới<a href="{{route('student.listcourse')}}" class="btn btn-primary  active ">Tại đây</a></h4>
+        <h4>Đăng ký môn học mới<a href="{{route('student.list_course')}}" class="btn btn-primary  active ">Tại đây</a></h4>
     </div>
     <table class="table-bordered table">
         <tr>
@@ -15,13 +15,13 @@
         </tr>
         @foreach($courses as $cou)
         <tr>
-            <td><a href="{{url('liststudent',$cou->id)}}">{{$cou->course_code}} </a></td>
+            <td><a href="{{url('list_student',$cou->id)}}">{{$cou->course_code}} </a></td>
             
             <td> {{$cou->subject['name']}}</td>
 
             <td>{{$cou->class}} </td>
-            <td>{{$cou->timestart}}->{{$cou->timefinish}} </td>
-            <td>{{$cou->weekdays}}</td>
+            <td>{{$cou->time_start}}->{{$cou->time_finish}} </td>
+            <td>{{$cou->weekday}}</td>
             <td>
                 <form action="{{route('student.delete',$cou->id)}}" method="post">
                     {{ csrf_field() }}

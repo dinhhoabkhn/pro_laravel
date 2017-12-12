@@ -20,9 +20,9 @@ class CreateCoursesTable extends Migration
             $table->string('class');
             $table->integer('course_code')->unique();
             $table->integer('semester');
-            $table->time('timefinish');
-            $table->time('timestart');
-            $table->string('weekdays');
+            $table->time('time_finish');
+            $table->time('time_start');
+            $table->string('weekday');
             $table->timestamps();
         });
     }

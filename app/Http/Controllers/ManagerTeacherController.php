@@ -16,10 +16,17 @@ class ManagerTeacherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $teacher = Teacher::all();
-        return view('admin.manager_teacher.manager',['teacher'=>$teacher]);
+        if($request->has('name')){
+            $search = $request->name;
+            $teacher = Teacher::where('name','like','%'.$search.'%')->paginate(10);
+            return view('admin.manager_teacher.manager',['teacher'=>$teacher]);
+        }
+        else{
+            $teacher = Teacher::paginate(10);
+            return view('admin.manager_teacher.manager',['teacher'=>$teacher]);
+        }
     }
 
     /**
@@ -111,10 +118,5 @@ class ManagerTeacherController extends Controller
     {
         Teacher::destroy($id);
         return redirect()->route('manager_teacher.index');
-    }
-    public function searchTeacher(Request $request){
-        $search = $request->name;
-        $teacher = Teacher::where('name',$search)->get();
-        return view('admin.manager_teacher.manager',['teacher'=>$teacher]);
     }
 }

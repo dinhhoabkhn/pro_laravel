@@ -19,7 +19,7 @@
         <tr>
             <td> {{$count++}}</td>
             
-            <td><a href="{{route('statisticpoint',$stu->id)}}">{{$stu->name}}</a></td>
+            <td><a href="{{route('statistic_point',$stu->id)}}">{{$stu->name}}</a></td>
 
             <td>{{$stu->student_code}} </td>
             <td>{{$stu->class}} </td>

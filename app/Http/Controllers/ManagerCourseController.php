@@ -15,10 +15,17 @@ class ManagerCourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::with(['teacher','subject'])->get();
-        return view('admin.manager_course.manager',['courses' =>$courses]);
+        if($request->has('course_code')){
+            $search = $request->course_code;
+            $courses = Course::where('course_code','like','%'.$search.'%')->paginate(1);
+            return view('admin.manager_course.manager',['courses' =>$courses]);
+        }
+        else{
+            $courses = Course::with(['teacher','subject'])->paginate(10);
+            return view('admin.manager_course.manager',['courses' =>$courses]);
+        }
     }   
 
     /**
@@ -46,9 +53,9 @@ class ManagerCourseController extends Controller
         $course->class = $request->class;
         $course->subject_id = $request->subject_id;
         $course->semester = $request->semester;
-        $course->timeStart = $request->timestart;
-        $course->timeFinish = $request->timefinish;
-        $course->weekdays = $request->weekday;
+        $course->time_start = $request->timestart;
+        $course->time_finish = $request->timefinish;
+        $course->weekday = $request->weekday;
         $course->save();
         return redirect()->route('manager_course.index');
     }
@@ -86,15 +93,14 @@ class ManagerCourseController extends Controller
      */
     public function update(CreateCourseRequest $request, $id)
     {
-        dd($request->all());
         $course = Course::findOrfail($id);
         $course->course_code = $request->course_code; 
         $course->class = $request->class;
         $course->subject_id = $request->subject_id;
         $course->semester = $request->semester;
-        $course->timeStart = $request->timestart;
-        $course->timeFinish = $request->timefinish;
-        $course->weekdays = $request->weekday;
+        $course->time_start = $request->timestart;
+        $course->time_finish = $request->timefinish;
+        $course->weekday = $request->weekday;
         $course->save();
         return redirect()->route('manager_course.index');
     }
@@ -109,10 +115,5 @@ class ManagerCourseController extends Controller
     {
         Course::destroy($id);
         return redirect()->route('manager_course.index');
-    }
-    public function searchCourse(Request $request){
-        $search = $request->course_code;
-        $courses = Course::where('course_code',$search)->get();
-        return view('admin.manager_course.manager',['courses'=>$courses]);
     }
 }

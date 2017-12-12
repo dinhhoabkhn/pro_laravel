@@ -9,8 +9,8 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{{url('/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url('css/main.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}">
     
     <!-- Styles -->
 </head>
@@ -24,7 +24,7 @@
 </nav>
 <div class="row">
     <div class="col-md-4 col-md-offset-4" style="border: solid 1px black">
-        <form action="{{route('student.changepassword',$student->id)}}" method="post">
+        <form action="{{route('student.change_password',$student->id)}}" method="post">
             {{ csrf_field() }}
             <h4> Hello {{$student->name}}</h4>
             <p>Now, type your new Password</p>

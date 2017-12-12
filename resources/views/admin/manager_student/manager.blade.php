@@ -5,11 +5,15 @@
         <a href="{{route('manager_student.create')}}" class="btn btn-primary btn-lg active btn-add">New Student</a>
     </div>
     <div class="row">
-        <form action="{{route('manager_student.search')}}" method="post">
-            {{ csrf_field() }}
+        <form action="" method="get">
+            @if(session()->has('success'))
+                <div class="alert alert-success">
+                {{session()->get('success')}}
+            </div>
+            @endif
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-4">
-                <input type="text" name="student_code" class="form-control" placeholder="type your code">
+                <input type="text" name="value_search" class="form-control" placeholder="type your code or name">
             </div>
                 <input type="submit" name="">
             </div>
@@ -44,5 +48,7 @@
         </tr>
         @endforeach
     </table>
+    {{ $students->links() }}
 </div>
+
 @endsection

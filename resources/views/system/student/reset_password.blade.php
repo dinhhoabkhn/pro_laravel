@@ -1,7 +1,7 @@
 @extends('layouts.layout_student')
 @section('student')
 <div class="container_fluid col-md-4 col-md-offset-4">
-	<form action="{{route('student.postrspassword')}}" method="post">
+	<form action="{{route('student.post_rs_password')}}" method="post">
 		{{ csrf_field() }}
 		@if($errors->any())
 		<div class="alert alert-danger">

@@ -15,15 +15,15 @@
         </tr>
         @foreach($courses as $cou)
         <tr>
-            <td><a href="{{route('teacher.liststudent.course',$cou->id)}}">{{$cou->course_code}} </a></td>
+            <td><a href="{{route('teacher.list_student.course',$cou->id)}}">{{$cou->course_code}} </a></td>
             
             <td> {{$cou->subject['name']}}</td>
 
             <td>{{$cou->class}} </td>
-            <td>{{$cou->timestart}}->{{$cou->timefinish}} </td>
-            <td>{{$cou->weekdays}}</td>
+            <td>{{$cou->time_start}}->{{$cou->time_finish}} </td>
+            <td>{{$cou->weekday}}</td>
             <td>
-                <form action="{{route('teacher.deleteregister',$cou->id)}}" method="post">
+                <form action="{{route('teacher.delete_register',$cou->id)}}" method="post">
                     {{ csrf_field() }}
                     <button type="submit" title="DELETE" ><span class="glyphicon glyphicon-remove"></span></button>
                 </form>

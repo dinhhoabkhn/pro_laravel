@@ -16,11 +16,20 @@ class ManagerStudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::all();
-        return view('admin.manager_student.manager',['students'=>$students]);
+        if($request->has('value_search')) {
+            $search = $request->value_search;
+            $students = Student::where('student_code','like','%'.$search.'%')
+            ->orWhere('name','like','%'.$search.'%')->paginate(10);
+            return view('admin.manager_student.manager',['students'=>$students])->with('success','the student that you search');
+        }
+        else{
+            $students = Student::paginate(1);
+            return view('admin.manager_student.manager',['students'=>$students]);
+        }
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -64,7 +73,7 @@ class ManagerStudentController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**
@@ -111,10 +120,5 @@ class ManagerStudentController extends Controller
         Student::destroy($id);
         return redirect()->route('manager_student.index');
         
-    }
-    public function searchStudent(Request $request){
-        $search = $request->student_code;
-        $students = Student::where('student_code',$search)->get();
-        return view('admin.manager_student.manager',['students'=>$students]);
     }
 }

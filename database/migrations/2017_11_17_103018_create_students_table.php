@@ -20,6 +20,7 @@ class CreateStudentsTable extends Migration
             $table->string('email',100)->unique();
             $table->string('email_token')->nullable();
             $table->string('password');
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->integer('student_code');
             $table->integer('phone');
