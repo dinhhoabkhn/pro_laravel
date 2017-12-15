@@ -12,7 +12,7 @@
                 <div class="col-md-3 col-md-offset-4">
                 <input type="text" name="course_code" class="form-control" placeholder="type Course code">
             </div>
-                <input type="submit" name="" value="search" class="btn btn-small btn-primary">
+                <input type="submit" name="" value="Search" class="btn btn-primary">
             </div>
             
         </form>

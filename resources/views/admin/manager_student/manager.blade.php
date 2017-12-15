@@ -2,7 +2,7 @@
 @section('header')
 <div class="container" style="margin-top: 50px;">
     <div class="row">
-        <a href="{{route('manager_student.create')}}" class="btn btn-primary btn-lg active btn-add">New Student</a>
+        <a href="{{route('manager_student.create')}}" class="btn btn-primary active btn-add">New Student</a>
     </div>
     <div class="row">
         <form action="" method="get">
@@ -15,7 +15,7 @@
                 <div class="col-md-3 col-md-offset-4">
                 <input type="text" name="value_search" class="form-control" placeholder="type your code or name">
             </div>
-                <input type="submit" name="">
+                <input type="submit" name="" value="Search" class="btn btn-small btn-primary">
             </div>
             
         </form>

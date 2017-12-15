@@ -12,30 +12,35 @@
 
 <body>
     <div class="container">
-        <div class="login col-md-4 col-md-offset-4">
-            <form action="" method="post">
-                {{ csrf_field() }}
-                <div class="form-group">
-                    @if($errors->has('email'))
-                        <div class="alert alert-danger">
-                            <strong> {{ $errors->first('email') }}</strong>
+        <div class=" col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"> Login</div>
+                <div class="panel panel-body">
+                    <form action="" method="post">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            @if($errors->has('email'))
+                            <div class="alert alert-danger">
+                                <strong> {{ $errors->first('email') }}</strong>
+                            </div>
+                            @endif
+                            <label for="">Email</label>
+                            <input type="text" name="email" class="form-control" placeholder="email">
                         </div>
-                    @endif
-                    <label for="">Email</label>
-                    <input type="text" name="email" class="form-control" placeholder="email">
-                </div>
-                <div class="form-group">
-                    @if($errors->has('password'))
-                        <div class="alert alert-danger">
-                            <strong> {{ $errors->first('password') }}</strong>
+                        <div class="form-group">
+                            @if($errors->has('password'))
+                            <div class="alert alert-danger">
+                                <strong> {{ $errors->first('password') }}</strong>
+                            </div>
+                            @endif
+                            <label for="">Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="password">
                         </div>
-                    @endif
-                    <label for="">Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="password">
+                        <a href="{{route('student.forgot_password_student')}}">Forgot password ?</a><br>
+                        <input type="submit" value="Login" class="btn btn-primary">
+                    </form>
                 </div>
-                <a href="{{route('student.forgotpasswordstudent')}}">Forgot password ?</a><br>
-                <input type="submit" value="Login" class="btn btn-primary">
-            </form>
+            </div>
         </div>
     </div>
 </body>

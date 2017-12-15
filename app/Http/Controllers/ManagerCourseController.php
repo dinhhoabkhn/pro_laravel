@@ -17,16 +17,15 @@ class ManagerCourseController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->has('course_code')){
+        if ($request->has('course_code')) {
             $search = $request->course_code;
-            $courses = Course::where('course_code','like','%'.$search.'%')->paginate(1);
-            return view('admin.manager_course.manager',['courses' =>$courses]);
+            $courses = Course::where('course_code', 'like', '%' . $search . '%')->paginate(1);
+            return view('admin.manager_course.manager', ['courses' => $courses]);
+        } else {
+            $courses = Course::with(['teacher', 'subject'])->paginate(10);
+            return view('admin.manager_course.manager', ['courses' => $courses]);
         }
-        else{
-            $courses = Course::with(['teacher','subject'])->paginate(10);
-            return view('admin.manager_course.manager',['courses' =>$courses]);
-        }
-    }   
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -36,20 +35,19 @@ class ManagerCourseController extends Controller
     public function create()
     {
         $subject = Subject::all();
-
-        return view('admin.manager_course.add',['subjects'=>$subject]);
+        return view('admin.manager_course.add', ['subjects' => $subject]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateCourseRequest $request)
     {
         $course = new Course();
-        $course->course_code = $request->course_code; 
+        $course->course_code = $request->course_code;
         $course->class = $request->class;
         $course->subject_id = $request->subject_id;
         $course->semester = $request->semester;
@@ -63,7 +61,7 @@ class ManagerCourseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -74,27 +72,27 @@ class ManagerCourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $course = Course::findOrfail($id);
         $subjects = Subject::all();
-        return view('admin.manager_course.edit',['course'=> $course,'subjects'=>$subjects]);
+        return view('admin.manager_course.edit', ['course' => $course, 'subjects' => $subjects]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(CreateCourseRequest $request, $id)
     {
         $course = Course::findOrfail($id);
-        $course->course_code = $request->course_code; 
+        $course->course_code = $request->course_code;
         $course->class = $request->class;
         $course->subject_id = $request->subject_id;
         $course->semester = $request->semester;
@@ -108,7 +106,7 @@ class ManagerCourseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

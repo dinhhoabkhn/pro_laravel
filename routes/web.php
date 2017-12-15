@@ -27,8 +27,8 @@ Route::middleware('check')->group(function (){
 });
 
 // Route::group()
-Route::get('login','AuthController@getLoginAdmin')->name('getlogin');
-Route::post('login','AuthController@postLoginAdmin')->name('postlogin');
+Route::get('login','AuthController@getLoginAdmin')->name('get_login');
+Route::post('login','AuthController@postLoginAdmin')->name('post_login');
 Route::get('teacher/login','TeacherController@getLoginTeacher')->name('teacher.get_login');
 Route::post('teacher/login','TeacherController@postLoginTeacher')->name('teacher.post_login');
 Route::get('student/login','StudentController@getLoginStudent')->name('student.get_login');
@@ -59,6 +59,7 @@ Route::prefix('student')->group(function(){
 		Route::get('my-information','StudentController@studentInformation')->name('student.information');
 		Route::get('rs-password','StudentController@getResetPassword')->name('student.get_rs_password');
 		Route::post('rs-password','StudentController@postResetPassword')->name('student.post_rs_password');
+		Route::post('change-avatar','StudentController@changeAvatar')->name('student.change-avatar');
 	});
 	Route::post('verify/{token}','StudentController@verify')->name('student.verify');
 	Route::get('forgot-password-student','StudentController@getForgotPasswordStudent')->name('student.forgot_password_student');

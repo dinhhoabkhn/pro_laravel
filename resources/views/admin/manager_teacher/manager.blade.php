@@ -10,7 +10,7 @@
                 <div class="col-md-3 col-md-offset-4">
                 <input type="text" name="name" class="form-control" placeholder="type teacher name">
             </div>
-                <input type="submit" name="">
+                <input type="submit" name="Search" class="btn btn-primary" value="Search">
             </div>
             
         </form>

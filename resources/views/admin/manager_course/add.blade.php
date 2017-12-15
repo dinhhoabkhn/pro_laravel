@@ -11,7 +11,7 @@
    </ul>
        @endif
         <div class="form-group">
-            <laber>Course code</laber>
+            <label>Course code</label>
             <input type="number" placeholder="Course code" class="form-control" name="course_code">
         </div>
         <div class="form-group">
@@ -23,7 +23,7 @@
             </select>
         </div>
         <div class="form-group">
-            <laber>Class</laber>
+            <label>Class</label>
             <select class="form-control" name="class">
                 <option>101</option>
                 <option>102</option>
@@ -44,19 +44,19 @@
             </select>
         </div>
         <div class="form-group">
-            <laber>Semester</laber>
+            <label>Semester</label>
             <input type="number" placeholder="Semester" class="form-control" name="semester">
         </div>
         <div class="form-group">
-            <laber>Time start</laber>
+            <label>Time start</label>
             <input type="time" placeholder="Time start" class="form-control" name="timestart">
         </div>
         <div class="form-group">
-            <laber>Time finish</laber>
+            <label>Time finish</label>
             <input type="time" placeholder="Time finish" class="form-control" name="timefinish">
         </div>
         <div class="form-group">
-            <laber>Day of Week</laber>
+            <label>Day of Week</label>
             <select class="form-control" name="weekday">
                 <option>Monday</option>
                 <option>Tuesday</option>

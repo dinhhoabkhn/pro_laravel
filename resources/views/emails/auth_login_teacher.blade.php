@@ -10,13 +10,11 @@
 </head>
 
 <body>
-	<h3> Hello </h3>
-	<form action="{{route('teacher.verify',$teacher->email_token)}}" method="PUT">
-		{{ method_field('PUT') }}
-		{{ csrf_field() }}
-	<p> Xac nhan tai khoan </p>
-	<!-- <input type="password" value="sadad" name=""> -->
-	<button type="submit">Tai day</button>
+<h3> Hello </h3>
+<form action="{{route('teacher.verify',$teacher->email_token)}}" method="post">
+    {{ csrf_field() }}
+    <p> Xac nhan tai khoan </p>
+    <button type="submit">Tai day</button>
 </form>
 </body>
 </html>

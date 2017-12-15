@@ -15,7 +15,7 @@
         </tr>
         @foreach($courses as $cou)
         <tr>
-            <td><a href="{{route('teacher.list_student.course',$cou->id)}}">{{$cou->course_code}} </a></td>
+            <td><a href="{{route('teacher.list_student_course',$cou->id)}}">{{$cou->course_code}} </a></td>
             
             <td> {{$cou->subject['name']}}</td>
 

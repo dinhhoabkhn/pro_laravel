@@ -11,11 +11,11 @@
    </ul>
        @endif
      <div class="form-group">
-        <laber>Name</laber>
+        <label>Name</label>
         <input type="text" placeholder="Ho ten" class="form-control" name="name">
     </div>
     <div class="form-group">
-        <laber>Email</laber>
+        <label>Email</label>
         <input type="email" placeholder="email" class="form-control" name="email">
     </div>
     <div class="form-group">
@@ -28,15 +28,15 @@
         </select>
     </div>
     <div class="form-group">
-        <laber>Address</laber>
+        <label>Address</label>
         <input type="text" placeholder="address" class="form-control" name="address">
     </div>
     <div class="form-group">
-        <laber>Birthday</laber>
+        <label>Birthday</label>
         <input type="date" placeholder="birthday" class="form-control" name="birthday">
     </div>
     <div class="form-group">
-        <laber>Academy</laber>
+        <label>Academy</label>
         <input type="text" placeholder="academy" class="form-control" name="academy">
     </div>
     <button type="submit" class="btn btn-default">Submit</button>

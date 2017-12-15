@@ -9,6 +9,7 @@ use App\Teacher;
 use App\Student;
 use App\Mail\AuthenticateLoginTeacher;
 use Illuminate\Support\Facades\Mail;
+
 class ManagerTeacherController extends Controller
 {
     /**
@@ -18,14 +19,13 @@ class ManagerTeacherController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->has('name')){
+        if ($request->has('name')) {
             $search = $request->name;
-            $teacher = Teacher::where('name','like','%'.$search.'%')->paginate(10);
-            return view('admin.manager_teacher.manager',['teacher'=>$teacher]);
-        }
-        else{
+            $teacher = Teacher::where('name', 'like', '%' . $search . '%')->paginate(10);
+            return view('admin.manager_teacher.manager', ['teacher' => $teacher]);
+        } else {
             $teacher = Teacher::paginate(10);
-            return view('admin.manager_teacher.manager',['teacher'=>$teacher]);
+            return view('admin.manager_teacher.manager', ['teacher' => $teacher]);
         }
     }
 
@@ -42,7 +42,7 @@ class ManagerTeacherController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(CreateTeacherRequest $request)
@@ -65,31 +65,27 @@ class ManagerTeacherController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $teacher = Teacher::findOrfail($id);
-        return view('admin.manager_teacher.edit',['teacher'=>$teacher]);
+        return view('admin.manager_teacher.edit', ['teacher' => $teacher]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateTeacherRequest $request, $id)
@@ -111,7 +107,7 @@ class ManagerTeacherController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
