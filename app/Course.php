@@ -11,7 +11,7 @@ class Course extends Model
     public function students()
     {
 
-    	return $this->belongsToMany(Student::class);
+    	return $this->belongsToMany(Student::class)->withPivot('point')->withTimestamps();
     }
     public function subject(){
     	return $this->belongsTo(Subject::class);

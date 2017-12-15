@@ -9,6 +9,7 @@
 	margin-top: 20px;
 	column-span: 10px;
 	text-align: center;
+	border: solid 2px aliceblue;
 }
 .table th{
 	font-size: 16px;
@@ -17,4 +18,15 @@
 }
 .table td a{
 	margin: 0 50px;
+}
+.value_information{
+
+}
+.reset-password{
+	padding: 10px;
+	border-radius: 20px;
+	background-color: blue;
+	color: white;
+	text-align: center;
+	margin-left: 130px;
 }

@@ -1,5 +1,5 @@
-@extends('layouts.layout')
-@section('teacher')
+@extends('layouts.layout_student')
+@section('student')
 <div class="container" style="margin-top: 50px;">
     <div class="row">
         <h2>List the Courses in this semester:</h2>
@@ -20,10 +20,10 @@
             <td> {{$cou->subject['name']}}</td>
 
             <td>{{$cou->class}} </td>
-            <td>{{$cou->timestart}}->{{$cou->timefinish}} </td>
-            <td>{{$cou->weekdays}}</td>
+            <td>{{$cou->time_start}}->{{$cou->time_finish}} </td>
+            <td>{{$cou->weekday}}</td>
             <td>
-                <form action="{{route('teacher.registercourse',$cou->id)}}" method="post">
+                <form action="{{route('student.register',$cou->id)}}" method="post">
                     {{ csrf_field() }}
                     <button type="submit" title="Register" >Register</span></button>
                 </form>

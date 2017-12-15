@@ -4,6 +4,13 @@
     <form action="{{route('manager_course.update',$course->id)}}" method="post" role="form">
         {{ method_field('PUT') }}
         {{ csrf_field() }}
+        @if($errors->any())
+       <ul>
+       @foreach ($errors->all() as $error)
+       <li>{{ $error }}</li>
+       @endforeach
+   </ul>
+       @endif
         <div class="form-group">
             <laber>Course code</laber>
             <input type="number" placeholder="{{$course->course_code}}" class="form-control" name="course_code">
@@ -47,11 +54,11 @@
         </div>
         <div class="form-group">
             <laber>Time start</laber>
-            <input type="time" class="form-control" name="timestart" value="{{$course->timestart}}">
+            <input type="time" class="form-control" name="timestart" value="{{$course->time_start}}">
         </div>
         <div class="form-group">
             <laber>Time finish</laber>
-            <input type="time" class="form-control" name="timefinish" value="{{$course->timefinish}}">
+            <input type="time" class="form-control" name="timefinish" value="{{$course->time_finish}}">
         </div>
         <div class="form-group">
             <laber>Day of Week</laber>

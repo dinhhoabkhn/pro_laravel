@@ -17,12 +17,15 @@ class CreateTeachersTable extends Migration
             $table->increments('id');
             $table->string('name',255);
             $table->string('email',100)->unique();
+            $table->string('email_token')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->string('level');
             $table->string('address');
             $table->date('birthday');
             $table->string('academy');
+            $table->boolean('active')->default(false);
+            $table->timestamps();
         });
     }
 

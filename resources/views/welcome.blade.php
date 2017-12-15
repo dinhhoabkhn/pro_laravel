@@ -9,8 +9,8 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{{url('/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url('css/main.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}">
     
     <!-- Styles -->
 </head>
@@ -21,12 +21,13 @@
             <a class="navbar-brand" href="#">ADMIN</a>
         </div>
         <ul class="nav navbar-nav navbar-left">
-          <li><a href="/admin">Student</a></li>
+          <li><a href="{{route('manager_teacher.index')}}">Student</a></li>
           <li><a href="{{route('manager_teacher.index')}}">Teacher</a></li>
           <li><a href="{{route('manager_course.index')}}">Course</a></li>
+          <li><a href="{{route('liststudent')}}">List Student</a></li>
         </ul>
         <ul class="nav navbar-right">
-            <li><a href="logout">Log out</a></li>
+            <li><a href="{{route('admin.logout')}}">Log out</a></li>
         </ul>
     </div>
 </nav>

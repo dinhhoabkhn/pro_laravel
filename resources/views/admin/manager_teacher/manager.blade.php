@@ -4,6 +4,17 @@
     <div class="row">
         <a href="{{route('manager_teacher.create')}}" class="btn btn-primary btn-lg active btn-add">New Teacher</a>
     </div>
+    <div class="row">
+        <form action="" method="get">
+            <div class="form-group">
+                <div class="col-md-3 col-md-offset-4">
+                <input type="text" name="name" class="form-control" placeholder="type teacher name">
+            </div>
+                <input type="submit" name="Search" class="btn btn-primary" value="Search">
+            </div>
+            
+        </form>
+    </div>
     <table class="table-bordered table">
         <tr>
             <th style="width: 18%">Name </th>
@@ -32,5 +43,6 @@
         </tr>
         @endforeach
     </table>
+    {{$teacher->links()}}
 </div>
 @endsection
