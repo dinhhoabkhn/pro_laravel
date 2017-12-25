@@ -21,10 +21,8 @@
         @endphp
         @foreach($students as $stu)
         <tr>
-            <td> {{$count++}}</td>
-            
-            <td> {{$stu->name}}</td>
-
+            <td>{{$count++}}</td>
+            <td>{{$stu->name}}</td>
             <td>{{$stu->student_code}} </td>
             <td>{{$stu->class}} </td>
             <td>{{$stu->birthday}}</td>
@@ -35,7 +33,7 @@
         </tr>
         @endforeach
     </table>
-    <input type="submit">
+    <input type="submit" class="btn btn-primary">
 </form>
 </div>
 @endsection

@@ -16,7 +16,7 @@ class AuthenticateLogin extends Mailable
      * Create a new message instance.
      *
      * @return void
-     */
+*/
     public $student;
     public function __construct(Student $student)
     {

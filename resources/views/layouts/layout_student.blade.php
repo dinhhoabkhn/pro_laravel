@@ -10,7 +10,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{asset('/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url('/css/main.css')}}">
     
     <!-- Styles -->
 </head>
@@ -25,8 +25,13 @@
           <li><a href="{{route('student.list_course')}}">Register Course</a></li>
           <li><a href="{{route('student.information')}}">My Information</a></li>
         </ul>
-        <ul class="nav navbar-right">
-            <li><a href="{{route('student.logout')}}">Log out</a></li>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @yield('avatar')
+            </li>
+            <li>
+                <a href="{{route('student.logout')}}">Log out</a>
+            </li>
         </ul>
     </div>
 </nav>

@@ -81,10 +81,9 @@ class StudentController extends Controller
     public function listMyCourse()
     {
         $student = Auth::guard('student')->user();
-        $courses = Course::whereHas('students', function ($query) use ($student) {
-            $query->where('students.id', $student->id);
-        })->with('subject')->get();
-        return view('system.student.home', ['courses' => $courses]);
+        $courses = $student->courses()->paginate(5);
+//        dd($courses);
+        return view('system.student.home', ['courses' => $courses, 'student'=>$student]);
     }
 
     public function deleteCourse($id)
@@ -94,13 +93,23 @@ class StudentController extends Controller
         return back();
     }
 
-    public function listCourse()
+    public function listCourse(Request $request)
     {
-        $student = Auth::guard('student')->user();
-        $courses = Course::whereDoesntHave('students', function ($query) use ($student) {
-            $query->where('students.id', $student->id);
-        })->with('subject')->get();
-        return view('system.student.list_course', ['courses' => $courses]);
+        if ($request->has('search_course')){
+            $student = Auth::guard('student')->user();
+            $search = $request->search_course;
+            $courses = Course::whereDoesntHave('students', function ($query) use ($student) {
+                $query->where('students.id', $student->id);})->whereHas('subject',function ($query) use ($search) {
+                $query->where('name','like','%'.$search.'%');
+            })->orWhere('course_code','like','%'.$search.'%')->get();
+            return view('system.student.list_course', ['courses' => $courses,'student'=>$student]);
+        }else {
+            $student = Auth::guard('student')->user();
+            $courses = Course::whereDoesntHave('students', function ($query) use ($student) {
+                $query->where('students.id', $student->id);
+            })->with('subject')->get();
+            return view('system.student.list_course', ['courses' => $courses,'student'=>$student]);
+        }
     }
 
     public function registerCourseStudent($id)
