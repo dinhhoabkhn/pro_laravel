@@ -11,7 +11,7 @@
             <th style="width: 14%">Class</th>
             <th style="width: 14%">Time</th>
             <th style="width: 15%"> Weekday</th>
-            <th style="width: 10%"></th>
+            <th style="width: 10%">Register</th>
         </tr>
         @foreach($courses as $cou)
         <tr>
@@ -25,7 +25,7 @@
             <td>
                 <form action="{{route('teacher.register_course',$cou->id)}}" method="post">
                     {{ csrf_field() }}
-                    <button type="submit" title="Register" >Register</span></button>
+                    <button type="submit" title="Register" class="btn btn-primary btn-sm">Register</button>
                 </form>
             </td>
         </tr>

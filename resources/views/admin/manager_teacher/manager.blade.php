@@ -2,7 +2,7 @@
 @section('header')
 <div class="container" style="margin-top: 50px;">
     <div class="row">
-        <a href="{{route('manager_teacher.create')}}" class="btn btn-primary btn-lg active btn-add">New Teacher</a>
+        <a href="{{route('manager_teacher.create')}}" class="btn btn-primary active btn-add">New Teacher</a>
     </div>
     <div class="row">
         <form action="" method="get">
@@ -20,9 +20,10 @@
             <th style="width: 18%">Name </th>
             <th style="width: 18%">Email</th>
             <th style="width: 14%">Level</th>
-            <th style="width: 15%">Address</th>
+            <th style="width: 13%">Address</th>
             <th style="width: 14%">Birthday</th>
-            <th style="width: 15%">Academy</th>
+            <th style="width:20%">Academy</th>
+            <th colspan="2">Action</th>
         </tr>
         @foreach($teacher as $tea)
         <tr>
@@ -37,7 +38,7 @@
                 <form action="{{route('manager_teacher.destroy',$tea->id)}}" method="post">
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}
-                    <button type="submit" title="DELETE" ><span class="glyphicon glyphicon-remove"></span></button>
+                    <button type="submit" title="DELETE" class="delete"><span class="glyphicon glyphicon-remove"></span></button>
                 </form>
             </td>
         </tr>

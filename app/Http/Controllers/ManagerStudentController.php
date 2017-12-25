@@ -11,34 +11,28 @@ use App\Mail\AuthenticateLogin;
 
 class ManagerStudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+
+    public function index()
     {
-        if ($request->has('value_search')) {
-            
-        } else {
-            $students = Student::paginate(1);
+//        if ($request->has('value_search')) {
+//            $search = $request->value_search;
+//            $students = Student::where('student_code', 'like', '%' . $search . '%')
+//                ->orWhere('name', 'like', '%' . $search . '%')->paginate(5);
+//            return view('admin.manager_student.manager', ['students' => $students])->with('success', 'the student that you search');
+//        } else {
+            $students = Student::paginate(5);
             return view('admin.manager_student.manager', ['students' => $students]);
-        }
+//        }
     }
-    public function searchStudent() 
-    {   
-        $search = $request->value_search;
-            $students = Student::where('student_code', 'like', '%' . $search . '%')
-                ->orWhere('name', 'like', '%' . $search . '%')->paginate(10);
-            return view('admin.manager_student.manager', ['students' => $students])->with('success', 'the student that you search');
+    public function searchStudent(Request $request)
+    {
+        $search = $request->search;
+        $students = Student::where('student_code', 'like', '%' . $search . '%')
+            ->orWhere('name', 'like', '%' . $search . '%')->paginate(5);
+        return view('ajax.search_student', ['students' => $students]);
+
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.manager_student.add');
@@ -60,6 +54,7 @@ class ManagerStudentController extends Controller
         $student->class = $request->class;
         $student->address = $request->address;
         $student->email = $request->email;
+        $student->academy = $request->academy;
         $student->email_token = str_random('15');
         $student->password = bcrypt('1');
         $student->save();
@@ -108,6 +103,7 @@ class ManagerStudentController extends Controller
         $student->birthday = $request->birthday;
         $student->class = $request->class;
         $student->address = $request->address;
+        $student->academy = $request->academy;
         $student->update();
         return redirect()->route('manager_student.index');
     }

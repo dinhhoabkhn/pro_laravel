@@ -19,11 +19,14 @@ Route::middleware('check')->group(function (){
 	Route::resources([
 		'manager_student'=>'ManagerStudentController',
 		'manager_teacher'=>'ManagerTeacherController',
-		'manager_course'=>'ManagerCourseController'
+		'manager_course'=>'ManagerCourseController',
+        'manager_subject'=>'ManagerSubjectController'
 	]);
 	Route::get('liststudent','StatisticController@listStudent')->name('liststudent');
 	Route::get('logout','AuthController@logoutAdmin')->name('admin.logout');
-	Route::get('statisticpoint/{id}','StatisticController@pointStudent')->name('statistic_point');
+	Route::get('statistic-point/{id}','StatisticController@pointStudent')->name('statistic_point');
+	Route::get('search-student','ManagerStudentController@searchStudent');
+	Route::get('list-course','StatisticController@listCourse');
 });
 
 // Route::group()
@@ -41,10 +44,14 @@ Route::middleware('check_teacher')->group(function (){
 		Route::post('/deleteregister/{id}','TeacherController@deleteRegisterCourse')->name('teacher.delete_register');
 		Route::get('list-course','TeacherController@listCourse')->name('teacher.course');
 		Route::get('logout','TeacherController@logoutTeacher')->name('teacher.logout');
+        Route::get('my-information','TeacherController@teacherInformation')->name('teacher.information');
 		Route::post('register-course/{id}','TeacherController@registerCourse')->name('teacher.register_course');
 		Route::get('list-student/{id}','TeacherController@listStudentCourse')->name('teacher.list_student_course');
 		Route::post('point-student/{courseId}','TeacherController@pointStudent')->name('teacher.point_student');
-	});
+		Route::get('rs-password-teacher','TeacherController@getResetPassword')->name('teacher.get_rs_password');
+        Route::post('rs-password-teacher','TeacherController@postResetPassword')->name('teacher.post_rs_password');
+
+    });
 	Route::post('verify/{token}','TeacherController@verifyTeacher')->name('teacher.verify');
 });
 // Route::group(['middleware'=>'check_teacher','prefix'=>'teacher'], function({

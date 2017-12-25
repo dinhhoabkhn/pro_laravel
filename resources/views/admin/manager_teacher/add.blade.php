@@ -35,10 +35,18 @@
         <label>Birthday</label>
         <input type="date" placeholder="birthday" class="form-control" name="birthday">
     </div>
-    <div class="form-group">
-        <label>Academy</label>
-        <input type="text" placeholder="academy" class="form-control" name="academy">
-    </div>
+        <div class="form-group">
+            <label class="control-label">Academy</label>
+            <select class="form-control" name="academy">
+                <option>Công nghệ thông tin- Truyền thông</option>
+                <option>Toán tin</option>
+                <option>Điện</option>
+                <option>Điện tử viễn thông</option>
+                <option>Kinh tế</option>
+                <option>Ngoại ngữ</option>
+                <option>Hóa học</option>
+            </select>
+        </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
 </div>

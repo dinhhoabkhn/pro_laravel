@@ -1,4 +1,5 @@
 @extends('layouts.layout_student')
+@include('include.avatar')
 @section('student')
 <div class="container_fluid col-md-4 col-md-offset-4">
 	<form action="{{route('student.post_rs_password')}}" method="post">

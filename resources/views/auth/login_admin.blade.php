@@ -10,15 +10,14 @@
     <link rel="stylesheet" href="{{url('/css/main.css')}}">
 </head>
 
-<body>
+<body style="background-color: #377b7b">
     <div class="container">
-        <div class=" col-md-4 col-md-offset-4 ">
+        <div class="col-md-4 col-md-offset-4" id="login">
             <div class="panel panel-default">
                 <div class="panel-heading"> Login</div>
                 <div class="panel panel-body">
                     <form action="" method="post">
                         {{ csrf_field() }}
-
                         <div class="form-group">
                             <label for="">Name</label>
                             <input type="text" name="name" class="form-control" placeholder="name/email">

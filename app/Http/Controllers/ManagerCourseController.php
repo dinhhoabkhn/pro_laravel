@@ -19,10 +19,13 @@ class ManagerCourseController extends Controller
     {
         if ($request->has('course_code')) {
             $search = $request->course_code;
-            $courses = Course::where('course_code', 'like', '%' . $search . '%')->paginate(1);
+            $courses = Course::whereHas('subject',function ($query) use ($search) {
+                $query->where('subjects.name','like','%'.$search.'%');
+            })->orWhere('course_code','like','%'.$search.'%')->paginate(5);
             return view('admin.manager_course.manager', ['courses' => $courses]);
+
         } else {
-            $courses = Course::with(['teacher', 'subject'])->paginate(10);
+            $courses = Course::with(['teacher', 'subject'])->paginate(5);
             return view('admin.manager_course.manager', ['courses' => $courses]);
         }
     }

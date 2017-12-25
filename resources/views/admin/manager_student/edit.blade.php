@@ -39,6 +39,18 @@
             <label>Address</label>
             <input type="text" value="{{$student->address}}" class="form-control" name="address">
         </div>
+        <div class="form-group">
+            <label class="control-label">Academy</label>
+            <select class="form-control" name="academy">
+                <option>Công nghệ thông tin- Truyền thông</option>
+                <option>Toán tin</option>
+                <option>Điện</option>
+                <option>Điện tử viễn thông</option>
+                <option>Kinh tế</option>
+                <option>Ngoại ngữ</option>
+                <option>Hóa học</option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 </div>

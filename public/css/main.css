@@ -7,20 +7,30 @@
 .table{
 	margin-left: -14px;
 	margin-top: 20px;
-	column-span: 10px;
 	text-align: center;
 	border: solid 2px aliceblue;
 }
-.table th{
+.table tr th{
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
+	background-color:#7da8c3 ;
+	color: #2b542c;
 }
-.table td a{
-	margin: 0 50px;
+.table td{
+	 color: darkred;
+ }
+.table-information{
+	text-align: left;
+	border: solid 2px aliceblue;
 }
-.value_information{
-
+.table-information th{
+	background-color:#7da8c3 ;
+	color: #2b542c;
+	width: 40%;
+}
+.table-information td{
+	color: darkred;
 }
 .reset-password{
 	padding: 10px;
@@ -30,3 +40,15 @@
 	text-align: center;
 	margin-left: 130px;
 }
+#login{
+	margin-top: 5%;
+}
+.delete{
+	background-color: rgba(0,0,0,0);
+	border: none;
+	color: black;
+}
+.delete:hover{
+	background-color: orangered;
+}
+

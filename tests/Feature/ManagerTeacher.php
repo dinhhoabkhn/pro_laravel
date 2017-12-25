@@ -16,4 +16,18 @@ class ManagerTeacher extends TestCase
     {
         $this->assertTrue(true);
     }
+    public  function testIndex()
+    {
+        $response = $this->get(route('manager_teacher.index'));
+        $response ->assertStatus(200);
+    }
+    public function testCreate()
+    {
+        $data = [
+          'name'=>'Nguyen van A',
+          'email'=>'info@example.com',
+          'address'=>'Thanh hoa',
+          'birthday'=>'19/05/1990'
+        ];
+    }
 }

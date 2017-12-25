@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
     <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/main.css')}}">
+    <link rel="stylesheet" href="{{asset('css/main.css')}}">
 </head>
 
-<body>
+<body style="background-color: #377b7b">
     <div class="container">
-        <div class=" col-md-4 col-md-offset-4">
+        <div class="col-md-4 col-md-offset-4" id="login">
             <div class="panel panel-default">
                 <div class="panel-heading"> Login</div>
                 <div class="panel panel-body">

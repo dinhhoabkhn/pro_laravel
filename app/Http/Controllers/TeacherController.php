@@ -7,6 +7,7 @@ use App\Http\Requests\LoginUserRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Teacher;
 use App\Course;
+use Illuminate\Support\Facades\Hash;
 use App\Subject;
 
 class TeacherController extends Controller
@@ -36,7 +37,7 @@ class TeacherController extends Controller
     public function showCourse()
     {
         $teacher = Auth::guard('teacher')->user();
-        $courses = Course::where('teacher_id', $teacher->id)->where('semester', '20172')->with('subject')->get();
+        $courses = Course::where('teacher_id', $teacher->id)->where('semester', '20172')->with('subject')->paginate(5);
         return view('system.teacher.home', ['courses' => $courses]);
     }
 
@@ -86,18 +87,48 @@ class TeacherController extends Controller
     {
         $teacher = Auth::guard('teacher')->user();
         $course = Course::findOrFail($courseId);
-        $point = $request->point;
-        // dd($point);
-        foreach ($point as $student => $point) {
-            $course->students()->updateExistingPivot($student, ['point' => $point]);
+        if ($request->has('point')) {
+            $point = $request->point;
+            foreach ($point as $student => $point) {
+                if($point == null){
+                    continue;
+                }
+                else {
+                    $course->students()->updateExistingPivot($student, ['point' => $point]);
+                }
+            }
+            return back();
         }
-
-        return back();
     }
 
     public function teacherInformation()
     {
-        $teacher = Teacher::guard('teacher')->user();
-        return view('system.teacher.information');
+        $teacher = Auth::guard('teacher')->user();
+        return view('system.teacher.information',['teacher'=>$teacher]);
+    }
+
+    public function getResetPassword()
+    {
+        $teacher = Auth::guard('teacher')->user();
+        return view('system.teacher.reset_password', ['teacher' => $teacher]);
+    }
+
+    public function postResetPassword(Request $request)
+    {
+        $teacher = Auth::guard('teacher')->user();
+        $password = $teacher->password;
+        $old_password = $request->oldpassword;
+        $new_password = $request->newpassword;
+        $retype_new_assword = $request->renewpassword;
+        if (Hash::check($old_password, $password) == false) {
+            return back()->withErrors(['error' => 'the password you type not true']);
+        } elseif ($new_password != $retype_new_assword) {
+            return back()->withErrors(['error' => '2 password not same']);
+        } else {
+            $teacher->password = bcrypt($new_password);
+            $teacher->save();
+            return redirect()->route('teacher.information')->with('success', 'you reseted password success');
+        }
     }
 }
+
