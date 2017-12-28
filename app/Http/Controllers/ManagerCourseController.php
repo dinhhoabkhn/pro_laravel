@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Requests\CreateCourseRequest;
-use App\Course;
-use App\Subject;
+use App\Model\Course;
+use App\Model\Subject;
 
 class ManagerCourseController extends Controller
 {
@@ -17,16 +17,17 @@ class ManagerCourseController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->has('course_code')) {
-            $search = $request->course_code;
-            $courses = Course::whereHas('subject',function ($query) use ($search) {
-                $query->where('subjects.name','like','%'.$search.'%');
-            })->orWhere('course_code','like','%'.$search.'%')->paginate(5);
-            return view('admin.manager_course.manager', ['courses' => $courses]);
+        $search = $request->search_course;
+        $searchArr = ['search_course' => $search];
+        if ($search) {
+            $courses = Course::whereHas('subject', function ($query) use ($search) {
+                $query->where('subjects.name', 'like', '%' . $search . '%');
+            })->orWhere('course_code', 'like', '%' . $search . '%')->paginate(5);
+            return view('admin.manager_course.manager', ['courses' => $courses,'search' => $searchArr]);
 
         } else {
             $courses = Course::with(['teacher', 'subject'])->paginate(5);
-            return view('admin.manager_course.manager', ['courses' => $courses]);
+            return view('admin.manager_course.manager', ['courses' => $courses,'search' => $searchArr]);
         }
     }
 

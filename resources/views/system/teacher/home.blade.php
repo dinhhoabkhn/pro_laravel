@@ -5,6 +5,11 @@
             <h4>Đăng ký môn học mới
                 <a href="{{route('teacher.course')}}" class="btn btn-primary btn-sm"><h5>Tại đây</h5></a></h4>
         </div>
+        @if($errors->any())
+            <div class="alert alert-danger">
+                {{ $errors->first() }}
+            </div>
+        @endif
         <table class="table-bordered table">
             <tr>
                 <th style="width: 15%">Course Code</th>

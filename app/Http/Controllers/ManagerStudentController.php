@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
-use App\Student;
+use App\Model\Student;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AuthenticateLogin;
 
@@ -27,7 +27,7 @@ class ManagerStudentController extends Controller
     public function searchStudent(Request $request)
     {
         $search = $request->search;
-        $students = Student::where('student_code', 'like', '%' . $search . '%')
+        $students = Student::where('student_code', 'like', '%'. $search .'%')
             ->orWhere('name', 'like', '%' . $search . '%')->paginate(5);
         return view('ajax.search_student', ['students' => $students]);
 

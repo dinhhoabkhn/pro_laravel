@@ -24,6 +24,11 @@
 </nav>
 <div class="row">
     <div class="col-md-4 col-md-offset-4" style="border: solid 1px blue">
+        @if($errors->any())
+            <div class="alert alert-danger">
+                {{ $errors ->first() }}
+            </div>
+        @endif
         <form action="{{route('student.send_forgot_password_student')}}" method="post">
             {{ csrf_field() }}
             <h5>please type your email</h5>

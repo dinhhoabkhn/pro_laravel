@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Mail\AuthenticateLogin;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ManagerStudentTest extends TestCase
 {
@@ -40,51 +41,51 @@ class ManagerStudentTest extends TestCase
 //        $response = $this->get(route('manager_student.index'));
 //        $response->assertStatus(200);
 //    }
-//    public function testCreate()
-//    {
-//        $this->withoutMiddleware();
-//        $data = [
-//            'email' => 'info123@example.com',
-//            'name' => 'nguyen van a',
-//            'student_code' => '20131111',
-//            'phone' => '0123456789',
-//            'birthday' => '1995-05-19',
-//            'class' => 'CNTT-TT 2.03',
-//            'address' => 'thanh hoa',
-//        ];
-//        $response = $this->post(route('manager_student.store'), $data);
-//        $this->assertDatabaseHas('students', [
-//            'email' => 'info123@example.com',
-//            'name' => 'nguyen van a',
-//            'student_code' => '20131111',
-//            'phone' => '0123456789',
-//            'birthday' => '1995-05-19',
-//            'class' => 'CNTT-TT 2.03',
-//            'address' => 'thanh hoa',
-//        ]);
-//        $response = $this->get(route('manager_student.index'));
-//        $response->assertStatus(200);
-//    }
-
-    public function testAuthenticateStudent()
+    public function testCreate()
     {
-      $student = $this->student;
-        Mail::fake();
         $this->withoutMiddleware();
-         Mail::assertSent(AuthenticateLogin::class,function($email) use ($student){
-             dd(1);
-             dd($student);
-             return ($email->student->id === $student->name);
-         });
+        $data = [
+            'email' => 'dinhhoabk95@gmail.com',
+            'name' => 'nguyen van a',
+            'student_code' => '20131111',
+            'phone' => '0123456789',
+            'birthday' => '1995-05-19',
+            'class' => 'CNTT-TT 2.03',
+            'address' => 'thanh hoa',
+        ];
+        $response = $this->post(route('manager_student.store'), $data);
+        $this->assertDatabaseHas('students', [
+            'email' => 'dinhhoabk95@gmail.com',
+            'name' => 'nguyen van a',
+            'student_code' => '20131111',
+            'phone' => '0123456789',
+            'birthday' => '1995-05-19',
+            'class' => 'CNTT-TT 2.03',
+            'address' => 'thanh hoa',
+        ]);
+        $response = $this->get(route('manager_student.index'));
+        $response->assertStatus(200);
+
+    }
+
+//    public function testAuthenticateStudent()
+//    {
+//      $student = $this->student;
+//        Mail::fake();
+//        $this->withoutMiddleware();
+////         Mail::assertSent(AuthenticateLogin::class,function($email) use ($student){
+////             dd($student);
+////             return ($email->student->id === $student->name);
+////         });
 //        Mail::assertSent(AuthenticateLogin::class, function ($mail) use ($student) {
-////            dd(1);
+//            dd(1);
 //            return $mail->hasTo($student->email) &&
 //                   $mail->hasCc('...') &&
 //                   $mail->hasBcc('...');
 //        });
-        Mail::assertSent(AuthenticateLogin::class, 2);
-        Mail::assertNotSent(AnotherMailable::class);
-    }
+//        Mail::assertSent(AuthenticateLogin::class, 2);
+//        Mail::assertNotSent(AnotherMailable::class);
+//    }
 //    public function testEdit()
 //    {
 //        $this->withoutMiddleware();

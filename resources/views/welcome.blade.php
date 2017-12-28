@@ -26,7 +26,7 @@
             <li><a href="{{route('manager_teacher.index')}}">Teacher</a></li>
             <li><a href="{{route('manager_course.index')}}">Course</a></li>
             <li><a href="{{route('manager_subject.index')}}">Subject</a></li>
-            <li><a href="{{route('liststudent')}}">Statistic Point</a></li>
+            <li><a href="{{route('list_student')}}">Statistic Point</a></li>
         </ul>
         <ul class="nav navbar-right">
             <li>

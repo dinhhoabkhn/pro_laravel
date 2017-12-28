@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginUserRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Teacher;
-use App\Course;
+use App\Model\Teacher;
+use App\Model\Course;
 use Illuminate\Support\Facades\Hash;
-use App\Subject;
+use App\Model\Subject;
 
 class TeacherController extends Controller
 {
@@ -43,10 +43,16 @@ class TeacherController extends Controller
 
     public function deleteRegisterCourse($id)
     {
+        $teacher = Auth::guard('teacher')->user();
         $course = Course::findOrFail($id);
-        $course->teacher_id = Null;
-        $course->save();
-        return back();
+        if($course->teacher_id == $teacher->id) {
+            $course->teacher_id = Null;
+            $course->save();
+            return back();
+        }
+        else{
+            return back()->withErrors('you do not register this course');
+        }
     }
 
     public function listCourse()

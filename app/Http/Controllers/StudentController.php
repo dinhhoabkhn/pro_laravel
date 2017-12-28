@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\SplFileInfo;
 use App\Http\Requests\ImageRequest;
-use App\Student;
-use App\Course;
-use App\Teacher;
-use App\Subject;
+use App\Model\Student;
+use App\Model\Course;
+use App\Model\Teacher;
+use App\Model\Subject;
 
 class StudentController extends Controller
 {
@@ -28,9 +28,9 @@ class StudentController extends Controller
         $email = $request->email;
         $password = $request->password;
         if (Auth::guard('student')->attempt(['email' => $email, 'password' => $password, 'active' => 1])) {
-            return redirect()->route('student');
+            return redirect()->route('student')->with('success','Login successed');
         } else {
-            return back();
+            return back()->withErrors(['Errors' => 'email or password not true. Or the account not active']);
         }
     }
 
@@ -50,7 +50,7 @@ class StudentController extends Controller
             Mail::to($student)->send($send_email);
             return redirect()->route('student.get_login');
         } else {
-            return back();
+            return back()->withErrors('The email do not register');
         }
     }
 
@@ -173,5 +173,12 @@ class StudentController extends Controller
         $student->email_token = null;
         $student->save();
         return redirect()->route('student.get_login');
+    }
+    public function myPoint()
+    {
+        $student = Auth::guard('student')->user();
+        $courses = $student->courses;
+        return view('system.student.my_point',['student'=>$student,'courses'=>$courses]);
+
     }
 }

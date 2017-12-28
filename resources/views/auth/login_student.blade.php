@@ -15,6 +15,11 @@
         <div class="col-md-4 col-md-offset-4" id="login">
             <div class="panel panel-default">
                 <div class="panel-heading"> Login</div>
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        {{$errors->first()}}
+                    </div>
+                @endif
                 <div class="panel panel-body">
                     <form action="" method="post">
                         {{ csrf_field() }}

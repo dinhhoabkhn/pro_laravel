@@ -11,10 +11,7 @@
     @foreach($courses as $course)
         <tr>
             <td> {{$count++}}</td>
-
-            {{--<td><a href="{{route('statistic_point',$stu->id)}}">{{$course->course_code}}</a></td>--}}
-            <td></td>
-
+            <td><a href="{{ route('statistic_point_course',$course->id) }}">{{$course->course_code}}</a></td>
             <td>{{$course->subject->name}} </td>
             <td>{{$course->class}} </td>
         </tr>

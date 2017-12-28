@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
-use App\Subject;
+use App\Model\Subject;
 use Illuminate\Http\Request;
 
 

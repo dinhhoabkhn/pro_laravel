@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,6 +15,6 @@ class Student extends Authenticatable
     ];
     public $timestamps = false;
     public function courses(){
-    	return $this->belongsToMany('App\Course')->withPivot('point')->withTimestamps();
+    	return $this->belongsToMany(Course::class)->withPivot('point')->withTimestamps();
     }
 }

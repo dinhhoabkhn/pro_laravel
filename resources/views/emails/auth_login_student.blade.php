@@ -6,7 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hello</title>
-    <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
+    <style>
+        .btn{
+            background-color: blue;
+            width: 100px;
+            height: 50px;
+            border: none;
+            color: white;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            border-radius: 20px;
+        }
+        h3{
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,7 +28,7 @@
 <form action="{{route('student.verify',$student->email_token)}}" method="post">
     {{ csrf_field() }}
     <p> Xac nhan tai khoan </p>
-    <button type="submit">Tai day</button>
+    <button type="submit" class="btn">Tai day</button>
 </form>
 </body>
 </html>

@@ -2,7 +2,7 @@
 @section('teacher')
 <div class="container" style="margin-top: 50px;">
     <div class="row">
-        <h2>List the Courses in this semester:</h2>
+        <h2>List the Student in Course:</h2>
     </div>
     <form action="{{route('teacher.point_student',$course->id)}}" method="post">
         {{ csrf_field() }}
@@ -14,7 +14,7 @@
             <th style="width: 14%">Class</th>
             <th style="width: 15%"> Birthday</th>
             <th style="width: 10%">Point</th>
-            <th></th>
+            <th width="10%"></th>
         </tr>
         @php
         $count = 1;
@@ -28,7 +28,7 @@
             <td>{{$stu->birthday}}</td>
             <td>{{$stu->pivot->point}}</td>
             <td>
-                <input type="number" max="10" min="0" name="point[{{$stu->id}}]" >
+                <input type="number" max="10" min="0" name="point[{{$stu->id}}]">
             </td>
         </tr>
         @endforeach
