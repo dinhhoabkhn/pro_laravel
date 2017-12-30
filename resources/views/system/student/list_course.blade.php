@@ -15,6 +15,11 @@
                 </div>
             </form>
         </div>
+        @if($errors->any())
+            <div class="alert alert-danger">
+                {{$errors->first()}}
+            </div>
+        @endif
         <table class="table-bordered table">
             <tr>
                 <th style="width: 18%">Course Code</th>

@@ -42,6 +42,6 @@ $(document).ready(function () {
         print_window.document.write(html);
         print_window.print();
     });
-    $('.alert').delay(1000).fadeOut();
+    $('.alert').delay(1500).fadeOut(2000);
 });
 

@@ -24,7 +24,7 @@ class TeacherController extends Controller
         if (Auth::guard('teacher')->attempt(['email' => $email, 'password' => $password, 'active' => 1])) {
             return redirect('teacher');
         } else {
-            return redirect('teacher/login');
+            return redirect('teacher/login')->withErrors('email or password not true. Or your account not active');
         }
     }
 

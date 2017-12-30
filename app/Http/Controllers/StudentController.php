@@ -28,7 +28,7 @@ class StudentController extends Controller
         $email = $request->email;
         $password = $request->password;
         if (Auth::guard('student')->attempt(['email' => $email, 'password' => $password, 'active' => 1])) {
-            return redirect()->route('student')->with('success','Login successed');
+            return redirect()->route('student')->with('success', 'Login successed');
         } else {
             return back()->withErrors(['Errors' => 'email or password not true. Or the account not active']);
         }
@@ -83,7 +83,7 @@ class StudentController extends Controller
         $student = Auth::guard('student')->user();
         $courses = $student->courses()->paginate(5);
 //        dd($courses);
-        return view('system.student.home', ['courses' => $courses, 'student'=>$student]);
+        return view('system.student.home', ['courses' => $courses, 'student' => $student]);
     }
 
     public function deleteCourse($id)
@@ -95,28 +95,53 @@ class StudentController extends Controller
 
     public function listCourse(Request $request)
     {
-        if ($request->has('search_course')){
+        if ($request->has('search_course')) {
             $student = Auth::guard('student')->user();
             $search = $request->search_course;
             $courses = Course::whereDoesntHave('students', function ($query) use ($student) {
-                $query->where('students.id', $student->id);})->whereHas('subject',function ($query) use ($search) {
-                $query->where('name','like','%'.$search.'%');
-            })->orWhere('course_code','like','%'.$search.'%')->get();
-            return view('system.student.list_course', ['courses' => $courses,'student'=>$student]);
-        }else {
+                $query->where('students.id', $student->id);
+            })->where('course_code', 'like', '%' . $search . '%')->orWhereHas('subject', function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })->get();
+            return view('system.student.list_course', ['courses' => $courses, 'student' => $student]);
+        } else {
             $student = Auth::guard('student')->user();
             $courses = Course::whereDoesntHave('students', function ($query) use ($student) {
                 $query->where('students.id', $student->id);
             })->with('subject')->get();
-            return view('system.student.list_course', ['courses' => $courses,'student'=>$student]);
+            return view('system.student.list_course', ['courses' => $courses, 'student' => $student]);
         }
     }
 
     public function registerCourseStudent($id)
     {
         $student = Auth::guard('student')->user();
-        $student->courses()->attach($id);
-        return redirect()->route('student');
+        $course = Course::findOrFail($id);
+        $courseSelect = $student->courses()->where('weekday', $course->weekday)->orderBy('time_start', 'asc')->get();
+        if ($student->courses()->where('course_id', $id)->exists()) {
+            return back()->withErrors('you registered this course');
+        } elseif (count($courseSelect) > 1) {
+            for ($i = 0; $i < count($courseSelect); $i++) {
+                if (($courseSelect[$i]->time_finish < $course->time_start) && ($courseSelect[$i + 1]->time_start > $course->time_finish)) {
+                    $student->courses()->attach($id);
+                    return redirect()->route('student')->with('success', 'register course successed');
+                } else {
+                    return back()->withErrors('coincided course');
+                }
+            }
+        } elseif (count($courseSelect) == 1) {
+            if ($courseSelect->time_finish < $course->time_start || $courseSelect->time_start > $course->time_finish){
+                $student->courses()->attach($id);
+                return redirect()->route('student')->with('success', 'register course successed');
+            }
+            else{
+                return back()->withErrors('coincided course');
+            }
+        } else {
+            $student->courses()->attach($id);
+            return redirect()->route('student')->with('success', 'register course successed');
+        }
+
     }
 
     public function studentInformation(Request $request)
@@ -127,18 +152,14 @@ class StudentController extends Controller
 
     public function changeAvatar(ImageRequest $request)
     {
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $student = Auth::guard('student')->user();
-            $avatar_change = 'avatar' . $student->id . '.' . $avatar->getClientOriginalExtension();
-            $path = 'images';
-            $avatar_move = $avatar->move($path, $avatar_change);
-            $student->avatar = $avatar_move;
-            $student->save();
-            return view('system.student.information', ['student' => $student]);
-        } else {
-            return back();
-        }
+        $avatar = $request->file('avatar');
+        $student = Auth::guard('student')->user();
+        $avatar_change = 'avatar' . $student->id . '.' . $avatar->getClientOriginalExtension();
+        $path = 'images';
+        $avatar_move = $avatar->move($path, $avatar_change);
+        $student->avatar = $avatar_move;
+        $student->save();
+        return back()->with('success', 'update avatar successed');
     }
 
     public function getResetPassword()
@@ -174,11 +195,12 @@ class StudentController extends Controller
         $student->save();
         return redirect()->route('student.get_login');
     }
+
     public function myPoint()
     {
         $student = Auth::guard('student')->user();
         $courses = $student->courses;
-        return view('system.student.my_point',['student'=>$student,'courses'=>$courses]);
+        return view('system.student.my_point', ['student' => $student, 'courses' => $courses]);
 
     }
 }

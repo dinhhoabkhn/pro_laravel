@@ -51,4 +51,9 @@
 .delete:hover{
 	background-color: orangered;
 }
-
+.note-create{
+	text-align: center;
+}
+.example{
+	color: darkgray;
+}
