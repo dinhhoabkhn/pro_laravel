@@ -16,21 +16,19 @@
                         <input type="text" name="search" class="form-control" id="search-student"
                                placeholder="Type your code or name">
                     </div>
-                    {{--<input type="submit" name="" value="Search" id="search-student" class="btn btn-small btn-primary" onclick="searchStudent(this)">--}}
                 </div>
             </form>
         </div>
-        {{--<form action="" method="post" enctype="multipart/form-data">--}}
         <div id="table-manager-student">
             <table class="table-bordered table" >
                 <tr>
-                    <th style="width: 20%">Name</th>
-                    <th style="width: 14%">MSSV</th>
-                    <th style="width: 18%">Email</th>
-                    <th style="width: 14%">Phone</th>
-                    <th style="width: 14%">Birthday</th>
-                    <th style="width: 15%">Class</th>
-                    <th colspan="2" width="15%">Action</th>
+                    <th >Name</th>
+                    <th >Student Code</th>
+                    <th >Email</th>
+                    <th >Phone</th>
+                    <th >Birthday</th>
+                    <th >Class</th>
+                    <th colspan="2">Action</th>
                 </tr>
                 @foreach($students as $stu)
                     <tr>

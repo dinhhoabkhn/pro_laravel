@@ -17,4 +17,9 @@ class Student extends Authenticatable
     public function courses(){
     	return $this->belongsToMany(Course::class)->withPivot('point')->withTimestamps();
     }
+    public static function searchStudent($search){
+        $students= self::where('student_code', 'like', '%'. $search .'%')
+            ->orWhere('name', 'like', '%' . $search . '%');
+        return $students;
+    }
 }

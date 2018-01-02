@@ -24,7 +24,7 @@ class TeacherController extends Controller
         if (Auth::guard('teacher')->attempt(['email' => $email, 'password' => $password, 'active' => 1])) {
             return redirect('teacher');
         } else {
-            return redirect('teacher/login')->withErrors('email or password not true. Or your account not active');
+            return redirect('teacher/login')->withErrors(['error_login'=>Lang::get('messages.errors_login')]);
         }
     }
 
@@ -51,7 +51,7 @@ class TeacherController extends Controller
             return back();
         }
         else{
-            return back()->withErrors('you do not register this course');
+            return back()->withErrors(['errors'=>'messages.delete-course-security']);
         }
     }
 
@@ -127,13 +127,13 @@ class TeacherController extends Controller
         $new_password = $request->newpassword;
         $retype_new_assword = $request->renewpassword;
         if (Hash::check($old_password, $password) == false) {
-            return back()->withErrors(['error' => 'the password you type not true']);
+            return back()->withErrors(['error' => Lang::get('messages.error-type-password')]);
         } elseif ($new_password != $retype_new_assword) {
-            return back()->withErrors(['error' => '2 password not same']);
+            return back()->withErrors(['error' => Lang::get('messages.error-password-not-same')]);
         } else {
             $teacher->password = bcrypt($new_password);
             $teacher->save();
-            return redirect()->route('teacher.information')->with('success', 'you reseted password success');
+            return redirect()->route('teacher.information')->with('success',Lang::get('messages.reset-password'));
         }
     }
 }

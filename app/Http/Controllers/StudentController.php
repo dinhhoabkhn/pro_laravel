@@ -15,6 +15,7 @@ use App\Model\Student;
 use App\Model\Course;
 use App\Model\Teacher;
 use App\Model\Subject;
+use Illuminate\Support\Facades\Lang;
 
 class StudentController extends Controller
 {
@@ -30,7 +31,7 @@ class StudentController extends Controller
         if (Auth::guard('student')->attempt(['email' => $email, 'password' => $password, 'active' => 1])) {
             return redirect()->route('student')->with('success', 'Login successed');
         } else {
-            return back()->withErrors(['Errors' => 'email or password not true. Or the account not active']);
+            return back()->withErrors(['error_login' => Lang::get('messages.errors_login')]);
         }
     }
 
@@ -50,7 +51,7 @@ class StudentController extends Controller
             Mail::to($student)->send($send_email);
             return redirect()->route('student.get_login');
         } else {
-            return back()->withErrors('The email do not register');
+            return back()->withErrors(['error_forgot_password' => Lang::get('messages.error_forgot_password')]);
         }
     }
 
@@ -82,7 +83,6 @@ class StudentController extends Controller
     {
         $student = Auth::guard('student')->user();
         $courses = $student->courses()->paginate(5);
-//        dd($courses);
         return view('system.student.home', ['courses' => $courses, 'student' => $student]);
     }
 
@@ -113,35 +113,55 @@ class StudentController extends Controller
         }
     }
 
+    public function addPivotTable($student, $id)
+    {
+        $student->courses()->attach($id);
+    }
+
     public function registerCourseStudent($id)
     {
         $student = Auth::guard('student')->user();
         $course = Course::findOrFail($id);
-        $courseSelect = $student->courses()->where('weekday', $course->weekday)->orderBy('time_start', 'asc')->get();
-        if ($student->courses()->where('course_id', $id)->exists()) {
-            return back()->withErrors('you registered this course');
+        $courseOfStudent = $student->courses();
+        $courseSelect = $courseOfStudent->where('weekday', $course->weekday)->orderBy('time_start', 'asc')->get();
+        $canRegiter = true;
+        if ($courseOfStudent->where('course_id', $id)->exists()) {
+            return back()->withErrors(['error-register-course' => Lang::get('messages.error-register-course')]);
         } elseif (count($courseSelect) > 1) {
-            for ($i = 0; $i < count($courseSelect); $i++) {
-                if (($courseSelect[$i]->time_finish < $course->time_start) && ($courseSelect[$i + 1]->time_start > $course->time_finish)) {
-                    $student->courses()->attach($id);
-                    return redirect()->route('student')->with('success', 'register course successed');
+            foreach ($courseSelect as $key => $cou) {
+                if ($courseSelect[0]->time_start > $course->time_finish) {
+                    $canRegiter = true;
+                    break;
+                } elseif ((($courseSelect[$key]->time_finish < $course->time_start) && ($courseSelect[$key + 1]->time_start > $course->time_finish))) {
+                    $canRegiter = true;
+                    break;
+
+                } elseif ($courseSelect[count($courseSelect) - 1]->time_finish < $course->time_start) {
+                    $canRegiter = true;
+                    break;
+
                 } else {
-                    return back()->withErrors('coincided course');
+                    return back()->withErrors(['coincided-course' => Lang::get('messages.coincided-course')]);
                 }
             }
         } elseif (count($courseSelect) == 1) {
-            if ($courseSelect->time_finish < $course->time_start || $courseSelect->time_start > $course->time_finish){
-                $student->courses()->attach($id);
-                return redirect()->route('student')->with('success', 'register course successed');
+            foreach ($courseSelect as $cou) {
+                if ($cou->time_finish < $course->time_start || $cou->time_start > $course->time_finish) {
+                    $this->addPivotTable($student, $id);;
+                    return redirect()->route('student')->with(['success' => Lang::get('success-register')]);
+                } else {
+                    $canRegiter = false;
+                    break;
+                }
             }
-            else{
-                return back()->withErrors('coincided course');
-            }
-        } else {
-            $student->courses()->attach($id);
-            return redirect()->route('student')->with('success', 'register course successed');
-        }
 
+        }
+        if ($canRegiter) {
+            $this->addPivotTable($student, $id);
+            return redirect()->route('student')->with(['success' => Lang::get('success-register')]);
+        } else {
+            return back()->withErrors(['coincided-course' => Lang::get('messages.coincided-course')]);
+        }
     }
 
     public function studentInformation(Request $request)
@@ -159,7 +179,7 @@ class StudentController extends Controller
         $avatar_move = $avatar->move($path, $avatar_change);
         $student->avatar = $avatar_move;
         $student->save();
-        return back()->with('success', 'update avatar successed');
+        return back()->with('success', Lang::get('messages.update-avatar'));
     }
 
     public function getResetPassword()
@@ -176,13 +196,13 @@ class StudentController extends Controller
         $new_password = $request->newpassword;
         $retype_new_assword = $request->renewpassword;
         if (Hash::check($old_password, $password) == false) {
-            return back()->withErrors(['error' => 'the password you type not true']);
+            return back()->withErrors(['error' => Lang::get('messages.error-type-password')]);
         } elseif ($new_password != $retype_new_assword) {
-            return back()->withErrors(['error' => '2 password not same']);
+            return back()->withErrors(['error' => Lang::get('messages.error-password-not-same')]);
         } else {
             $student->password = bcrypt($new_password);
             $student->save();
-            return redirect()->route('student.information')->with('success', 'you reseted password success');
+            return redirect()->route('student.information')->with('success', Lang::get('messages.reset-password'));
         }
     }
 

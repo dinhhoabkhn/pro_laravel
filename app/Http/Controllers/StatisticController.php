@@ -15,11 +15,10 @@ class StatisticController extends Controller
             'search_student' => $search_student
         ];
         if ($search_student) {
-            $students = Student::where('student_code', 'like', '%' . $search_student . '%')->orWhere('name', 'like', '%' . $search_student . '%')->paginate(5);
+            $students = Student::searchStudent($search_student)->paginate(5);
             return view('admin.statistic.list_student', ['students' => $students, 'search_student'=>$stuArray]);
         } else {
             $students = Student::paginate(5);
-            // dd($students);
             return view('admin.statistic.list_student', ['students' => $students,'search_student'=>$stuArray]);
         }
     }
@@ -28,35 +27,17 @@ class StatisticController extends Controller
     {
         $search = $request->search_course;
         $courseArr = [
-          'search_course'=>$search
+            'search_course' => $search
         ];
         if ($search) {
             $search = $request->search_course;
-            $courses = Course::where('course_code', 'like', '%' . $search . '%')->paginate(5);
-            return view('admin.statistic.list_course', ['courses' => $courses,'search'=>$courseArr]);
+            $courses = Course::searchCourse($search)->paginate(5);
+            return view('admin.statistic.list_course', ['courses' => $courses, 'search' => $courseArr]);
         } else {
             $courses = Course::paginate(5);
-            return view('admin.statistic.list_course', ['courses' => $courses,'search'=>$courseArr]);
+            return view('admin.statistic.list_course', ['courses' => $courses, 'search' => $courseArr]);
         }
-
-//        $view = view('ajax.list_course', ['courses' => $courses]);
-//        var_dump($view->render());die;
-//        return response()
-////            ->view('ajax.list_course',['courses'=> $courses]);
-//        ->json([
-////            'data' => $courses,
-//            'html' => $view->render(),
-////            'type'  =>'course'
-//        ]);
-//        return \GuzzleHttp\json_encode($view->render());
     }
-//    public function listStudents()
-//    {
-//        $students = Student::all();
-//        $view = view('ajax.list_students',['students'=>$students]);
-//        return \GuzzleHttp\json_encode($view->render());
-//    }
-
     public function pointStudent($id)
     {
         $student = Student::findOrFail($id);

@@ -17,13 +17,13 @@
         </div>
         <table class="table-bordered table">
             <tr>
-                <th style="width: 18%">Course code</th>
-                <th style="width: 14%">Subject Name</th>
-                <th style="width: 14%">Class</th>
-                <th style="width: 15%">Semester</th>
-                <th style="width: 18%">Teacher</th>
-                <th style="width: 14%">Time</th>
-                <th width="10%" ; colspan="2">Action</th>
+                <th >Course code</th>
+                <th >Subject Name</th>
+                <th >Class</th>
+                <th >Semester</th>
+                <th >Teacher</th>
+                <th >Time</th>
+                <th colspan="2">Action</th>
             </tr>
             @foreach($courses as $cou)
                 <tr>

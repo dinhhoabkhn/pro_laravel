@@ -1,9 +1,9 @@
 <table class="table-bordered table" id="list-student">
     <tr>
-        <th style="width: 5%">STT </th>
-        <th style="width: 20%">Course Code</th>
-        <th style="width: 20%">Subject</th>
-        <th style="width: 20%">Class</th>
+        <th class="stt">STT </th>
+        <th >Course Code</th>
+        <th >Subject</th>
+        <th >Class</th>
     </tr>
     @php
         $count = 1;

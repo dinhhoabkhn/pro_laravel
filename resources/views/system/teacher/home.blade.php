@@ -12,12 +12,12 @@
         @endif
         <table class="table-bordered table">
             <tr>
-                <th style="width: 15%">Course Code</th>
-                <th style="width: 14%">Subject Name</th>
-                <th style="width: 14%">Class</th>
-                <th style="width: 18%">Time</th>
-                <th style="width: 15%">Weekday</th>
-                <th width="5%">Action</th>
+                <th >Course Code</th>
+                <th >Subject Name</th>
+                <th >Class</th>
+                <th >Time</th>
+                <th >Weekday</th>
+                <th >Action</th>
             </tr>
             @foreach($courses as $cou)
                 <tr>

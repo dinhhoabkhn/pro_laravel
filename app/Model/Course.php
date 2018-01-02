@@ -23,4 +23,10 @@ class Course extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
+    public static function searchCourse($search){
+        $courses = self::whereHas('subject', function ($query) use ($search) {
+            $query->where('subjects.name', 'like', '%' . $search . '%');
+        })->orWhere('course_code', 'like', '%' . $search . '%');
+        return $courses;
+    }
 }

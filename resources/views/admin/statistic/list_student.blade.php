@@ -21,10 +21,10 @@
         <div id="content_ajax">
             <table class="table-bordered table" id="table-list-student">
                 <tr>
-                    <th style="width: 5%">STT</th>
-                    <th style="width: 20%">Name</th>
-                    <th style="width: 20%">Student_code</th>
-                    <th style="width: 20%">Class</th>
+                    <th class="stt">STT</th>
+                    <th >Name</th>
+                    <th >Student_code</th>
+                    <th >Class</th>
                 </tr>
                 @php
                     $count = 1;

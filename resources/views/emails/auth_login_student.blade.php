@@ -27,8 +27,8 @@
 <h3> Hello </h3>
 <form action="{{route('student.verify',$student->email_token)}}" method="post">
     {{ csrf_field() }}
-    <p> Xac nhan tai khoan </p>
-    <button type="submit" class="btn">Tai day</button>
+    <p> Authenticate account </p>
+    <button type="submit" class="btn">Here</button>
 </form>
 </body>
 </html>

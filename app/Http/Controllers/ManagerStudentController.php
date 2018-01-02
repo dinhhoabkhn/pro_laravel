@@ -14,12 +14,6 @@ class ManagerStudentController extends Controller
 
     public function index()
     {
-//        if ($request->has('value_search')) {
-//            $search = $request->value_search;
-//            $students = Student::where('student_code', 'like', '%' . $search . '%')
-//                ->orWhere('name', 'like', '%' . $search . '%')->paginate(5);
-//            return view('admin.manager_student.manager', ['students' => $students])->with('success', 'the student that you search');
-//        } else {
             $students = Student::paginate(5);
             return view('admin.manager_student.manager', ['students' => $students]);
 //        }
@@ -27,8 +21,7 @@ class ManagerStudentController extends Controller
     public function searchStudent(Request $request)
     {
         $search = $request->search;
-        $students = Student::where('student_code', 'like', '%'. $search .'%')
-            ->orWhere('name', 'like', '%' . $search . '%')->paginate(5);
+        $students = Student::searchStudent($search)->paginate(5);
         return view('ajax.search_student', ['students' => $students]);
 
     }

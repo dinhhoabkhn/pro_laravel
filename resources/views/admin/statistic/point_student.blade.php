@@ -7,18 +7,17 @@
         </div>
         <table class="table-bordered table">
             <tr>
-                <th style="width: 5%">STT</th>
-                <th style="width: 20%">Course Code</th>
-                <th style="width: 20%">Subject</th>
-                <th style="width: 20%">Point</th>
+                <th class="stt">STT</th>
+                <th >Course Code</th>
+                <th >Subject</th>
+                <th >Point</th>
             </tr>
             @php
                 $count = 1;
             @endphp
             @foreach($courses as $course)
                 <tr>
-                    <td> {{$count++}}</td>
-
+                    <td>{{$count++}}</td>
                     <td>{{$course->course_code}}</td>
                     <td>{{$course->subject['name']}} </td>
                     <td>{{$course->pivot->point}} </td>

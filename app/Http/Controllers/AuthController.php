@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    // public function __construct()
-    //    {
-    //        $this->middleware('check')->except(['getLoginAdmin','postLoginAdmin']);
-    //    }
     public function getLoginAdmin()
     {
         if(Auth::guard('admin')->check()) {
@@ -29,7 +25,7 @@ class AuthController extends Controller
         if (Auth::guard('admin')->attempt(['name' => $name, 'password' => $password])) {
             return redirect()->route('manager_student.index');
         } else {
-            return back()->withErrors('name or password does not true');
+            return back()->withErrors(['error'=>'messages.error-login-admin']);
         }
     }
 

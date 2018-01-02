@@ -12,12 +12,12 @@
         <div id="table-manager-student">
             <table class="table-bordered table">
                 <tr>
-                    <th style="width: 5%">STT</th>
-                    <th style="width: 14%">Name</th>
-                    <th style="width: 14%">Student_code</th>
-                    <th style="width: 14%">Class</th>
-                    <th style="width: 15%"> Birthday</th>
-                    <th style="width: 10%">Point</th>
+                    <th class="stt">STT</th>
+                    <th >Name</th>
+                    <th >Student_code</th>
+                    <th >Class</th>
+                    <th >Birthday</th>
+                    <th >Point</th>
                 </tr>
                 @php
                     $count = 1;

@@ -3,13 +3,10 @@
 
     <div class="container" style="margin-top: 50px;">
         <div class="row">
-            {{--<form>--}}
             <div class="col-md-4">
                 <a id="list-student" class="btn btn-group-sm" href="{{route('list_student')}}">List Student</a>
                 <a id="list-course" class="btn btn-group-sm" href="{{route('list_course')}}">List Course</a>
             </div>
-            {{--</form>--}}
-
         <form action="" method="get">
             <div class="col-md-4">
                 <input type="text" class="form-control" name="search_course" id="search_course_statistic">
@@ -21,10 +18,10 @@
         </div>
         <table class="table-bordered table" id="list-student">
             <tr>
-                <th style="width: 5%">STT</th>
-                <th style="width: 20%">Course Code</th>
-                <th style="width: 20%">Subject</th>
-                <th style="width: 20%">Class</th>
+                <th class="stt">STT</th>
+                <th >Course Code</th>
+                <th >Subject</th>
+                <th >Class</th>
             </tr>
             @php
                 $count = 1;

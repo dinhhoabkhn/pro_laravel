@@ -20,9 +20,7 @@ class ManagerCourseController extends Controller
         $search = $request->search_course;
         $searchArr = ['search_course' => $search];
         if ($search) {
-            $courses = Course::whereHas('subject', function ($query) use ($search) {
-                $query->where('subjects.name', 'like', '%' . $search . '%');
-            })->orWhere('course_code', 'like', '%' . $search . '%')->paginate(5);
+            $courses = Course::searchCourse($search)->paginate(5);
             return view('admin.manager_course.manager', ['courses' => $courses,'search' => $searchArr]);
 
         } else {

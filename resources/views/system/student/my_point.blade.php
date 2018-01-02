@@ -8,9 +8,9 @@
         </div>
         <table class="table-bordered table">
             <tr>
-                <th style="width: 5%">STT</th>
-                <th style="width: 20%">Subject</th>
-                <th style="width: 20%">Point</th>
+                <th class="stt">STT</th>
+                <th >Subject</th>
+                <th >Point</th>
             </tr>
             @php
                 $count = 1;
