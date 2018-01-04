@@ -128,12 +128,8 @@ class TeacherController extends Controller
         $retypeNewPassword = $request->renewpassword;
         if (Hash::check($oldPassword, $password) == false) {
             return back()->withErrors(['error' => Lang::get('messages.error-type-password')]);
-        }
-        elseif ($newPassword == $oldPassword){
+        } elseif ($newPassword == $oldPassword) {
             return back()->withErrors(['error' => Lang::get('messages.error-same-oldpassword')]);
-        }
-        elseif ($newPassword != $retypeNewPassword) {
-            return back()->withErrors(['error' => Lang::get('messages.error-password-not-same')]);
         } else {
             $teacher->password = bcrypt($newPassword);
             $teacher->save();

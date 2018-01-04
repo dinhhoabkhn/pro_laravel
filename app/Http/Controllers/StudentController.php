@@ -126,9 +126,9 @@ class StudentController extends Controller
             return back()->withErrors(['error-register-course' => Lang::get('messages.error-register-course')]);
         } else {
             foreach ($courseSelect as $key => $cou) {
-                if (($course->time_start > $courseSelect[$key]->time_start && $course->time_start < $courseSelect[$key]->time_finish)
-                    || ($course->time_finish > $courseSelect[$key]->time_start && $course->time_finish < $courseSelect[$key]->time_finish)
-                    || ($course->time_start < $courseSelect[$key]->time_start && $course->time_finish > $courseSelect[$key]->time_finish)) {
+                if (($course->time_finish < $cou->time_start || $course->time_start > $cou->time_finish)) {
+                    continue;
+                } else {
                     $canRegiter = false;
                     break;
                 }
@@ -175,12 +175,8 @@ class StudentController extends Controller
         $retypeNewPassword = $request->renewpassword;
         if (Hash::check($oldPassword, $password) == false) {
             return back()->withErrors(['error' => Lang::get('messages.error-type-password')]);
-        }
-        elseif ($newPassword == $oldPassword){
+        } elseif ($newPassword == $oldPassword) {
             return back()->withErrors(['error' => Lang::get('messages.error-same-oldpassword')]);
-        }
-        elseif ($newPassword != $retypeNewPassword) {
-            return back()->withErrors(['error' => Lang::get('messages.error-password-not-same')]);
         } else {
             $student->password = bcrypt($newPassword);
             $student->save();

@@ -1,6 +1,7 @@
 @extends('layouts.layout_student')
 @include('include.avatar')
 @section('student')
+
     @if(session()->has('success'))
         <div class="alert alert-success">
             {{session()->get('success')}}

@@ -25,8 +25,8 @@ class ResetPasswordRequest extends FormRequest
     {
         return [
             'oldpassword'=>'required',
-            'newpassword'=>'required',
-            'renewpassword'=>'required'
+            'newpassword'=>'required|confirmed:foo_confirmation',
+            'newpassword_confirmation'=>'required'
         ];
     }
 }
