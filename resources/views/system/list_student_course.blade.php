@@ -16,12 +16,9 @@
             <th >Point</th>
             <th ></th>
         </tr>
-        @php
-        $count = 1;
-        @endphp
-        @foreach($students as $stu)
+        @foreach($students as $key=> $stu)
         <tr>
-            <td>{{$count++}}</td>
+            <td>{{++$key}}</td>
             <td>{{$stu->name}}</td>
             <td>{{$stu->student_code}} </td>
             <td>{{$stu->class}} </td>

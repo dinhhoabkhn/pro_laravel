@@ -23,12 +23,9 @@
                 <th >Subject</th>
                 <th >Class</th>
             </tr>
-            @php
-                $count = 1;
-            @endphp
-            @foreach($courses as $course)
+            @foreach($courses as $key => $course)
                 <tr>
-                    <td> {{$count++}}</td>
+                    <td> {{++$key}}</td>
                     <td><a href="{{ route('statistic_point_course',$course->id) }}">{{$course->course_code}}</a></td>
                     <td>{{$course->subject->name}} </td>
                     <td>{{$course->class}} </td>

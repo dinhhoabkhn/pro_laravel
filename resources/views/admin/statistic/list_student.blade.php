@@ -26,12 +26,9 @@
                     <th >Student_code</th>
                     <th >Class</th>
                 </tr>
-                @php
-                    $count = 1;
-                @endphp
-                @foreach($students as $stu)
+                @foreach($students as $key => $stu)
                     <tr>
-                        <td> {{$count++}}</td>
+                        <td> {{++$key}}</td>
                         <td><a href="{{route('statistic_point',$stu->id)}}">{{$stu->name}}</a></td>
                         <td>{{$stu->student_code}} </td>
                         <td>{{$stu->class}} </td>
@@ -41,7 +38,7 @@
         </div>
         </table>
         @php
-        echo $students->appends($search_student)->links();
+        echo $students->appends($searchStudent)->links();
         @endphp
     </div>
 @endsection

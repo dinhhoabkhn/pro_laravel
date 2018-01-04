@@ -8,20 +8,21 @@ use App\Http\Requests\UpdateStudentRequest;
 use App\Model\Student;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AuthenticateLogin;
+use Config;
 
 class ManagerStudentController extends Controller
 {
 
     public function index()
     {
-            $students = Student::paginate(5);
+            $students = Student::paginate(Config::get('constants.paginate_number'));
             return view('admin.manager_student.manager', ['students' => $students]);
 //        }
     }
     public function searchStudent(Request $request)
     {
         $search = $request->search;
-        $students = Student::searchStudent($search)->paginate(5);
+        $students = Student::searchStudent($search)->paginate(Config::get('constants.paginate_number'));
         return view('ajax.search_student', ['students' => $students]);
 
     }

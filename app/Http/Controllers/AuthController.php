@@ -25,7 +25,7 @@ class AuthController extends Controller
         if (Auth::guard('admin')->attempt(['name' => $name, 'password' => $password])) {
             return redirect()->route('manager_student.index');
         } else {
-            return back()->withErrors(['error'=>'messages.error-login-admin']);
+            return back()->withErrors(['error'=>Lang::get('messages.error-login-admin')]);
         }
     }
 

@@ -9,6 +9,7 @@ use App\Model\Teacher;
 use App\Model\Course;
 use Illuminate\Support\Facades\Hash;
 use App\Model\Subject;
+use Config;
 
 class TeacherController extends Controller
 {
@@ -24,7 +25,7 @@ class TeacherController extends Controller
         if (Auth::guard('teacher')->attempt(['email' => $email, 'password' => $password, 'active' => 1])) {
             return redirect('teacher');
         } else {
-            return redirect('teacher/login')->withErrors(['error_login'=>Lang::get('messages.errors_login')]);
+            return redirect('teacher/login')->withErrors(['error_login' => Lang::get('messages.errors_login')]);
         }
     }
 
@@ -37,7 +38,7 @@ class TeacherController extends Controller
     public function showCourse()
     {
         $teacher = Auth::guard('teacher')->user();
-        $courses = Course::where('teacher_id', $teacher->id)->where('semester', '20172')->with('subject')->paginate(5);
+        $courses = Course::where('teacher_id', $teacher->id)->where('semester', '20172')->with('subject')->paginate(Config::get('constants.paginate_number'));
         return view('system.teacher.home', ['courses' => $courses]);
     }
 
@@ -45,13 +46,12 @@ class TeacherController extends Controller
     {
         $teacher = Auth::guard('teacher')->user();
         $course = Course::findOrFail($id);
-        if($course->teacher_id == $teacher->id) {
+        if ($course->teacher_id == $teacher->id) {
             $course->teacher_id = Null;
             $course->save();
             return back();
-        }
-        else{
-            return back()->withErrors(['errors'=>'messages.delete-course-security']);
+        } else {
+            return back()->withErrors(['errors' => Lang::get('messages.delete-course-security')]);
         }
     }
 
@@ -96,10 +96,9 @@ class TeacherController extends Controller
         if ($request->has('point')) {
             $point = $request->point;
             foreach ($point as $student => $point) {
-                if($point == null){
+                if ($point == null) {
                     continue;
-                }
-                else {
+                } else {
                     $course->students()->updateExistingPivot($student, ['point' => $point]);
                 }
             }
@@ -110,7 +109,7 @@ class TeacherController extends Controller
     public function teacherInformation()
     {
         $teacher = Auth::guard('teacher')->user();
-        return view('system.teacher.information',['teacher'=>$teacher]);
+        return view('system.teacher.information', ['teacher' => $teacher]);
     }
 
     public function getResetPassword()
@@ -133,7 +132,7 @@ class TeacherController extends Controller
         } else {
             $teacher->password = bcrypt($new_password);
             $teacher->save();
-            return redirect()->route('teacher.information')->with('success',Lang::get('messages.reset-password'));
+            return redirect()->route('teacher.information')->with('success', Lang::get('messages.reset-password'));
         }
     }
 }

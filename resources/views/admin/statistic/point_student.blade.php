@@ -12,12 +12,9 @@
                 <th >Subject</th>
                 <th >Point</th>
             </tr>
-            @php
-                $count = 1;
-            @endphp
-            @foreach($courses as $course)
+            @foreach($courses as $key => $course)
                 <tr>
-                    <td>{{$count++}}</td>
+                    <td>{{++$key}}</td>
                     <td>{{$course->course_code}}</td>
                     <td>{{$course->subject['name']}} </td>
                     <td>{{$course->pivot->point}} </td>

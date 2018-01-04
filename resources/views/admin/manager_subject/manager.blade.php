@@ -11,12 +11,9 @@
                 <th >Academy</th>
                 <th colspan="2">Action</th>
             </tr>
-            @php
-                $count =1;
-            @endphp
-            @foreach($subjects as $subject)
+            @foreach($subjects as $key => $subject)
                 <tr>
-                    <td>{{$count++}} </td>
+                    <td>{{++$key}} </td>
                     <td> {{$subject ->name}}</td>
                     <td>{{$subject ->academy}} </td>
                     <td><a class="glyphicon glyphicon-edit" title="EDIT"

@@ -5,21 +5,22 @@ namespace App\Http\Controllers;
 use App\Model\Course;
 use Illuminate\Http\Request;
 use App\Model\Student;
+use Config;
 
 class StatisticController extends Controller
 {
     public function listStudent(Request $request)
     {
-        $search_student = $request->search_student;
+        $searchStudent = $request->search_student;
         $stuArray = [
-            'search_student' => $search_student
+            'searchStudent' => $searchStudent
         ];
-        if ($search_student) {
-            $students = Student::searchStudent($search_student)->paginate(5);
-            return view('admin.statistic.list_student', ['students' => $students, 'search_student'=>$stuArray]);
+        if ($searchStudent) {
+            $students = Student::searchStudent($searchStudent)->paginate(Config::get('constants.paginate_number'));
+            return view('admin.statistic.list_student', ['students' => $students, 'searchStudent'=>$stuArray]);
         } else {
-            $students = Student::paginate(5);
-            return view('admin.statistic.list_student', ['students' => $students,'search_student'=>$stuArray]);
+            $students = Student::paginate(Config::get('constants.paginate_number'));
+            return view('admin.statistic.list_student', ['students' => $students,'searchStudent'=>$stuArray]);
         }
     }
 
@@ -31,10 +32,10 @@ class StatisticController extends Controller
         ];
         if ($search) {
             $search = $request->search_course;
-            $courses = Course::searchCourse($search)->paginate(5);
+            $courses = Course::searchCourse($search)->paginate(Config::get('constants.paginate_number'));
             return view('admin.statistic.list_course', ['courses' => $courses, 'search' => $courseArr]);
         } else {
-            $courses = Course::paginate(5);
+            $courses = Course::paginate(Config::get('constants.paginate_number'));
             return view('admin.statistic.list_course', ['courses' => $courses, 'search' => $courseArr]);
         }
     }

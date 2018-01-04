@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Http\Requests\CreateCourseRequest;
 use App\Model\Course;
 use App\Model\Subject;
+use Config;
 
 class ManagerCourseController extends Controller
 {
@@ -20,11 +21,11 @@ class ManagerCourseController extends Controller
         $search = $request->search_course;
         $searchArr = ['search_course' => $search];
         if ($search) {
-            $courses = Course::searchCourse($search)->paginate(5);
+            $courses = Course::searchCourse($search)->paginate(Config::get('constants.paginate_number'));
             return view('admin.manager_course.manager', ['courses' => $courses,'search' => $searchArr]);
 
         } else {
-            $courses = Course::with(['teacher', 'subject'])->paginate(5);
+            $courses = Course::with(['teacher', 'subject'])->paginate(Config::get('constants.paginate_number'));
             return view('admin.manager_course.manager', ['courses' => $courses,'search' => $searchArr]);
         }
     }

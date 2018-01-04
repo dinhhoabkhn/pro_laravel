@@ -16,6 +16,7 @@ use App\Model\Course;
 use App\Model\Teacher;
 use App\Model\Subject;
 use Illuminate\Support\Facades\Lang;
+use Config;
 
 class StudentController extends Controller
 {
@@ -47,8 +48,8 @@ class StudentController extends Controller
             $student = Student::where('email', $email)->first();
             $student->email_token = str_random(15);
             $student->save();
-            $send_email = new ForgotPasswordStudent($student);
-            Mail::to($student)->send($send_email);
+            $sendEmail = new ForgotPasswordStudent($student);
+            Mail::to($student)->send($sendEmail);
             return redirect()->route('student.get_login');
         } else {
             return back()->withErrors(['error_forgot_password' => Lang::get('messages.error_forgot_password')]);
@@ -82,7 +83,7 @@ class StudentController extends Controller
     public function listMyCourse()
     {
         $student = Auth::guard('student')->user();
-        $courses = $student->courses()->paginate(5);
+        $courses = $student->courses()->paginate(Config::get('constants.paginate_number'));
         return view('system.student.home', ['courses' => $courses, 'student' => $student]);
     }
 
@@ -113,11 +114,6 @@ class StudentController extends Controller
         }
     }
 
-    public function addPivotTable($student, $id)
-    {
-        $student->courses()->attach($id);
-    }
-
     public function registerCourseStudent($id)
     {
         $student = Auth::guard('student')->user();
@@ -127,37 +123,21 @@ class StudentController extends Controller
         $canRegiter = true;
         if ($courseOfStudent->where('course_id', $id)->exists()) {
             return back()->withErrors(['error-register-course' => Lang::get('messages.error-register-course')]);
-        } elseif (count($courseSelect) > 1) {
+        } else {
             foreach ($courseSelect as $key => $cou) {
-                if ($courseSelect[0]->time_start > $course->time_finish) {
-                    $canRegiter = true;
+                if (($course->time_start > $courseSelect[$key]->time_start && $course->time_start < $courseSelect[$key]->time_finish)
+                    || ($course->time_finish > $courseSelect[$key]->time_start && $course->time_finish < $courseSelect[$key]->time_finish)) {
+                    $canRegiter = false;
                     break;
-                } elseif ((($courseSelect[$key]->time_finish < $course->time_start) && ($courseSelect[$key + 1]->time_start > $course->time_finish))) {
-                    $canRegiter = true;
-                    break;
-
-                } elseif ($courseSelect[count($courseSelect) - 1]->time_finish < $course->time_start) {
-                    $canRegiter = true;
-                    break;
-
-                } else {
-                    return back()->withErrors(['coincided-course' => Lang::get('messages.coincided-course')]);
                 }
-            }
-        } elseif (count($courseSelect) == 1) {
-            foreach ($courseSelect as $cou) {
-                if ($cou->time_finish < $course->time_start || $cou->time_start > $course->time_finish) {
-                    $this->addPivotTable($student, $id);;
-                    return redirect()->route('student')->with(['success' => Lang::get('success-register')]);
-                } else {
+                if ($course->time_start < $courseSelect[$key]->time_start && $course->time_finish > $courseSelect[$key]->time_finish) {
                     $canRegiter = false;
                     break;
                 }
             }
-
         }
         if ($canRegiter) {
-            $this->addPivotTable($student, $id);
+            $student->courses()->attach($id);
             return redirect()->route('student')->with(['success' => Lang::get('success-register')]);
         } else {
             return back()->withErrors(['coincided-course' => Lang::get('messages.coincided-course')]);
@@ -174,10 +154,10 @@ class StudentController extends Controller
     {
         $avatar = $request->file('avatar');
         $student = Auth::guard('student')->user();
-        $avatar_change = 'avatar' . $student->id . '.' . $avatar->getClientOriginalExtension();
+        $avatarChange = 'avatar' . $student->id . '.' . $avatar->getClientOriginalExtension();
         $path = 'images';
-        $avatar_move = $avatar->move($path, $avatar_change);
-        $student->avatar = $avatar_move;
+        $avatarMove = $avatar->move($path, $avatarChange);
+        $student->avatar = $avatarMove;
         $student->save();
         return back()->with('success', Lang::get('messages.update-avatar'));
     }
@@ -192,15 +172,15 @@ class StudentController extends Controller
     {
         $student = Auth::guard('student')->user();
         $password = $student->password;
-        $old_password = $request->oldpassword;
-        $new_password = $request->newpassword;
+        $oldPassword = $request->oldpassword;
+        $newPassword = $request->newpassword;
         $retype_new_assword = $request->renewpassword;
-        if (Hash::check($old_password, $password) == false) {
+        if (Hash::check($oldPassword, $password) == false) {
             return back()->withErrors(['error' => Lang::get('messages.error-type-password')]);
-        } elseif ($new_password != $retype_new_assword) {
+        } elseif ($newPassword != $retype_new_assword) {
             return back()->withErrors(['error' => Lang::get('messages.error-password-not-same')]);
         } else {
-            $student->password = bcrypt($new_password);
+            $student->password = bcrypt($newPassword);
             $student->save();
             return redirect()->route('student.information')->with('success', Lang::get('messages.reset-password'));
         }
