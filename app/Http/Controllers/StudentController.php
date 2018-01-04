@@ -140,15 +140,13 @@ class StudentController extends Controller
         }
     }
 
-    public
-    function studentInformation(Request $request)
+    public function studentInformation(Request $request)
     {
         $student = Auth::guard('student')->user();
         return view('system.student.information', ['student' => $student]);
     }
 
-    public
-    function changeAvatar(ImageRequest $request)
+    public function changeAvatar(ImageRequest $request)
     {
         $avatar = $request->file('avatar');
         $student = Auth::guard('student')->user();
@@ -160,15 +158,13 @@ class StudentController extends Controller
         return back()->with('success', Lang::get('messages.update-avatar'));
     }
 
-    public
-    function getResetPassword()
+    public function getResetPassword()
     {
         $student = Auth::guard('student')->user();
         return view('system.student.reset_password', ['student' => $student]);
     }
 
-    public
-    function postResetPassword(ResetPasswordRequest $request)
+    public function postResetPassword(ResetPasswordRequest $request)
     {
         $student = Auth::guard('student')->user();
         $password = $student->password;
@@ -186,8 +182,7 @@ class StudentController extends Controller
         }
     }
 
-    public
-    function verify($token)
+    public function verify($token)
     {
 
         $student = Student::where('email_token', $token)->firstOrFail();
@@ -197,8 +192,7 @@ class StudentController extends Controller
         return redirect()->route('student.get_login');
     }
 
-    public
-    function myPoint()
+    public function myPoint()
     {
         $student = Auth::guard('student')->user();
         $courses = $student->courses;
