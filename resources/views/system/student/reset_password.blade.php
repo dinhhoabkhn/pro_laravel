@@ -6,7 +6,10 @@
 		{{ csrf_field() }}
 		@if($errors->any())
 		<div class="alert alert-danger">
-                {{$errors->first()}}
+			@foreach($errors->all() as $error)
+                {{ $error }}
+				<br>
+                @endforeach
             </div>
         @endif
 		<div class="form-group">

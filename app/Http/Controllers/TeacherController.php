@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ResetPasswordRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginUserRequest;
 use Illuminate\Support\Facades\Auth;
@@ -118,19 +119,23 @@ class TeacherController extends Controller
         return view('system.teacher.reset_password', ['teacher' => $teacher]);
     }
 
-    public function postResetPassword(Request $request)
+    public function postResetPassword(ResetPasswordRequest $request)
     {
         $teacher = Auth::guard('teacher')->user();
         $password = $teacher->password;
-        $old_password = $request->oldpassword;
-        $new_password = $request->newpassword;
-        $retype_new_assword = $request->renewpassword;
-        if (Hash::check($old_password, $password) == false) {
+        $oldPassword = $request->oldpassword;
+        $newPassword = $request->newpassword;
+        $retypeNewPassword = $request->renewpassword;
+        if (Hash::check($oldPassword, $password) == false) {
             return back()->withErrors(['error' => Lang::get('messages.error-type-password')]);
-        } elseif ($new_password != $retype_new_assword) {
+        }
+        elseif ($newPassword == $oldPassword){
+            return back()->withErrors(['error' => Lang::get('messages.error-same-oldpassword')]);
+        }
+        elseif ($newPassword != $retypeNewPassword) {
             return back()->withErrors(['error' => Lang::get('messages.error-password-not-same')]);
         } else {
-            $teacher->password = bcrypt($new_password);
+            $teacher->password = bcrypt($newPassword);
             $teacher->save();
             return redirect()->route('teacher.information')->with('success', Lang::get('messages.reset-password'));
         }

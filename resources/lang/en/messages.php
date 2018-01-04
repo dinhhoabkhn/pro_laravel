@@ -12,4 +12,5 @@ return [
     'error-password-not-same'=>'2 password not same',
     'reset-password'=>'you reseted password success',
     'delete-course-security'=>'you do not register this course',
+    'error-same-oldpassword'=>'the new password not same old password'
 ];

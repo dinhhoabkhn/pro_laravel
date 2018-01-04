@@ -5,6 +5,7 @@
             {{ csrf_field() }}
             @if($errors->any())
                 <div class="alert alert-danger">
+                    @foreach()
                     {{$errors->first()}}
                 </div>
             @endif

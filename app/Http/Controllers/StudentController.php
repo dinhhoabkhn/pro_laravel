@@ -17,6 +17,7 @@ use App\Model\Teacher;
 use App\Model\Subject;
 use Illuminate\Support\Facades\Lang;
 use Config;
+use App\Http\Requests\ResetPasswordRequest;
 
 class StudentController extends Controller
 {
@@ -126,11 +127,8 @@ class StudentController extends Controller
         } else {
             foreach ($courseSelect as $key => $cou) {
                 if (($course->time_start > $courseSelect[$key]->time_start && $course->time_start < $courseSelect[$key]->time_finish)
-                    || ($course->time_finish > $courseSelect[$key]->time_start && $course->time_finish < $courseSelect[$key]->time_finish)) {
-                    $canRegiter = false;
-                    break;
-                }
-                if ($course->time_start < $courseSelect[$key]->time_start && $course->time_finish > $courseSelect[$key]->time_finish) {
+                    || ($course->time_finish > $courseSelect[$key]->time_start && $course->time_finish < $courseSelect[$key]->time_finish)
+                    || ($course->time_start < $courseSelect[$key]->time_start && $course->time_finish > $courseSelect[$key]->time_finish)) {
                     $canRegiter = false;
                     break;
                 }
@@ -168,16 +166,20 @@ class StudentController extends Controller
         return view('system.student.reset_password', ['student' => $student]);
     }
 
-    public function postResetPassword(Request $request)
+    public function postResetPassword(ResetPasswordRequest $request)
     {
         $student = Auth::guard('student')->user();
         $password = $student->password;
         $oldPassword = $request->oldpassword;
         $newPassword = $request->newpassword;
-        $retype_new_assword = $request->renewpassword;
+        $retypeNewPassword = $request->renewpassword;
         if (Hash::check($oldPassword, $password) == false) {
             return back()->withErrors(['error' => Lang::get('messages.error-type-password')]);
-        } elseif ($newPassword != $retype_new_assword) {
+        }
+        elseif ($newPassword == $oldPassword){
+            return back()->withErrors(['error' => Lang::get('messages.error-same-oldpassword')]);
+        }
+        elseif ($newPassword != $retypeNewPassword) {
             return back()->withErrors(['error' => Lang::get('messages.error-password-not-same')]);
         } else {
             $student->password = bcrypt($newPassword);
