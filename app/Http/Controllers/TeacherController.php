@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ResetPasswordRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginUserRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Teacher;
-use App\Course;
+use App\Model\Teacher;
+use App\Model\Course;
 use Illuminate\Support\Facades\Hash;
-use App\Subject;
+use App\Model\Subject;
+use Config;
 
 class TeacherController extends Controller
 {
@@ -24,7 +26,7 @@ class TeacherController extends Controller
         if (Auth::guard('teacher')->attempt(['email' => $email, 'password' => $password, 'active' => 1])) {
             return redirect('teacher');
         } else {
-            return redirect('teacher/login');
+            return redirect('teacher/login')->withErrors(['error_login' => Lang::get('messages.errors_login')]);
         }
     }
 
@@ -37,16 +39,21 @@ class TeacherController extends Controller
     public function showCourse()
     {
         $teacher = Auth::guard('teacher')->user();
-        $courses = Course::where('teacher_id', $teacher->id)->where('semester', '20172')->with('subject')->paginate(5);
+        $courses = Course::where('teacher_id', $teacher->id)->where('semester', '20172')->with('subject')->paginate(Config::get('constants.paginate_number'));
         return view('system.teacher.home', ['courses' => $courses]);
     }
 
     public function deleteRegisterCourse($id)
     {
+        $teacher = Auth::guard('teacher')->user();
         $course = Course::findOrFail($id);
-        $course->teacher_id = Null;
-        $course->save();
-        return back();
+        if ($course->teacher_id == $teacher->id) {
+            $course->teacher_id = Null;
+            $course->save();
+            return back();
+        } else {
+            return back()->withErrors(['errors' => Lang::get('messages.delete-course-security')]);
+        }
     }
 
     public function listCourse()
@@ -90,10 +97,9 @@ class TeacherController extends Controller
         if ($request->has('point')) {
             $point = $request->point;
             foreach ($point as $student => $point) {
-                if($point == null){
+                if ($point == null) {
                     continue;
-                }
-                else {
+                } else {
                     $course->students()->updateExistingPivot($student, ['point' => $point]);
                 }
             }
@@ -104,7 +110,7 @@ class TeacherController extends Controller
     public function teacherInformation()
     {
         $teacher = Auth::guard('teacher')->user();
-        return view('system.teacher.information',['teacher'=>$teacher]);
+        return view('system.teacher.information', ['teacher' => $teacher]);
     }
 
     public function getResetPassword()
@@ -113,21 +119,21 @@ class TeacherController extends Controller
         return view('system.teacher.reset_password', ['teacher' => $teacher]);
     }
 
-    public function postResetPassword(Request $request)
+    public function postResetPassword(ResetPasswordRequest $request)
     {
         $teacher = Auth::guard('teacher')->user();
         $password = $teacher->password;
-        $old_password = $request->oldpassword;
-        $new_password = $request->newpassword;
-        $retype_new_assword = $request->renewpassword;
-        if (Hash::check($old_password, $password) == false) {
-            return back()->withErrors(['error' => 'the password you type not true']);
-        } elseif ($new_password != $retype_new_assword) {
-            return back()->withErrors(['error' => '2 password not same']);
+        $oldPassword = $request->oldpassword;
+        $newPassword = $request->newpassword;
+        $retypeNewPassword = $request->renewpassword;
+        if (Hash::check($oldPassword, $password) == false) {
+            return back()->withErrors(['error' => Lang::get('messages.error-type-password')]);
+        } elseif ($newPassword == $oldPassword) {
+            return back()->withErrors(['error' => Lang::get('messages.error-same-oldpassword')]);
         } else {
-            $teacher->password = bcrypt($new_password);
+            $teacher->password = bcrypt($newPassword);
             $teacher->save();
-            return redirect()->route('teacher.information')->with('success', 'you reseted password success');
+            return redirect()->route('teacher.information')->with('success', Lang::get('messages.reset-password'));
         }
     }
 }

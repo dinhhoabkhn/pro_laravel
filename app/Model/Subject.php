@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +10,6 @@ class Subject extends Model
     protected $fillable = ['name','academy'];
     public  $timestamps = false;
     public function courses(){
-    	return $this->hasMany('App\Course');
+    	return $this->hasMany(Course::class);
     }
 }

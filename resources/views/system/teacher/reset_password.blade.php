@@ -5,7 +5,10 @@
             {{ csrf_field() }}
             @if($errors->any())
                 <div class="alert alert-danger">
-                    {{$errors->first()}}
+                    @foreach($errors->all() as $error)
+                        {{$error}}
+                        <br>
+                    @endforeach
                 </div>
             @endif
             <div class="form-group">
@@ -23,7 +26,7 @@
             <div class="form-group">
                 <div class="row">
                     <label for="">Retype new Password</label>
-                    <input type="password" class="form-control" name="renewpassword">
+                    <input type="password" class="form-control" name="newpassword_confirmation">
                 </div>
             </div>
             <input type="submit" class="btn-primary">

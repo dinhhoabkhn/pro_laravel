@@ -17,12 +17,12 @@
     </div>
     <table class="table-bordered table">
         <tr>
-            <th style="width: 18%">Name </th>
-            <th style="width: 18%">Email</th>
-            <th style="width: 14%">Level</th>
-            <th style="width: 13%">Address</th>
-            <th style="width: 14%">Birthday</th>
-            <th style="width:20%">Academy</th>
+            <th >Name </th>
+            <th >Email</th>
+            <th >Level</th>
+            <th >Address</th>
+            <th >Birthday</th>
+            <th >Academy</th>
             <th colspan="2">Action</th>
         </tr>
         @foreach($teacher as $tea)

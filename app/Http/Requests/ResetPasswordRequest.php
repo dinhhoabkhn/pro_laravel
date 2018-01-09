@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ImageRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,9 @@ class ImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'avatar' => 'required|mimes:jpeg,bmp,png,jpg|max:10240',
-        ];
-    }
-    public function messages()
-    {
-        return [
-            'avatar.required' => 'Select an image to upload',
-            'avatar.max' => 'Images size is too large',
-            'avatar.mimes'=> 'This file is not a image'
+            'oldpassword'=>'required',
+            'newpassword'=>'required|confirmed:foo_confirmation',
+            'newpassword_confirmation'=>'required'
         ];
     }
 }

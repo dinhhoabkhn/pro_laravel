@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
-use App\Subject;
+use App\Model\Subject;
 use Illuminate\Http\Request;
+use Config;
 
 
 class ManagerSubjectController extends Controller
@@ -17,7 +18,7 @@ class ManagerSubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::paginate(10);
+        $subjects = Subject::paginate(Config::get('constants.paginate_number'));
         return view('admin.manager_subject.manager',['subjects'=>$subjects]);
     }
 

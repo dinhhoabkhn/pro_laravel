@@ -5,30 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
-use App\Student;
+use App\Model\Student;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AuthenticateLogin;
+use Config;
 
 class ManagerStudentController extends Controller
 {
 
     public function index()
     {
-//        if ($request->has('value_search')) {
-//            $search = $request->value_search;
-//            $students = Student::where('student_code', 'like', '%' . $search . '%')
-//                ->orWhere('name', 'like', '%' . $search . '%')->paginate(5);
-//            return view('admin.manager_student.manager', ['students' => $students])->with('success', 'the student that you search');
-//        } else {
-            $students = Student::paginate(5);
+            $students = Student::paginate(Config::get('constants.paginate_number'));
             return view('admin.manager_student.manager', ['students' => $students]);
 //        }
     }
     public function searchStudent(Request $request)
     {
         $search = $request->search;
-        $students = Student::where('student_code', 'like', '%' . $search . '%')
-            ->orWhere('name', 'like', '%' . $search . '%')->paginate(5);
+        $students = Student::searchStudent($search)->paginate(Config::get('constants.paginate_number'));
         return view('ajax.search_student', ['students' => $students]);
 
     }

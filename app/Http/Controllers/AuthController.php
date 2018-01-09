@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    // public function __construct()
-    //    {
-    //        $this->middleware('check')->except(['getLoginAdmin','postLoginAdmin']);
-    //    }
     public function getLoginAdmin()
     {
-        return view('auth.login_admin');
+        if(Auth::guard('admin')->check()) {
+            return redirect()->route('manager_student.index');
+        }
+        else{
+            return view('auth.login_admin');
+        }
     }
 
     public function postLoginAdmin(LoginAdminRequest $request)
@@ -24,7 +25,7 @@ class AuthController extends Controller
         if (Auth::guard('admin')->attempt(['name' => $name, 'password' => $password])) {
             return redirect()->route('manager_student.index');
         } else {
-            return back()->with('sucsess', "nhập lại thông tin");
+            return back()->withErrors(['error'=>Lang::get('messages.error-login-admin')]);
         }
     }
 

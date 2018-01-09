@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Student;
+use App\Model\Student;
 class ForgotPasswordStudent extends Mailable
 {
     use Queueable, SerializesModels;

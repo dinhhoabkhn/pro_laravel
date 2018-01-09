@@ -11,10 +11,13 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\SplFileInfo;
 use App\Http\Requests\ImageRequest;
-use App\Student;
-use App\Course;
-use App\Teacher;
-use App\Subject;
+use App\Model\Student;
+use App\Model\Course;
+use App\Model\Teacher;
+use App\Model\Subject;
+use Illuminate\Support\Facades\Lang;
+use Config;
+use App\Http\Requests\ResetPasswordRequest;
 
 class StudentController extends Controller
 {
@@ -28,9 +31,9 @@ class StudentController extends Controller
         $email = $request->email;
         $password = $request->password;
         if (Auth::guard('student')->attempt(['email' => $email, 'password' => $password, 'active' => 1])) {
-            return redirect()->route('student');
+            return redirect()->route('student')->with('success', 'Login successed');
         } else {
-            return back();
+            return back()->withErrors(['error_login' => Lang::get('messages.errors_login')]);
         }
     }
 
@@ -46,11 +49,11 @@ class StudentController extends Controller
             $student = Student::where('email', $email)->first();
             $student->email_token = str_random(15);
             $student->save();
-            $send_email = new ForgotPasswordStudent($student);
-            Mail::to($student)->send($send_email);
+            $sendEmail = new ForgotPasswordStudent($student);
+            Mail::to($student)->send($sendEmail);
             return redirect()->route('student.get_login');
         } else {
-            return back();
+            return back()->withErrors(['error_forgot_password' => Lang::get('messages.error_forgot_password')]);
         }
     }
 
@@ -81,9 +84,8 @@ class StudentController extends Controller
     public function listMyCourse()
     {
         $student = Auth::guard('student')->user();
-        $courses = $student->courses()->paginate(5);
-//        dd($courses);
-        return view('system.student.home', ['courses' => $courses, 'student'=>$student]);
+        $courses = $student->courses()->paginate(Config::get('constants.paginate_number'));
+        return view('system.student.home', ['courses' => $courses, 'student' => $student]);
     }
 
     public function deleteCourse($id)
@@ -95,28 +97,47 @@ class StudentController extends Controller
 
     public function listCourse(Request $request)
     {
-        if ($request->has('search_course')){
+        if ($request->has('search_course')) {
             $student = Auth::guard('student')->user();
             $search = $request->search_course;
             $courses = Course::whereDoesntHave('students', function ($query) use ($student) {
-                $query->where('students.id', $student->id);})->whereHas('subject',function ($query) use ($search) {
-                $query->where('name','like','%'.$search.'%');
-            })->orWhere('course_code','like','%'.$search.'%')->get();
-            return view('system.student.list_course', ['courses' => $courses,'student'=>$student]);
-        }else {
+                $query->where('students.id', $student->id);
+            })->where('course_code', 'like', '%' . $search . '%')->orWhereHas('subject', function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })->get();
+            return view('system.student.list_course', ['courses' => $courses, 'student' => $student]);
+        } else {
             $student = Auth::guard('student')->user();
             $courses = Course::whereDoesntHave('students', function ($query) use ($student) {
                 $query->where('students.id', $student->id);
             })->with('subject')->get();
-            return view('system.student.list_course', ['courses' => $courses,'student'=>$student]);
+            return view('system.student.list_course', ['courses' => $courses, 'student' => $student]);
         }
     }
 
     public function registerCourseStudent($id)
     {
         $student = Auth::guard('student')->user();
-        $student->courses()->attach($id);
-        return redirect()->route('student');
+        $course = Course::findOrFail($id);
+        $courseOfStudent = $student->courses();
+        $courseSelect = $courseOfStudent->where('weekday', $course->weekday)->orderBy('time_start', 'asc')->get();
+        $canRegiter = true;
+        if ($courseOfStudent->where('course_id', $id)->exists()) {
+            return back()->withErrors(['error-register-course' => Lang::get('messages.error-register-course')]);
+        } else {
+            foreach ($courseSelect as $key => $cou) {
+                if (!($course->time_finish < $cou->time_start || $course->time_start > $cou->time_finish)) {
+                    $canRegiter = false;
+                    break;
+                }
+            }
+        }
+        if ($canRegiter) {
+            $student->courses()->attach($id);
+            return redirect()->route('student')->with(['success' => Lang::get('success-register')]);
+        } else {
+            return back()->withErrors(['coincided-course' => Lang::get('messages.coincided-course')]);
+        }
     }
 
     public function studentInformation(Request $request)
@@ -127,18 +148,14 @@ class StudentController extends Controller
 
     public function changeAvatar(ImageRequest $request)
     {
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $student = Auth::guard('student')->user();
-            $avatar_change = 'avatar' . $student->id . '.' . $avatar->getClientOriginalExtension();
-            $path = 'images';
-            $avatar_move = $avatar->move($path, $avatar_change);
-            $student->avatar = $avatar_move;
-            $student->save();
-            return view('system.student.information', ['student' => $student]);
-        } else {
-            return back();
-        }
+        $avatar = $request->file('avatar');
+        $student = Auth::guard('student')->user();
+        $avatarChange = 'avatar' . $student->id . '.' . $avatar->getClientOriginalExtension();
+        $path = 'images';
+        $avatarMove = $avatar->move($path, $avatarChange);
+        $student->avatar = $avatarMove;
+        $student->save();
+        return back()->with('success', Lang::get('messages.update-avatar'));
     }
 
     public function getResetPassword()
@@ -147,21 +164,21 @@ class StudentController extends Controller
         return view('system.student.reset_password', ['student' => $student]);
     }
 
-    public function postResetPassword(Request $request)
+    public function postResetPassword(ResetPasswordRequest $request)
     {
         $student = Auth::guard('student')->user();
         $password = $student->password;
-        $old_password = $request->oldpassword;
-        $new_password = $request->newpassword;
-        $retype_new_assword = $request->renewpassword;
-        if (Hash::check($old_password, $password) == false) {
-            return back()->withErrors(['error' => 'the password you type not true']);
-        } elseif ($new_password != $retype_new_assword) {
-            return back()->withErrors(['error' => '2 password not same']);
+        $oldPassword = $request->oldpassword;
+        $newPassword = $request->newpassword;
+        $retypeNewPassword = $request->renewpassword;
+        if (Hash::check($oldPassword, $password) == false) {
+            return back()->withErrors(['error' => Lang::get('messages.error-type-password')]);
+        } elseif ($newPassword == $oldPassword) {
+            return back()->withErrors(['error' => Lang::get('messages.error-same-oldpassword')]);
         } else {
-            $student->password = bcrypt($new_password);
+            $student->password = bcrypt($newPassword);
             $student->save();
-            return redirect()->route('student.information')->with('success', 'you reseted password success');
+            return redirect()->route('student.information')->with('success', Lang::get('messages.reset-password'));
         }
     }
 
@@ -173,5 +190,13 @@ class StudentController extends Controller
         $student->email_token = null;
         $student->save();
         return redirect()->route('student.get_login');
+    }
+
+    public function myPoint()
+    {
+        $student = Auth::guard('student')->user();
+        $courses = $student->courses;
+        return view('system.student.my_point', ['student' => $student, 'courses' => $courses]);
+
     }
 }

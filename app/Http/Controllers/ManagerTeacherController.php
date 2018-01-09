@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
-use App\Teacher;
-use App\Student;
+use App\Model\Teacher;
+use App\Model\Student;
 use App\Mail\AuthenticateLoginTeacher;
 use Illuminate\Support\Facades\Mail;
+use Config;
 
 class ManagerTeacherController extends Controller
 {
@@ -21,10 +22,10 @@ class ManagerTeacherController extends Controller
     {
         if ($request->has('name')) {
             $search = $request->name;
-            $teacher = Teacher::where('name', 'like', '%' . $search . '%')->paginate(10);
+            $teacher = Teacher::where('name', 'like', '%' . $search . '%')->paginate(Config::get('constants.paginate_number'));
             return view('admin.manager_teacher.manager', ['teacher' => $teacher]);
         } else {
-            $teacher = Teacher::paginate(10);
+            $teacher = Teacher::paginate(Config::get('constants.paginate_number'));
             return view('admin.manager_teacher.manager', ['teacher' => $teacher]);
         }
     }

@@ -79,15 +79,15 @@ return [
     'providers' => [
         'admin' => [
             'driver' => 'eloquent',
-            'model' => App\Admin::class,
+            'model' => App\Model\Admin::class,
         ],
         'student' => [
             'driver' => 'eloquent',
-            'model' => App\Student::class,
+            'model' => App\Model\Student::class,
         ],
         'teacher' => [
             'driver' => 'eloquent',
-            'model' => App\Teacher::class,
+            'model' => App\Model\Teacher::class,
         ],
     ],
 

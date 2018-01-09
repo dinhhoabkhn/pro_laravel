@@ -8,7 +8,7 @@
             <form action="" method="get">
                 <div class="form-group">
                     <div class="col-md-3 col-md-offset-4">
-                        <input type="text" name="course_code" class="form-control" placeholder="type Course code">
+                        <input type="text" name="search_course" class="form-control" placeholder="type Course code">
                     </div>
                     <input type="submit" name="" value="Search" class="btn btn-primary">
                 </div>
@@ -17,13 +17,13 @@
         </div>
         <table class="table-bordered table">
             <tr>
-                <th style="width: 18%">Course code</th>
-                <th style="width: 14%">Subject Name</th>
-                <th style="width: 14%">Class</th>
-                <th style="width: 15%">Semester</th>
-                <th style="width: 18%">Teacher</th>
-                <th style="width: 14%">Time</th>
-                <th width="10%" ; colspan="2">Action</th>
+                <th >Course code</th>
+                <th >Subject Name</th>
+                <th >Class</th>
+                <th >Semester</th>
+                <th >Teacher</th>
+                <th >Time</th>
+                <th colspan="2">Action</th>
             </tr>
             @foreach($courses as $cou)
                 <tr>
@@ -46,7 +46,9 @@
                 </tr>
             @endforeach
         </table>
-        {{$courses->links()}}
+        @php
+            echo $courses->appends($search)->links();
+        @endphp
     </div>
 
 @endsection

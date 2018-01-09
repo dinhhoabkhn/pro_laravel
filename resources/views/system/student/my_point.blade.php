@@ -1,5 +1,6 @@
-@extends('welcome')
-@section('header')
+@extends('layouts.layout_student')
+@include('include.avatar')
+@section('student')
 
     <div class="container" style="margin-top: 50px;">
         <div class="row">
@@ -8,17 +9,17 @@
         <table class="table-bordered table">
             <tr>
                 <th class="stt">STT</th>
-                <th >Course Code</th>
                 <th >Subject</th>
                 <th >Point</th>
             </tr>
             @foreach($courses as $key => $course)
+                @if(!empty($course->pivot->point))
                 <tr>
                     <td>{{++$key}}</td>
-                    <td>{{$course->course_code}}</td>
-                    <td>{{$course->subject['name']}} </td>
+                    <td>{{$course->subject['name']}}
                     <td>{{$course->pivot->point}} </td>
                 </tr>
+                @endif
             @endforeach
         </table>
     </div>

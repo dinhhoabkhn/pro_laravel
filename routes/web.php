@@ -22,11 +22,12 @@ Route::middleware('check')->group(function (){
 		'manager_course'=>'ManagerCourseController',
         'manager_subject'=>'ManagerSubjectController'
 	]);
-	Route::get('liststudent','StatisticController@listStudent')->name('liststudent');
+	Route::get('liststudent','StatisticController@listStudent')->name('list_student');
 	Route::get('logout','AuthController@logoutAdmin')->name('admin.logout');
 	Route::get('statistic-point/{id}','StatisticController@pointStudent')->name('statistic_point');
 	Route::get('search-student','ManagerStudentController@searchStudent');
-	Route::get('list-course','StatisticController@listCourse');
+	Route::get('list-course','StatisticController@listCourse')->name('list_course');
+	Route::get('point-student-in-course/{id}','StatisticController@pointStudentInCourse')->name('statistic_point_course');
 });
 
 // Route::group()
@@ -50,7 +51,6 @@ Route::middleware('check_teacher')->group(function (){
 		Route::post('point-student/{courseId}','TeacherController@pointStudent')->name('teacher.point_student');
 		Route::get('rs-password-teacher','TeacherController@getResetPassword')->name('teacher.get_rs_password');
         Route::post('rs-password-teacher','TeacherController@postResetPassword')->name('teacher.post_rs_password');
-
     });
 	Route::post('verify/{token}','TeacherController@verifyTeacher')->name('teacher.verify');
 });
@@ -67,6 +67,7 @@ Route::prefix('student')->group(function(){
 		Route::get('rs-password','StudentController@getResetPassword')->name('student.get_rs_password');
 		Route::post('rs-password','StudentController@postResetPassword')->name('student.post_rs_password');
 		Route::post('change-avatar','StudentController@changeAvatar')->name('student.change-avatar');
+		Route::get('my-point','StudentController@myPoint')->name('student.my_point');
 	});
 	Route::post('verify/{token}','StudentController@verify')->name('student.verify');
 	Route::get('forgot-password-student','StudentController@getForgotPasswordStudent')->name('student.forgot_password_student');
